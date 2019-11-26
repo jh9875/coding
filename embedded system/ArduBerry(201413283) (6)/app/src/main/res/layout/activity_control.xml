@@ -1,0 +1,255 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/bg" >
+
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_title"
+        android:gravity="center_vertical" >
+		<!--
+		<TextView
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:text="@string/app_name"/>  -->
+
+        <ImageView
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_weight="1"
+		android:src="@drawable/new_title"
+		android:contentDescription="@string/app_name"/>
+
+		<Button
+			android:id="@+id/btBTN"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginRight="20dp"
+			android:background="@drawable/selector_bt_btn"
+			android:onClick="clickFunc"
+			android:visibility="gone" />
+
+		<Button
+			android:id="@+id/wifiBTN"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginRight="20dp"
+			android:background="@drawable/selector_wifi_btn"
+			android:onClick="clickFunc"
+			android:visibility="gone"/>
+    </LinearLayout>
+
+	<!-- Sensor Monitor & Contorl -->
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="20dp"
+        android:background="@drawable/bg_text">
+	    <LinearLayout 
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:gravity="center_vertical" >
+	        <ImageView android:layout_width="wrap_content" 
+	            	   android:layout_height="wrap_content" 
+	                   android:layout_margin="10dp" 
+	                   android:background="@drawable/arrow"
+	                   android:contentDescription="@string/app_name"/>
+	        
+	        <ImageView android:layout_width="wrap_content" 
+	            		android:layout_height="wrap_content" 
+	            		android:layout_marginRight="10dp" 
+	            		android:background="@drawable/temp"
+	            		android:contentDescription="@string/app_name"/>
+	        <TextView 
+	            android:id="@+id/tv_temp"
+	            android:layout_width="0dp"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:gravity="center"
+	            android:layout_marginRight="10dp"
+	            android:background="@drawable/bg_value"/>
+	    </LinearLayout>
+
+	    <LinearLayout 
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:gravity="center_vertical" >
+	        <ImageView 	android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_margin="10dp"
+						android:background="@drawable/arrow"
+						android:contentDescription="@string/app_name"/>
+	        <ImageView 	android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginRight="10dp"
+						android:background="@drawable/hum"
+						android:contentDescription="@string/app_name"/>
+	        <TextView 
+	            android:id="@+id/tv_hum"
+	            android:layout_width="0dp"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:gravity="center"
+	            android:layout_marginRight="10dp"
+	            android:background="@drawable/bg_value" />
+	    </LinearLayout>
+	    <LinearLayout 
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:gravity="center_vertical" >
+	        <ImageView 	android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_margin="10dp"
+						android:background="@drawable/arrow"
+						android:contentDescription="@string/app_name"/>
+	        <ImageView 	android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginRight="10dp"
+						android:background="@drawable/light"
+						android:contentDescription="@string/app_name"/>
+	        <TextView 
+	            android:id="@+id/tv_ill"
+	            android:layout_width="0dp"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:gravity="center"
+	            android:layout_marginRight="10dp"
+	            android:background="@drawable/bg_value" />
+	    </LinearLayout>
+
+		<!-- LED Control -->
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:gravity="center_vertical" >
+			<ImageView 	android:layout_width="wrap_content"
+						android:contentDescription="@string/app_name"
+						android:layout_height="wrap_content"
+						android:layout_margin="10dp"
+						android:background="@drawable/arrow"/>
+			<ImageView 	android:layout_width="wrap_content"
+						android:contentDescription="@string/app_name"
+						android:layout_height="wrap_content"
+						android:layout_marginRight="10dp"
+						android:background="@drawable/led" />
+
+			<Button
+				android:id="@+id/onButton"
+				android:layout_width="0dp"
+				android:layout_weight="1"
+				android:layout_height="wrap_content"
+				android:text="@string/red_led"
+				android:textStyle="bold"
+				android:onClick="clickFunc"/>
+
+			<Button
+				android:id="@+id/offButton"
+				android:layout_width="0dp"
+				android:layout_weight="1"
+				android:layout_height="wrap_content"
+				android:text="@string/green_led"
+				android:textStyle="bold"
+				android:onClick="clickFunc"/>
+
+			<Button
+				android:id="@+id/clearButton"
+				android:layout_width="0dp"
+				android:layout_weight="1"
+				android:layout_height="wrap_content"
+				android:text="@string/yellow_led"
+				android:textStyle="bold"
+				android:onClick="clickFunc"/>
+
+			<Button
+				android:id="@+id/white_btn"
+				android:layout_width="0dp"
+				android:layout_weight="1"
+				android:layout_height="wrap_content"
+				android:text="@string/white_led"
+				android:textStyle="bold"
+				android:onClick="clickFunc"/>
+
+		</LinearLayout>
+
+		<!-- Buzzer Control -->
+	    <LinearLayout 
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:gravity="center_vertical" >
+	        <ImageView 	android:layout_width="wrap_content"
+						android:contentDescription="@string/app_name"
+						android:layout_height="wrap_content"
+						android:layout_margin="10dp"
+						android:background="@drawable/arrow"/>
+	        <ImageView 	android:layout_width="wrap_content"
+						android:contentDescription="@string/app_name"
+						android:layout_height="wrap_content"
+						android:layout_marginRight="10dp"
+						android:background="@drawable/buzzer" />
+
+			<ToggleButton
+				android:id="@+id/tg_btn_buzzer"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:background="@drawable/selector_tg_btn_on_off"
+				android:focusable="false"
+				android:focusableInTouchMode="false"
+				android:onClick="clickFunc"
+				android:textOff=""
+				android:textOn="" />
+	    </LinearLayout>
+
+		<!-- Capture -->
+	    <LinearLayout 
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:gravity="center_vertical" >
+	        <ImageView 	android:layout_width="wrap_content"
+						android:contentDescription="@string/app_name"
+						android:layout_height="wrap_content"
+						android:layout_margin="10dp"
+						android:background="@drawable/arrow"/>
+	        <ImageView 	android:layout_width="wrap_content"
+						android:contentDescription="@string/app_name"
+						android:layout_height="wrap_content"
+						android:layout_marginRight="10dp"
+						android:background="@drawable/capture" />
+
+			<Button
+				android:id="@+id/btn_capture"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:onClick="clickFunc"
+				android:text="CAPTURE" />
+	    </LinearLayout>
+    </LinearLayout>
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+		android:layout_marginBottom="20dp"
+        android:background="@drawable/bg_text">
+
+		<TextView
+			android:id="@+id/noImgTXT"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/no_image" />
+	    
+		<ImageView
+		    android:id="@+id/imageView"
+		    android:layout_width="match_parent"
+		    android:layout_height="match_parent"
+		    android:contentDescription="@string/app_name"
+		    android:visibility="gone" />
+
+    </LinearLayout>
+</LinearLayout>
