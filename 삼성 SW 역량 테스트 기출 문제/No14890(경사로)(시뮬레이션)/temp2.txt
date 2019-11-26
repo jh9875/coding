@@ -1,0 +1,219 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.StringTokenizer;
+
+public class Main
+{	
+	static int N, L;
+	static int[][] map;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		
+		st =new StringTokenizer(br.readLine());
+		N =Integer.parseInt(st.nextToken());
+		L =Integer.parseInt(st.nextToken());
+		map =new int[N][N];
+		
+		for(int i =0; i <N; i++)
+		{
+			st =new StringTokenizer(br.readLine());
+			for(int j =0; j <N; j++)
+				map[i][j] =Integer.parseInt(st.nextToken());
+		}
+		
+		bw.write(checkMap() +"\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	public static int checkMap()
+	{
+		int count =0;
+		
+		for(int i =0; i <N; i++)
+		{
+			System.out.println("---row check---");
+			if(rowCheck(i))
+				count++;
+			System.out.println("count: " +count);
+			System.out.println("==========================");
+				
+			System.out.println("---col check---");
+			if(colCheck(i))
+				count++;
+			System.out.println("count: " +count);
+			System.out.println("==========================");
+		}
+		
+		return count;
+	}
+	public static boolean rowCheck(int row)
+	{
+		System.out.println("row: " +row);
+		int cur =0;
+		int next =1;
+		boolean[] set =new boolean[N];				//경사로를 설치한 곳인지 아닌지 확인할 배열.
+		while(cur <N)
+		{
+			if(next <N)								//끝에 도달하지 않으면.
+			{
+				if(validHeight(map[row][cur], map[row][next]))
+				{
+					if(map[row][cur] ==map[row][next])		//높이가 같은경우.
+					{
+						cur++;
+						next++;
+						continue;
+					}else							//높이차이가 1인경우.
+					{
+						if(map[row][cur] >map[row][next])		//내려가는 경우.
+						{
+							if(cur+L >=N)					//길이를 초과한다면.
+								return false;
+							
+							for(int i =next; i <cur+L+1; i++)
+							{
+								if(set[i])				//이미 설치한곳이라면.
+									return false;
+								
+								set[i] =true;
+								if(map[row][cur] -map[row][i] !=1)	//높이차이가 1이아닌경우.
+								{
+									return false;
+								}
+							}
+							System.out.println("visited check!");
+							for(int i =0; i <N; i++)
+								System.out.print(set[i] +" ");
+							System.out.println();
+							cur +=L;
+							next =cur+1;
+							continue;
+						}else									//올라가는 경우.
+						{
+							if(cur-L+1 <0)
+								return false;
+							
+							for(int i =cur; i >=cur-L+1; i--)
+							{
+								if(set[i])				//이미 설치한곳이라면.
+									return false;
+								
+								set[i] =true;
+								if(map[row][next] -map[row][i] !=1)	//높이차이가 1이아닌경우.
+								{
+									return false;
+								}
+							}
+							System.out.println("visited check!");
+							for(int i =0; i <N; i++)
+								System.out.print(set[i] +" ");
+							System.out.println();
+							cur++;
+							next =cur+1;
+							continue;
+						}
+					}
+				}else								//높이가 1넘게 차이나는 경우.
+				{
+					return false;
+				}
+			}else									//끝에 도달한 경우.
+			{
+				break;
+			}
+		}
+		return true;
+	}
+	public static boolean colCheck(int col)
+	{
+		System.out.println("row: " +col);
+		int cur =0;
+		int next =1;
+		boolean[] set =new boolean[N];				//경사로를 설치한 곳인지 아닌지 확인할 배열.
+		while(cur <N)
+		{
+			if(next <N)								//끝에 도달하지 않으면.
+			{
+				if(validHeight(map[cur][col], map[next][col]))
+				{
+					if(map[cur][col] ==map[next][col])		//높이가 같은경우.
+					{
+						cur++;
+						next++;
+						continue;
+					}else							//높이차이가 1인경우.
+					{
+						if(map[cur][col] >map[next][col])		//내려가는 경우.
+						{
+							if(cur+L >=N)					//길이를 초과한다면.
+								return false;
+							
+							for(int i =next; i <cur+L+1; i++)
+							{
+								if(set[i])				//이미 설치한곳이라면.
+									return false;
+								
+								set[i] =true;
+								if(map[cur][col] -map[i][col] !=1)	//높이차이가 1이아닌경우.
+								{
+									return false;
+								}
+							}
+							System.out.println("visited check!");
+							for(int i =0; i <N; i++)
+								System.out.print(set[i] +" ");
+							System.out.println();
+							cur +=L;
+							next =cur+1;
+							continue;
+						}else									//올라가는 경우.
+						{
+							if(cur-L+1 <0)
+								return false;
+							
+							for(int i =cur; i >=cur-L+1; i--)
+							{
+								if(set[i])				//이미 설치한곳이라면.
+									return false;
+								
+								set[i] =true;
+								if(map[next][col] -map[i][col] !=1)	//높이차이가 1이아닌경우.
+								{
+									return false;
+								}
+							}
+							System.out.println("visited check!");
+							for(int i =0; i <N; i++)
+								System.out.print(set[i] +" ");
+							System.out.println();
+							cur++;
+							next =cur+1;
+							continue;
+						}
+					}
+				}else								//높이가 1넘게 차이나는 경우.
+				{
+					return false;
+				}
+			}else									//끝에 도달한 경우.
+			{
+				break;
+			}
+		}
+		return true;
+	}
+	public static boolean validHeight(int cur, int next)
+	{
+		if(Math.abs(next -cur) >1)
+			return false;
+		return true;
+	}
+	
+}

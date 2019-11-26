@@ -1,0 +1,74 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+public class Main
+{	
+	static int N, M;
+	static int count =0;
+	static int[][] map;
+	static int[] dirR = {-1, 0, 1, 0};		//북, 동, 남, 서
+	static int[] dirC = {0, 1, 0, -1};
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int r, c, d;
+		String[] input;
+		
+		input =br.readLine().split(" ");
+		N =Integer.parseInt(input[0]);
+		M =Integer.parseInt(input[1]);
+		
+		input =br.readLine().split(" ");
+		r =Integer.parseInt(input[0]);
+		c =Integer.parseInt(input[1]);
+		d =Integer.parseInt(input[2]);
+		
+		map =new int[N][M];
+		
+		for(int i =0; i <N; i++)
+		{
+			input =br.readLine().split(" ");
+			for(int j =0; j <M; j++)
+				map[i][j] =input[j].charAt(0)-'0';
+		}
+		search(r, c, d);
+		
+		bw.write(count +"\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	public static void search(int r, int c, int d)
+	{
+		if(map[r][c] ==0)
+		{
+			map[r][c] =2;
+			count++;
+		}
+		
+		for(int i =0; i <4; i++)	//4번 턴
+		{
+			d =(d+3) %4;			//왼쪽으로 턴.
+			if(0 <=r+dirR[d] && r+dirR[d] <N
+					&& 0 <=c+dirC[d] && c+dirC[d] <M
+					&& map[r+dirR[d]][c+dirC[d]] ==0)
+			{
+				search(r+dirR[d], c+dirC[d], d);
+				return;
+			}
+				
+		}
+		//후진
+		int back =(d+2) %4;
+		if(0 <=r+dirR[back] && r+dirR[back] <N
+				&& 0 <=c+dirC[back] && c+dirC[back] <M
+				&& map[r+dirR[back]][c+dirC[back]] !=1)
+			search(r+dirR[back], c+dirC[back], d);	//뒤로 이동하면서 방향은 유지.
+		else 
+			return;
+	}
+}

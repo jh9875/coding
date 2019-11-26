@@ -1,0 +1,313 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.PriorityQueue;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	static class CCTV implements Comparable<CCTV>
+	{
+		int r;
+		int c;
+		int v;
+		
+		CCTV(int r, int c, int v)
+		{
+			this.r =r;
+			this.c =c;
+			this.v =v;
+		}
+
+		@Override
+		public int compareTo(CCTV cctv)		//값이 큰것을 우선적으로.
+		{
+			return cctv.v -this.v;
+		}
+	}
+	static int N, M;
+	static int[][] map;
+	static int[] dirR = {0, 1, 0, -1};			//동, 남, 서, 북
+	static int[] dirC = {1, 0, -1, 0};
+	static PriorityQueue<CCTV> pq =new PriorityQueue<>();			//cctv의 좌표를 담을 변수.
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		
+		st =new StringTokenizer(br.readLine());
+		N =Integer.parseInt(st.nextToken());
+		M =Integer.parseInt(st.nextToken());
+		map =new int[N][M];
+		
+		for(int i =0; i <N; i++)
+		{
+			st =new StringTokenizer(br.readLine());
+			for(int j =0; j <M; j++)
+			{
+				int n =Integer.parseInt(st.nextToken());
+				map[i][j] =n;
+				
+				if(0 <n && n <6)
+					pq.add(new CCTV(i, j, n));
+			}
+		}
+		
+		while(!pq.isEmpty())
+		{
+			CCTV c =pq.poll();
+			paint(c.r, c.c, c.v);
+		}
+		bw.write(sum() +"\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+	public static void paint(int r, int c, int v)
+	{
+		if(v ==1)
+			v1(r, c);
+		else if(v ==2)
+			v2(r, c);
+		else if(v ==3)
+			v3(r, c);
+		else if(v ==4)
+			v4(r, c);
+		else if(v ==5)
+			v5(r, c);
+	}
+	
+	public static void v1(int r, int c)			//1가지 방향
+	{											//4가지 방향중 최대로 칠할수 있는곳 찾아서 칠하기.
+		int max =0;
+		int dir =0;
+		
+		for(int i =0; i <4; i++)
+		{
+			int cnt =0;
+			int nextR =r+dirR[i];
+			int nextC =c+dirC[i];
+			
+			while(0 <=nextR && nextR <N && 0 <=nextC && nextC <M)
+			{
+				if(map[nextR][nextC] ==6)
+					break;
+				
+				cnt++;
+				nextR +=dirR[i];
+				nextC +=dirC[i];
+			}
+			if(cnt >max)
+			{
+				max =cnt;
+				dir =i;
+			}
+		}
+		
+		int nextR =r +dirR[dir];
+		int nextC =c +dirC[dir];
+		
+		while(0 <=nextR && nextR <N && 0 <=nextC && nextC <M)
+		{
+			if(map[nextR][nextC] ==6)
+				break;
+			
+			map[nextR][nextC] =7;
+			
+			nextR +=dirR[dir];
+			nextC +=dirC[dir];
+		}
+	}
+	public static void v2(int r, int c)			//2가지 반대로
+	{
+		int max =0;
+		int dir =0;
+		
+		for(int i =0; i <2; i++)
+		{
+			int cnt =0;
+			int nextR1 =r+dirR[i];
+			int nextC1 =c+dirC[i];
+			int nextR2 =r+dirR[i+2];
+			int nextC2 =c+dirC[i+2];
+			
+			while(0 <=nextR1 && nextR1 <N && 0 <=nextC1 && nextC1 <M)
+			{
+				if(map[nextR1][nextC1] ==6 && map[nextR1][nextC1] ==7)
+					break;
+				
+				cnt++;
+				nextR1 +=dirR[i];
+				nextC1 +=dirC[i];
+			}
+			while(0 <=nextR2 && nextR2 <N && 0 <=nextC2 && nextC2 <M)
+			{
+				if(map[nextR2][nextC2] ==6 && map[nextR2][nextC2] ==7)
+					break;
+				
+				cnt++;
+				nextR2 +=dirR[i];
+				nextC2 +=dirC[i];
+			}
+			if(cnt >max)
+			{
+				max =cnt;
+				dir =i;
+			}
+		}
+		int nextR =r +dirR[dir];
+		int nextC =c +dirC[dir];
+		
+		while(0 <=nextR && nextR <N && 0 <=nextC && nextC <M)
+		{
+			if(map[nextR][nextC] ==6)
+				break;
+			
+			map[nextR][nextC] =7;
+			
+			nextR +=dirR[dir];
+			nextC +=dirC[dir];
+		}
+	}
+	public static void v3(int r, int c)			//2가지 직각
+	{
+		int max =0;
+		int dr =0;
+		int dc =0;
+		
+		for(int i =0; i <4; i +=2)		//가로방향. 
+		{
+			for(int j =1; j <4; j +=2)		//세로방향.
+			{
+				int cnt =0;
+				int nextR1 =r +dirR[i];
+				int nextC1 =c +dirC[i];
+				int nextR2 =r +dirR[j];
+				int nextC2 =c +dirC[j];
+				
+				while(0 <=nextR1 && nextR1 <N && 0 <=nextC1 && nextC1 <M)
+				{
+					if(map[nextR1][nextC1] ==6 && map[nextR1][nextC1] ==7)
+						break;
+					
+					cnt++;
+					nextR1 +=dirR[i];
+					nextC1 +=dirC[i];
+				}
+				while(0 <=nextR2 && nextR2 <N && 0 <=nextC2 && nextC2 <M)
+				{
+					if(map[nextR2][nextC2] ==6 && map[nextR2][nextC2] ==7)
+						break;
+					
+					cnt++;
+					nextR2 +=dirR[j];
+					nextC2 +=dirC[j];
+				}
+				
+				if(cnt >max)
+				{
+					max =cnt;
+					dr =i;
+					dc =j;
+				}
+			}
+		}
+		
+		int nextR =r +dirR[dr];
+		int nextC =c +dirC[dc];
+		
+		while(0 <=nextR && nextR <N && 0 <=nextC && nextC <M)
+		{
+			if(map[nextR][nextC] ==6)
+				break;
+			
+			map[nextR][nextC] =7;
+			
+			nextR +=dirR[dr];
+			nextC +=dirC[dc];
+		}
+	}
+	public static void v4(int r, int c)			//3가지
+	{											//4가지 방향중 최소인 부분만 빼기
+		int min =10;
+		int dir =0;
+		
+		for(int i =0; i <4; i++)
+		{
+			int cnt =0;
+			int nextR =r+dirR[i];
+			int nextC =c+dirC[i];
+			
+			while(0 <=nextR && nextR <N && 0 <=nextC && nextC <M)
+			{
+				if(map[nextR][nextC] ==6 && map[nextR][nextC] ==7)
+					break;
+				
+				cnt++;
+				nextR +=dirR[i];
+				nextC +=dirC[i];
+			}
+			if(cnt <min)
+			{
+				min =cnt;
+				dir =i;
+			}
+		}
+		
+		for(int i =0; i <4; i++)
+		{
+			if(i ==dir)
+				continue;
+			int nextR =r+dirR[i];
+			int nextC =c+dirC[i];
+			
+			while(0 <=nextR && nextR <N && 0 <=nextC && nextC <M)
+			{
+				if(map[nextR][nextC] ==6)		//벽이면
+					break;
+				
+				map[nextR][nextC] =7;			//감시되는 부분
+				
+				nextR +=dirR[i];
+				nextC +=dirC[i];
+			}
+		}
+	}
+	public static void v5(int r, int c)			//4가지
+	{
+		for(int i =0; i <4; i++)
+		{
+			int nextR =r+dirR[i];
+			int nextC =c+dirC[i];
+			
+			while(0 <=nextR && nextR <N && 0 <=nextC && nextC <M)
+			{
+				if(map[nextR][nextC] ==6 && map[nextR][nextC] ==7)		//벽이면
+					break;
+				
+				map[nextR][nextC] =7;			//감시되는 부분
+				
+				nextR +=dirR[i];
+				nextC +=dirC[i];
+			}
+		}
+	}
+	
+	public static int sum()
+	{
+		int sum =0;
+		
+		for(int i =0; i <N; i++)
+		{
+			for(int j =0; j <M; j++)
+				if(map[i][j] ==0)
+					sum++;
+		}
+		
+		return sum;
+	}
+}

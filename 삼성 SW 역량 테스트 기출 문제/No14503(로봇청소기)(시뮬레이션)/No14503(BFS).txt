@@ -1,0 +1,111 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.StringTokenizer;
+
+public class Main
+{	
+	static class Pos
+	{
+		int r;
+		int c;
+		int d;
+		
+		Pos(int r, int c, int d)
+		{
+			this.r =r;
+			this.c =c;
+			this.d =d;
+		}
+	}
+	static int N, M;
+	static int count =0;
+	static int[][] map;
+	static int[] dirR = {-1, 0, 1, 0};		//북, 동, 남, 서
+	static int[] dirC = {0, 1, 0, -1};
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int r, c, d;
+		StringTokenizer st;
+		
+		st =new StringTokenizer(br.readLine());
+		N =Integer.parseInt(st.nextToken());
+		M =Integer.parseInt(st.nextToken());
+		map =new int[N][M];
+		
+		st =new StringTokenizer(br.readLine());
+		r =Integer.parseInt(st.nextToken());
+		c =Integer.parseInt(st.nextToken());
+		d =Integer.parseInt(st.nextToken());
+		
+		for(int i =0; i <N; i++)
+		{
+			st =new StringTokenizer(br.readLine());
+			for(int j =0; j <M; j++)
+				map[i][j] =Integer.parseInt(st.nextToken());
+		}
+		
+		bfs(r, c, d);
+		
+		bw.write(count +"\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	public static void bfs(int r, int c, int d)
+	{
+		Queue<Pos> queue =new LinkedList<>();
+		boolean[][] visited =new boolean[N][M];
+		int nextR =0, nextC =0;
+		
+		map[r][c] =2;
+		visited[r][c] =true;
+		count++;
+		queue.offer(new Pos(r, c, d));
+		
+		while(!queue.isEmpty())
+		{
+			Pos p =queue.poll();
+			boolean check =false;
+			
+			for(int i =0; i <4; i++)
+			{
+				d =(d+3) %4;		//왼쪽으로 회전.
+				nextR =p.r +dirR[d];
+				nextC =p.c +dirC[d];
+				
+				if(0 <=nextR && nextR <N &&
+						0 <=nextC && nextC <M &&
+						map[nextR][nextC] ==0 && !visited[nextR][nextC])
+				{
+					check =true;
+					count++;
+					map[nextR][nextC] =2;
+					visited[nextR][nextC] =true;
+					queue.offer(new Pos(nextR, nextC, d));
+					break;								//한가지라도 찾으면 큐에 다른반향은 큐에 않넣어도 됨.
+				}
+			}
+			//back
+			if(!check)			//4방향중 한곳도 갈수있는곳이 없는경우..
+			{
+				int back =(d+2) %4;
+				nextR =p.r +dirR[back];
+				nextC =p.c +dirC[back];
+				
+				if(0 <=nextR && nextR <N &&
+						0 <=nextC && nextC <M &&
+						map[nextR][nextC] !=1)
+				{
+					queue.offer(new Pos(nextR, nextC, d));
+				}
+			}
+		}
+	}
+}

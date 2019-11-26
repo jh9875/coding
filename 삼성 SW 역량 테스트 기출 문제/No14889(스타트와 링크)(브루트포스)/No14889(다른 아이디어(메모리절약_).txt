@@ -1,0 +1,85 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.StringTokenizer;
+
+public class Main
+{	
+	static int min =Integer.MAX_VALUE;
+	static int N;
+	static int[][] S;
+	static boolean[] visited;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		
+		N =Integer.parseInt(br.readLine());
+		S =new int[N][N];
+		visited =new boolean[N];
+		
+		for(int i =0; i <N; i++)
+		{
+			st =new StringTokenizer(br.readLine());
+			for(int j =0; j <N; j++)
+				S[i][j] =Integer.parseInt(st.nextToken());
+		}
+		
+		for(int i =0; i <N; i++)
+		{
+			visited[i] =true;
+			pickTeam1(i, 1);
+			visited[i] =false;
+		}
+		bw.write(min +"\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	public static void pickTeam1(int index, int count)
+	{
+		
+		if(count ==N/2)		//¹ÝÀ¸·Î ´Ù ³ª´«°æ¿ì.
+		{
+			addAbility();
+			return;
+		}
+		
+		for(int i =index+1; i <N; i++)
+		{
+			if(!visited[i])
+			{
+				visited[i] =true;
+				pickTeam1(i, count+1);
+				visited[i] =false;
+			}
+			
+		}
+		
+	}
+	
+	public static void addAbility()		//trueÆÀ, falseÆÀ ³ª´¸.
+	{
+		int sum1 =0;
+		int sum2 =0;
+		
+		for(int i =0; i <N; i++)
+		{
+			for(int j =0; j <N; j++)
+			{
+				if(i ==j)
+					continue;
+				if(visited[i] && visited[j])
+					sum1 +=S[i][j];
+				if(!visited[i] && !visited[j])
+					sum2 +=S[i][j];
+			}
+		}
+		
+		if(Math.abs(sum1-sum2) <min)
+			min =Math.abs(sum1-sum2);
+	}
+}

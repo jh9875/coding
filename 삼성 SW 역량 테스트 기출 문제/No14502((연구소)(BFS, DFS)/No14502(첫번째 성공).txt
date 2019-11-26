@@ -1,0 +1,175 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Main
+{
+	static class Point
+	{
+		int r;
+		int c;
+		Point(int r, int c)
+		{
+			this.r =r;
+			this.c =c;
+		}
+	}
+	static int max =Integer.MIN_VALUE;
+	static int N, M;
+	static int[][] map;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		String[] input;
+		
+		input =br.readLine().split(" ");
+		N =Integer.parseInt(input[0]);
+		M =Integer.parseInt(input[1]);
+		map =new int[N][M];
+		
+		for(int i =0; i <N; i++)
+		{
+			input =br.readLine().split(" ");
+			for(int j =0; j <M; j++)
+				map[i][j] =Integer.parseInt(input[j]);
+		}
+		makeWall(0);
+		
+		bw.write(max +"\n");
+		bw.close();
+		br.close();
+	}
+	public static void makeWall(int count)
+	{
+		if(count ==3)		//벽 3개를 세우면 spreadVirus
+		{
+			spreadVirus();
+			return;
+		}
+		//맵에서 3개의 0을 찾음.
+		for(int i =0; i <N; i++)
+		{
+			for(int j =0; j <M; j++)
+			{
+				if(map[i][j] ==0)
+				{
+					map[i][j] =1;
+					makeWall(count+1);
+					map[i][j] =0;
+				}
+			}
+		}
+	}
+	public static void spreadVirus()
+	{
+		int[][] arr =copyMap();		//바이러스를 가상으로 퍼트려볼 맵
+		
+		for(int i =0; i <N; i++)
+		{
+			for(int j =0; j <M; j++)
+			{
+				if(arr[i][j] ==2)
+				{
+					spreadVirus(i, j, arr);
+				}
+					
+			}
+		}
+		searchZero(arr);
+	}
+	public static void spreadVirus(int r, int c, int[][] arr)
+	{
+		Queue<Point> queue =new LinkedList<>();
+		int[] dirR = {1, 0, -1, 0};
+		int[] dirC = {0, 1, 0, -1};
+		
+		queue.offer(new Point(r, c));
+		arr[r][c] =2;
+		
+		while(!queue.isEmpty())
+		{
+			Point p =queue.poll();
+			
+			for(int i =0; i <4; i++)
+			{
+				int nextR =p.r +dirR[i];
+				int nextC =p.c +dirC[i];
+				
+				if((0 <=nextR && nextR <N) && (0 <=nextC && nextC <M))
+				{
+					if(arr[nextR][nextC] ==0)
+					{
+						arr[nextR][nextC] =2;
+						queue.offer(new Point(nextR, nextC));
+					}
+				}
+			}
+		}
+	}
+	public static void searchZero(int[][] arr)
+	{
+		int count =0;
+		boolean[][] visited =new boolean[N][M];
+		
+		for(int i =0; i <N; i++)
+		{
+			for(int j =0; j <M; j++)
+			{
+				if(arr[i][j] ==0 && !visited[i][j])
+					count +=searchZero(i, j, arr, visited);
+			}
+		}
+		
+		if(count >max)
+			max =count;
+	}
+	public static int searchZero(int r, int c, int[][] arr, boolean[][] visited)
+	{
+		Queue<Point> queue =new LinkedList<>();
+		int[] dirR = {1, 0, -1, 0};
+		int[] dirC = {0, 1, 0, -1};
+		int count =1;
+		
+		queue.offer(new Point(r, c));
+		visited[r][c] =true;
+		
+		while(!queue.isEmpty())
+		{
+			Point p =queue.poll();
+			
+			for(int i =0; i <4; i++)
+			{
+				int nextR =p.r +dirR[i];
+				int nextC =p.c +dirC[i];
+				
+				if((0 <=nextR && nextR <N) && (0 <=nextC && nextC <M))
+				{
+					if(arr[nextR][nextC] ==0 && !visited[nextR][nextC])
+					{
+						count++;
+						visited[nextR][nextC] =true;
+						queue.offer(new Point(nextR, nextC));
+					}
+				}
+			}
+		}
+		
+		return count;
+	}
+	
+	public static int[][] copyMap()
+	{
+		int[][] arr =new int[N][M];
+		
+		for(int i =0; i <N; i++)
+			for(int j =0; j <M; j++)
+				arr[i][j] =map[i][j];
+		
+		return arr;
+	}
+}

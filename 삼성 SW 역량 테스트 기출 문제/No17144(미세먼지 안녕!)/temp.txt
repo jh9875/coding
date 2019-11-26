@@ -1,0 +1,220 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	static class Dust
+	{
+		int before;
+		int after;
+		Dust()
+		{
+			this.before =0;
+			this.after =0;
+		}
+		Dust(int b, int a)
+		{
+			this.before =b;
+			this.after =a;
+		}
+	}
+	static int R, C, T;
+	static int[] dirR = {0, 1, 0, -1};	
+	static int[] dirC = {1, 0, -1, 0};
+	static Dust[][] map;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		
+		st =new StringTokenizer(br.readLine());
+		R =Integer.parseInt(st.nextToken());
+		C =Integer.parseInt(st.nextToken());
+		T =Integer.parseInt(st.nextToken());
+		
+		map =new Dust[R][C];
+		
+		for(int i =0; i <R; i++)							//data input
+		{
+			st =new StringTokenizer(br.readLine());
+			for(int j =0; j <C; j++)
+			{
+				map[i][j] =new Dust();
+				map[i][j].before =Integer.parseInt(st.nextToken());
+			}
+		}
+		
+		for(int i =0; i <T; i++)		//T번 실행
+			action();
+		printMap();
+		
+		bw.write(sumMicroDust() +"\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	public static void action()		//동작1, 동작2
+	{
+		act1();
+		act2();
+	}
+	public static void act1()		//미세먼지 확산
+	{
+		for(int i =0; i <R; i++)
+			for(int j =0; j <C; j++)
+				spread(i, j);
+		
+		for(int i =0; i <R; i++)
+		{
+			for(int j =0; j <C; j++)
+			{
+				map[i][j].before =map[i][j].after;
+				map[i][j].after =0;
+			}
+		}
+	}
+	public static void act2()		//공기청정기 동작.
+	{
+		int topR =0;
+		int topC =0;
+		int bottomR =0;
+		int bottomC =0;
+		boolean check =false;
+		
+		for(int i =0; i <R; i++)
+		{
+			for(int j =0; j <C; j++)
+			{
+				if(map[i][j].before ==-1)
+				{
+					if(!check)
+					{
+						topR =i;
+						topC =j;
+						check =true;
+					}else
+					{
+						bottomR =i;
+						bottomC =j;
+					}
+				}
+			}
+		}
+		
+		airCleaner(topR, topC, true);
+		airCleaner(bottomR, bottomC, false);
+	}
+	public static void spread(int r, int c)
+	{
+		int count =0;
+		
+		for(int i =0; i <4; i++)
+		{
+			int nextR =r+dirR[i];
+			int nextC =c+dirC[i];
+			
+			if(0 <=nextR && nextR <R && 0 <=nextC && nextC < C && map[nextR][nextC].before !=-1)
+			{
+				count++;
+				map[nextR][nextC].after +=map[r][c].before/5;
+			}
+		}
+		map[r][c].after +=map[r][c].before -(map[r][c].before/5)*count;
+	}
+	public static void airCleaner(int r, int c, boolean type)		//type이 true면 위쪽, false면 아래쪽.
+	{
+		int prev =0;
+		int nextR =r;
+		int nextC =c;
+		if(type)		//top
+		{
+			int[] dirRT = {0, -1, 0, 1};		//동,북,서,남
+			int[] dirCT = {1, 0, -1, 0};
+			
+			for(int i =0; i <4; i++)
+			{
+				System.out.println("i: " +i);
+				System.out.println("nextR: " +nextR);
+				System.out.println("nextC: " +nextC);
+				System.out.println("===================");
+				nextR +=dirRT[i];
+				nextC +=dirCT[i];
+				while(0 <=nextR && nextR <R && 0 <=nextC && nextC < C && map[nextR][nextC].before !=-1)
+				{
+					System.out.println("nextR: " +nextR);
+					System.out.println("nextC: " +nextC);
+					System.out.println("===================");
+					int temp =map[nextR][nextC].before;
+					map[nextR][nextC].before =prev;
+					prev =temp;
+					nextR =nextR +dirRT[i];
+					nextC =nextC +dirCT[i];
+				}
+				nextR =nextR +(-1)*dirRT[i];
+				nextC =nextC +(-1)*dirCT[i];
+			}
+		}else			//bottom
+		{
+			int[] dirRT = {0, 1, 0, -1};		//동,남,서,북
+			int[] dirCT = {1, 0, -1, 0};
+			
+			for(int i =0; i <4; i++)
+			{
+				System.out.println("i: " +i);
+				System.out.println("nextR: " +nextR);
+				System.out.println("nextC: " +nextC);
+				System.out.println("===================");
+				nextR +=dirRT[i];
+				nextC +=dirCT[i];
+				while(0 <=nextR && nextR <R && 0 <=nextC && nextC < C && map[nextR][nextC].before !=-1)
+				{
+					System.out.println("nextR: " +nextR);
+					System.out.println("nextC: " +nextC);
+					System.out.println("===================");
+					int temp =map[nextR][nextC].before;
+					map[nextR][nextC].before =prev;
+					prev =temp;
+					nextR =nextR +dirRT[i];
+					nextC =nextC +dirCT[i];
+				}
+				nextR =nextR +(-1)*dirRT[i];
+				nextC =nextC +(-1)*dirCT[i];
+			}
+		}
+		System.out.println("End");
+	}
+	
+	public static int sumMicroDust()
+	{
+		int sum =0;
+		
+		
+		return sum;
+	}
+	 
+	public static void printMap()
+	{
+		System.out.println("before");
+		for(int i =0; i <R; i++)
+		{
+			for(int j =0; j <C; j++)
+				System.out.print(map[i][j].before + " ");
+			System.out.println();
+		}
+		System.out.println("======================");
+		
+		System.out.println("after");
+		for(int i =0; i <R; i++)
+		{
+			for(int j =0; j <C; j++)
+				System.out.print(map[i][j].after + " ");
+			System.out.println();
+		}
+		System.out.println("======================");
+	}
+}

@@ -1,0 +1,119 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	static class Point
+	{
+		int r;
+		int c;
+		Point(int r, int c)
+		{
+			this.r =r;
+			this.c =c;
+		}
+	}
+	
+	static int N, L, R;
+	static int ans =0;
+	static int[][] map;
+	static boolean check =false;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		st =new StringTokenizer(br.readLine());
+		
+		N =Integer.parseInt(st.nextToken());
+		L =Integer.parseInt(st.nextToken());
+		R =Integer.parseInt(st.nextToken());
+		map =new int[N][N];
+		
+		for(int i =0; i <N; i++)
+		{
+			st =new StringTokenizer(br.readLine());
+			
+			for(int j =0; j <N; j++)
+				map[i][j] =Integer.parseInt(st.nextToken());
+		}
+		
+		while(true)
+		{
+			check =false;
+			search();
+			if(!check)
+				break;
+			ans++;
+		}
+		
+		bw.write(ans +"\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	public static void search()		//인구이동이 있으면 true, 없으면 false.
+	{
+		boolean[][] visited =new boolean[N][N];
+		
+		for(int i =0; i <N; i++)
+		{
+			for(int j =0; j <N; j++)
+			{
+				if(!visited[i][j])
+					search(i, j, visited);
+			}
+		}
+	}
+	public static void search(int r, int c, boolean[][] visited)
+	{
+		ArrayList<Point> al =new ArrayList<>();
+		Queue<Point> q =new LinkedList<>();
+		int[] dirR = {0, 1, 0, -1};
+		int[] dirC = {1, 0, -1, 0};
+		int sum =0;
+		int count =0;
+		
+		q.offer(new Point(r, c));
+		al.add(new Point(r, c));
+		visited[r][c] =true;
+		sum +=map[r][c];
+		count++;
+		
+		while(!q.isEmpty())
+		{
+			Point p =q.poll();
+			
+			for(int i =0; i <4; i++)
+			{
+				int nextR =p.r +dirR[i];
+				int nextC =p.c +dirC[i];
+				
+				if(0 <=nextR && nextR <N && 0 <=nextC && nextC <N && !visited[nextR][nextC]
+						&& L <=Math.abs(map[p.r][p.c] -map[nextR][nextC])
+						&& Math.abs(map[p.r][p.c] -map[nextR][nextC]) <=R)
+				{
+					q.offer(new Point(nextR, nextC));
+					al.add(new Point(nextR, nextC));
+					visited[nextR][nextC] =true;
+					sum +=map[nextR][nextC];
+					count++;
+					check =true;
+				}
+			}
+		}
+		if(!check || count ==1)				//할게 없으면.
+			return;
+		
+		int ave =sum/count;
+		for(Point p : al)
+			map[p.r][p.c] =ave;
+	}
+}
