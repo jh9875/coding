@@ -1,0 +1,27 @@
+import java.util.Scanner;
+
+public class Main
+{	
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		int h =input.nextInt();
+		int m =input.nextInt();
+		int n =input.nextInt();
+		
+		m +=n;
+		while(m >59)
+		{
+			m -=60;
+			h +=1;
+		}
+		while(h >23)
+		{
+			h -=24;
+		}
+		
+		
+		System.out.println(h + " " +m);
+	}
+	
+}

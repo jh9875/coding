@@ -1,0 +1,18 @@
+import java.util.Scanner;
+
+public class Main
+{
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		long s =input.nextLong();
+		int N =0;
+		
+		for(int i =1; i <=s; i++)
+		{
+			s -=i;
+			N++;
+		}
+		System.out.println(N);
+	}
+}

@@ -1,0 +1,69 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+public class Main
+{	
+	static String max =String.valueOf(Long.MIN_VALUE);
+	static String min =String.valueOf(Long.MAX_VALUE);
+	static int k;
+	static String[] inequalities;
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		k =Integer.parseInt(br.readLine());
+		inequalities =br.readLine().split(" ");
+		
+		for(int i =0; i <10; i++)
+		{
+			boolean[] visited =new boolean[10];		//0~9
+			visited[i] =true;
+			String number ="";
+			search(i, 0, visited, number +i);
+		}
+		bw.write(max + " " +min +"\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+	static void search(int prev, int order, boolean[] visited, String number)
+	{
+		if(order ==k)
+		{
+			long n =Long.parseLong(number);
+			if(n >Long.parseLong(max))
+				max =number;
+			if(n <Long.parseLong(min))
+				min =number;
+			
+			return;
+		}
+		
+		for(int i =0; i <10; i++)
+		{
+			char c =inequalities[order].charAt(0);
+			if(c =='<')
+			{
+				if(prev <i && !visited[i])
+				{
+					boolean[] newVisited =new boolean[10];
+					System.arraycopy(visited, 0, newVisited, 0, 10);
+					newVisited[i] =true;
+					search(i, order+1, newVisited, number+i);
+				}
+			}else if(c =='>')
+			{
+				if(prev >i && !visited[i])
+				{
+					boolean[] newVisited =new boolean[10];
+					System.arraycopy(visited, 0, newVisited, 0, 10);
+					newVisited[i] =true;
+					search(i, order+1, newVisited, number+i);
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,97 @@
+import java.util.Scanner;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	private static int[] stack =new int[20];
+	private static int next =0;
+	
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		int n =input.nextInt();
+		
+		for(int i =0; i <n; i++)
+		{
+			String command =input.next();
+			int num =0;
+			if(command.equals("push"))
+				num =input.nextInt();
+			if(command.equals("push"))
+			{
+				push(num);
+				//print();
+			}
+			else if(command.equals("pop"))
+			{
+				System.out.println(pop());
+				//print();
+			}
+			else if(command.equals("size"))
+			{
+				System.out.println(size());
+				//print();
+			}
+			else if(command.equals("empty"))
+			{
+				System.out.println(empty());
+				//print();
+			}
+			else if(command.equals("top"))
+			{
+				System.out.println(top());
+				//print();
+			}
+		}
+		input.close();
+	}
+	
+	public static void push(int x)
+	{
+		if(size() ==stack.length)
+			resize();
+		stack[next++] =x;
+	}
+	public static int pop()
+	{
+		if(empty() ==1)
+			return -1;
+		else
+			return stack[--next];
+	}
+	public static int size()
+	{
+		return next;
+	}
+	public static int empty()
+	{
+		if(size() ==0)
+			return 1;
+		else
+			return 0;
+	}
+	public static int top()
+	{
+		if(empty() ==1)
+			return -1;
+		else
+			return stack[next -1];
+	}
+	public static void resize()
+	{
+		int[] newStack =new int[stack.length*2];
+		for(int i =0; i <stack.length; i++)
+		{
+			newStack[i] =stack[i];
+		}
+		stack =newStack;
+	}
+	public static void print()
+	{
+		for(int i=0; i <stack.length; i++)
+			System.out.print(stack[i] + " ");
+		System.out.println();
+	}
+	
+	
+}

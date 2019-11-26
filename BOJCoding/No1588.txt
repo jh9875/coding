@@ -1,0 +1,20 @@
+import java.util.Scanner;
+
+public class Main
+{
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		int n =input.nextInt();
+		int minus =1;
+		int count =0;
+		while(n >0)
+		{
+			if(minus >n)
+				minus =1;
+			n -=minus++;
+			count++;
+		}
+		System.out.println(count);
+	}
+}

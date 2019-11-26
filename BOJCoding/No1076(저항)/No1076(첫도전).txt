@@ -1,0 +1,77 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+public class Main
+{
+	static class Resister
+	{
+		long value;
+		long mult;
+		Resister(String color)
+		{
+			if(color.equals("black"))
+			{
+				this.value =0;
+				this.mult =1;
+			}else if(color.equals("brown"))
+			{
+				this.value =1;
+				this.mult =10;
+			}else if(color.equals("red"))
+			{
+				this.value =2;
+				this.mult =100;
+			}else if(color.equals("orange"))
+			{
+				this.value =3;
+				this.mult =1000;
+			}
+			else if(color.equals("yellow"))
+			{
+				this.value =4;
+				this.mult =10000;
+			}
+			else if(color.equals("green"))
+			{
+				this.value =5;
+				this.mult =100000;
+			}
+			else if(color.equals("blue"))
+			{
+				this.value =6;
+				this.mult =1000000;
+			}
+			else if(color.equals("violet"))
+			{
+				this.value =7;
+				this.mult =10000000;
+			}
+			else if(color.equals("grey"))
+			{
+				this.value =8;
+				this.mult =100000000;
+			}
+			else if(color.equals("white"))
+			{
+				this.value =9;
+				this.mult =1000000000;
+			}
+		}
+	}
+	public static void main(String[] args) throws NumberFormatException, IOException
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		Resister r1 =new Resister(br.readLine().trim());
+		Resister r2 =new Resister(br.readLine().trim());
+		Resister r3 =new Resister(br.readLine().trim());
+		long ans =(10*r1.value +r2.value) *r3.mult;
+		bw.write(String.valueOf(ans) +"\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+}

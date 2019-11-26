@@ -1,0 +1,95 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	static class Edge
+	{
+		int index;
+		int weight;
+		
+		Edge(int index, int weight)
+		{
+			this.index =index;
+			this.weight =weight;
+		}
+	}
+	
+	static int max =Integer.MIN_VALUE;
+	static int maxIndex =-1;
+	static int N;
+	static ArrayList<Edge>[] alArray;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		int p, c, w;
+		int len =0;
+		
+		N =Integer.parseInt(br.readLine());
+		alArray =new ArrayList[N+1];
+		for(int i =0; i <N+1; i++)
+			alArray[i] =new ArrayList<>();
+		
+		for(int i =0; i <N-1; i++)
+		{
+			st =new StringTokenizer(br.readLine());
+			p =Integer.parseInt(st.nextToken());
+			c =Integer.parseInt(st.nextToken());
+			w =Integer.parseInt(st.nextToken());
+			
+			//무방향 그래프이므로 양쪽다 연결.
+			alArray[p].add(new Edge(c, w));
+			alArray[c].add(new Edge(p,w));
+		}
+		
+		len =alArray[1].size();
+		for(int i =0; i <len; i++)				//1(root)에서 가장 멀리 떨어진 노드
+		{
+			boolean[] visited =new boolean[N+1];
+			visited[1] =true;
+			visited[alArray[1].get(i).index] =true;
+			dfs(alArray[1].get(i).index, alArray[1].get(i).weight, visited);
+		}
+		int num =maxIndex;
+		maxIndex =-1;
+		max =Integer.MIN_VALUE;
+		
+		len =alArray[num].size();
+		for(int i =0; i <len; i++)
+		{
+			boolean[] visited =new boolean[N+1];
+			visited[num] =true;
+			visited[alArray[num].get(i).index] =true;
+			dfs(alArray[num].get(i).index, alArray[num].get(i).weight, visited);
+		}
+		bw.write(max +"\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+	public static void dfs(int index, int sum, boolean[] visited)
+	{
+		if(sum >max)
+		{
+			max =sum;
+			maxIndex =index;
+		}
+		int len =alArray[index].size();
+		for(int i =0; i <len; i++)
+		{
+			if(!visited[alArray[index].get(i).index])
+			{
+				visited[alArray[index].get(i).index] =true;
+				dfs(alArray[index].get(i).index, sum+alArray[index].get(i).weight, visited);
+			}
+		}
+	}
+}

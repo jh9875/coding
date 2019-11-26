@@ -1,0 +1,71 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class Main
+{	
+	static ArrayList<String> al =new ArrayList<>();
+	static boolean[] visited =new boolean[10];
+	static String[] input;
+	static int k;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		k =Integer.parseInt(br.readLine());
+		input =br.readLine().split(" ");
+		
+		for(int i =0; i <10; i++)
+		{
+			visited[i] =true;
+			dfs(i, 0, i+"");
+		}
+		//Collections.sort(al);
+		System.out.println(al.size());
+		/*
+		int min =Integer.parseInt(al.get(0));
+		int max =Integer.parseInt(al.get(al.size()-1));
+		
+		bw.write(max + "\n");
+		bw.write(min + "\n");
+		bw.flush();
+		bw.close();
+		br.close(); 
+		 */
+		
+	}
+	public static void dfs(int cur, int index, String str)	//cur는 비교할 숫자. index는  level을 나타냄.
+	{
+		
+		if(index ==k)		//부등호의 갯수만큼 비교 끝.
+		{
+			al.add(str);
+		}else
+		{
+			for(int i =0; i <10; i++)
+			{
+				if(!visited[i])		//아직 방문하지 않은 곳.
+				{
+					if(input[index].equals("<"))
+					{
+						if(cur >=i)
+							continue;
+						else
+							if(cur <=i)
+								continue;
+					}
+					visited[i] =true;
+					dfs(i, index+1, str+i);
+				}
+			}
+		}
+		
+		
+		visited[cur] =false;
+	}
+	
+}

@@ -1,0 +1,32 @@
+
+import java.util.Scanner;
+
+public class Main
+{
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		int[] arr1 =new int[3];
+		int[] arr2 =new int[2];
+		
+		for(int i =0; i <arr1.length; i++)
+			arr1[i] =input.nextInt();
+		
+		for(int i =0; i <arr2.length; i++)
+			arr2[i] =input.nextInt();
+		
+		int min =10000;
+		
+		for(int i =0; i <arr1.length; i++)
+		{
+			for(int j =0; j <arr2.length; j++)
+			{
+				if(min >(arr1[i] + arr2[j]))
+					min =arr1[i] +arr2[j];
+			}
+		}
+		System.out.println(min -50);
+		
+		
+	}
+}

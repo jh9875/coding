@@ -1,0 +1,88 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Scanner;
+
+public class Main
+{
+	static class Point
+	{
+		int x;
+		int y;
+		Point(int x, int y)
+		{
+			this.x =x;
+			this.y =y;
+		}
+	}
+	
+	static int n;
+	static int[] dx = {1, 0, -1, 0};
+	static int[] dy = {0, 1, 0, -1};
+	static int[][] map;
+	static boolean[][] check;
+	static int num =101;
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		n =input.nextInt();
+		map =new int[n][n];
+		check =new boolean[n][n];
+		for(int i =0; i <n; i++)
+		{
+			String s =input.next();
+			for(int j =0; j <s.length(); j++)
+				map[i][j] =s.charAt(j) -'0';
+		}
+		for(int i =0; i <map.length; i++)
+			for(int j =0; j <map[i].length; j++)
+				if(map[i][j] ==1)
+					BFS(i, j);
+					
+		int total =num -101;
+		num =101;
+		ArrayList<Integer> al =new ArrayList<Integer>();
+		
+		for(int i =0; i <total; i++)
+		{
+			int count =0;
+			for(int j =0; j <map.length; j++)
+				for(int l =0; l <map[j].length; l++)
+					if(map[j][l] ==num)
+						count++;
+			al.add(count);
+			num++;
+		}
+		Collections.sort(al);
+		System.out.println(total);
+		for(int i =0; i <al.size(); i++)
+			System.out.println(al.get(i));
+		
+	}
+	public static void BFS(int x, int y)
+	{
+		Queue<Point> queue =new LinkedList<Point>();
+		map[x][y] =num;
+		check[x][y] =true;
+		queue.add(new Point(x, y));
+		while(queue.size() >0)
+		{
+			Point p =queue.poll();
+			for(int i =0; i <4; i++)
+			{
+				int nextX =p.x +dx[i];
+				int nextY =p.y +dy[i];
+				if(!(nextX <n) || !(nextX >=0) ||!(nextY <n) || !(nextY >=0))
+					continue;
+				if(map[nextX][nextY] ==1 && !check[nextX][nextY])
+				{
+					map[nextX][nextY] =num;
+					check[nextX][nextY] =true;
+					queue.add(new Point(nextX, nextY));
+				}
+			}
+		}
+		num++;
+	}
+}

@@ -1,0 +1,127 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	static int N, M, K;
+	static int bottomCursor =1;
+	static int topCursor =3;
+	static int[][] map;
+	static int[] moveOrder;
+	static int[] base = {0, 0, 0, 0};
+	static int[] side = {0, 0};		//¿ÞÂÊ, ¿À¸¥ÂÊ.
+	static BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		
+		StringTokenizer st;
+		int x, y;
+		
+		st =new StringTokenizer(br.readLine());
+		N =Integer.parseInt(st.nextToken());
+		M =Integer.parseInt(st.nextToken());
+		x =Integer.parseInt(st.nextToken());
+		y =Integer.parseInt(st.nextToken());
+		K =Integer.parseInt(st.nextToken());
+		
+		map =new int[N][M];
+		moveOrder =new int[K];
+		
+		for(int i =0; i <N; i++)			//input map data
+		{
+			st =new StringTokenizer(br.readLine());
+			for(int j =0; j <M; j++)
+				map[i][j] =Integer.parseInt(st.nextToken());
+		}
+		
+		st =new StringTokenizer(br.readLine());		//input order data
+		for(int i =0; i <K; i++)
+			moveOrder[i] =Integer.parseInt(st.nextToken());
+		
+		move(x, y, 0);
+		
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	public static void move(int r, int c, int index) throws Exception
+	{
+		if(index ==K)
+			return;
+		
+		int order =moveOrder[index];
+		int nextR =0;
+		int nextC =0;
+		
+		if(order ==4)
+		{
+			nextR =r+1;
+			nextC =c;
+		}else if(order ==3)
+		{
+			nextR =r-1;
+			nextC =c;
+		}else if(order ==2)
+		{
+			nextR =r;
+			nextC =c-1;
+		}else if(order ==1)
+		{
+			nextR =r;
+			nextC =c+1;
+		}
+		
+		if(0 <=nextR && nextR <N && 0 <=nextC && nextC <M)
+		{
+			if(order ==4)
+			{
+				bottomCursor =(bottomCursor+1) %4;
+				topCursor =(topCursor+1) %4;
+			}else if(order ==3)
+			{
+				if(bottomCursor-1 >-1)
+					bottomCursor =(bottomCursor-1) %4;
+				else
+					bottomCursor =3;
+				if(topCursor-1 >-1)
+					topCursor =(topCursor-1) %4;
+				else
+					topCursor =3;
+			}else if(order ==2)
+			{
+				int temp =base[bottomCursor];
+				base[bottomCursor] =side[0];
+				side[0] =base[topCursor];
+				base[topCursor] =side[1];
+				side[1] =temp;
+			}else if(order ==1)
+			{
+				int temp =base[bottomCursor];
+				base[bottomCursor] =side[1];
+				side[1] =base[topCursor];
+				base[topCursor] =side[0];
+				side[0] =temp;
+			}
+			
+			//ÀÌµ¿ÇÏ°í º¹»ç ¹Ø À­¸é ¾²±â
+			bw.write(base[topCursor] +"\n");			//À­¸é
+			
+			if(map[nextR][nextC] !=0)
+			{
+				base[bottomCursor] =map[nextR][nextC];			//¹Ø¸é º¹»ç.
+				map[nextR][nextC] =0;
+			}
+			else
+				map[nextR][nextC] =base[bottomCursor];
+			
+			move(nextR, nextC, index+1);
+		}else
+			move(r, c, index+1);
+		
+	}
+}

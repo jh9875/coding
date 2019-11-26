@@ -1,0 +1,114 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Main
+{
+	static class Point
+	{
+		int r;
+		int c;
+		Point(int r, int c)
+		{
+			this.r =r;
+			this.c =c;
+		}
+	}
+	static int N;
+	static char[][] arr;
+	static boolean[][] visited;
+	static int R =0;
+	static int G =0;
+	static int B =0;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		String input;
+		
+		N =Integer.parseInt(br.readLine());
+		arr =new char[N][N];
+		visited =new boolean[N][N];
+		
+		for(int i =0; i <N; i++)
+		{
+			input =br.readLine();
+			for(int j =0; j <N; j++)
+				arr[i][j] =input.charAt(j);
+		}
+		
+		for(int i =0; i <N; i++)
+		{
+			for(int j =0; j <N; j++)
+			{
+				if(!visited[i][j])
+					bfs(i, j);
+			}
+		}
+		bw.write(R+B+G +"\n");
+		
+		//초기화
+		visited =new boolean[N][N];
+		R =0;
+		G =0;
+		B =0;
+		for(int i =0; i <N; i++)
+			for(int j =0; j <N; j++)
+				if(arr[i][j] =='G')
+					arr[i][j] ='R';
+		
+		for(int i =0; i <N; i++)
+		{
+			for(int j =0; j <N; j++)
+			{
+				if(!visited[i][j])
+					bfs(i, j);
+			}
+		}
+		bw.write(R+B +"\n");
+		
+		bw.flush();
+		bw.close();
+	}
+	static void bfs(int r, int c)
+	{
+		int[] dirR = {0, 1, 0, -1};
+		int[] dirC = {1, 0, -1, 0};
+		char color =arr[r][c];
+		Queue<Point> q =new LinkedList<>();
+
+		if(color =='R')
+			R++;
+		else if(color =='G')
+			G++;
+		else if(color =='B')
+			B++;
+		
+		visited[r][c] =true;
+		q.offer(new Point(r, c));
+		
+		while(!q.isEmpty())
+		{
+			Point p =q.poll();
+			
+			for(int i =0; i <4; i++)
+			{
+				int nextR =p.r +dirR[i];
+				int nextC =p.c +dirC[i];
+				
+				if(0 <=nextR && nextR <N && 0 <=nextC && nextC <N)
+				{
+					if(!visited[nextR][nextC] && arr[nextR][nextC] ==color)	//방문하지 않고 같은색일때
+					{
+						visited[nextR][nextC] =true;
+						q.offer(new Point(nextR, nextC));
+					}
+				}
+			}
+		}
+	}
+}

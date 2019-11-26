@@ -1,0 +1,43 @@
+import java.util.Scanner;
+
+public class Main
+{	
+	static int count =0;
+	static int r;
+	static int c;
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		int N =input.nextInt();
+		r =input.nextInt();
+		c =input.nextInt();
+		Z(0,0,(int)Math.pow(2, N));
+		input.close();
+	}
+	public static void Z(int x, int y, int length)
+	{
+		if(x ==r && y ==c)
+		{
+			System.out.println(count);
+			return;
+		}
+		
+		if(!(x<=r && r<x+length && y<=c && c<y+length))
+		{
+	        count += length*length;
+	        return;
+	    }
+		
+		if(length <1)
+			return;
+
+		if(length ==1)
+			count++;
+		
+		Z(x, y, length/2);	//1사분면
+		Z(x, y+length/2, length/2);	//2사분면
+		Z(x+length/2, y, length/2);	//3사분면
+		Z(x+length/2, y+length/2, length/2);	//4사분면
+		
+	}
+}

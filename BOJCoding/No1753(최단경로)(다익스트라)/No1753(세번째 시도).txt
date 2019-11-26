@@ -1,0 +1,110 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.PriorityQueue;
+
+public class Main
+{
+	public static class Edge implements Comparable<Edge>
+	{
+		int dest;
+		int weight;
+		
+		public Edge(int dest, int weight)
+		{
+			this.dest =dest;
+			this.weight =weight;
+		}
+		@Override
+		public int compareTo(Edge e) {
+			return this.weight -e.weight;
+		}
+	}
+	
+	public static class Graph
+	{
+		int n;
+		int[] dist;
+		ArrayList<Edge>[] al;
+		
+		public Graph(int n)
+		{
+			this.n =n;
+			this.dist =new int[n+1];
+			al =(ArrayList<Edge>[])new ArrayList[n+1];
+			
+			for(int i =1; i <n+1; i++)
+			{
+				dist[i] =Integer.MAX_VALUE;
+				al[i] =new ArrayList<Edge>();
+			}
+		}
+		
+		public void input(int u, int v, int w)
+		{
+			al[u].add(new Edge(v, w));
+		}
+		public String dijkstra(int k) 		//k ==start index
+		{
+			StringBuilder sb =new StringBuilder();
+			PriorityQueue<Integer> pq =new PriorityQueue();
+			dist[k] =0;
+			pq.offer(k);
+			
+			while(!pq.isEmpty())
+			{
+				int cur =pq.poll();
+				int len =al[cur].size();
+				
+				for(int i =0; i <len; i++)
+				{
+					int next =al[cur].get(i).dest;
+					int weight =al[cur].get(i).weight;
+					
+					dist[next] =Integer.min(dist[next], dist[cur] +weight);
+					pq.offer(next);
+				}
+			}
+			for(int i =1; i <n+1; i++)
+			{
+				if(dist[i] ==Integer.MAX_VALUE)
+					sb.append("INF\n");
+				else
+					sb.append(dist[i] +"\n");
+			}
+			return sb.toString();
+		}
+	}
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int V =0, E =0, K =0;
+		int u =0, v =0, w =0;
+		String[] input =null;
+		Graph g =null;
+		
+		input =br.readLine().split(" ");
+		V =Integer.parseInt(input[0]);
+		E =Integer.parseInt(input[1]);
+		input =br.readLine().split(" ");
+		K =Integer.parseInt(input[0]);
+		
+		g =new Graph(V);
+		
+		for(int i =0; i <E; i++)
+		{
+			input =br.readLine().split(" ");
+			u =Integer.parseInt(input[0]);
+			v =Integer.parseInt(input[1]);
+			w =Integer.parseInt(input[2]);
+			g.input(u, v, w);
+		}
+		bw.write(g.dijkstra(K));
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+}

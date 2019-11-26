@@ -1,0 +1,40 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+public class Main
+{
+	public static void main(String[] args) throws IOException
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		String[] inputs;
+		int max =0;
+		int maxI =0;
+		int maxJ =0;
+		int num =0;
+		for(int i =0; i <9; i++)
+		{
+			inputs =br.readLine().split(" ");
+			for(int j =0; j <inputs.length; j++)
+			{
+				num =Integer.parseInt(inputs[j]);
+				if(num >max)
+				{
+					max =num;
+					maxI =i+1;
+					maxJ =j+1;
+				}
+			}
+		}
+		bw.write(max + "\n");
+		bw.write(maxI + "\n");
+		bw.write(maxJ + "\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+}

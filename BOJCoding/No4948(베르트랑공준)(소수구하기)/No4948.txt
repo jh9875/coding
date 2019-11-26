@@ -1,0 +1,46 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	public static void main(String[] args) throws NumberFormatException, IOException
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		boolean[] arr =new boolean[2 *123456+1];
+		arr[2] =true;
+		for(int i =2; i <arr.length; i++)
+		{
+			boolean check =true;
+			for(int j =2; j <Math.sqrt(i)+1; j++)
+				if(i %j ==0)
+					check =false;
+			if(check)
+				arr[i] =true;
+		}
+		int n =0;
+		do
+		{
+			n =Integer.parseInt(br.readLine());
+			int count =0;
+			for(int i =n+1; i <=2*n; i++)
+				if(arr[i] ==true)
+					count++;
+			if(n !=0)
+				bw.write(count + "\n");
+		}while(n !=0);
+
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+}

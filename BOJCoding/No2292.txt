@@ -1,0 +1,32 @@
+import java.util.Scanner;
+
+public class Main
+{
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		int n =input.nextInt();
+		System.out.println(honeyComb(n));
+	}
+	
+	public static int honeyComb(int n)
+	{
+		if(n ==1)
+			return 1;
+		int mos =6;			//a multiple of six
+		int count =1;
+		
+		while(true)
+		{
+			if((mos +1) <n)
+				mos += ++count *6;
+			else
+			{
+				count++;
+				break;
+			}
+		}
+		return count;
+	}
+	
+}

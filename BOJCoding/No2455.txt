@@ -1,0 +1,34 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	
+	public static void main(String[] args) throws IOException
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int sum =0;
+		int max =0;
+		for(int i =0; i <4; i++)
+		{
+			String s =br.readLine();
+			StringTokenizer st =new StringTokenizer(s);
+			int n1 =Integer.parseInt(st.nextToken());
+			int n2 =Integer.parseInt(st.nextToken());
+			sum +=n2;
+			sum -=n1;
+			if(sum >max)
+				max =sum;
+		}
+		bw.write(String.valueOf(max));
+		bw.flush();
+		bw.close();
+		br.close();
+		 
+	} 
+}

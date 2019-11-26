@@ -1,0 +1,16 @@
+아주 예전에 풀때 이문제를 못풀었었는데 지금은 쉽게 답이 나왔다.
+
+그 해답은 이중for문으로 해결하는 것이다.
+바깥 for문의 i가 주체가 되어서 j랑 비교해가며 현재보다 큰것이 있다면
+count를 늘려준다. 그럼 등수가 된다. 아래는 정렬 예다
+
+for(int i =0; i <n; i++)
+		{
+			for(int j =0; j <n; j++)
+			{
+				if(bodies[i].w <bodies[j].w && bodies[i].h <bodies[j].h)
+					count++;
+			}
+			bw.write(count + " ");
+			count =1;
+		}

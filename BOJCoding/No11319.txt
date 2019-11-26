@@ -1,0 +1,43 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+public class Main
+{	
+	public static void main(String[] args) throws NumberFormatException, IOException
+	{
+		char[] vowels = {'A', 'E', 'I', 'O', 'U', 'a', 'e', 'i', 'o', 'u'};
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int t =Integer.parseInt(br.readLine());
+		String s ="";
+		while(t-- >0)
+		{
+			int total =0;
+			int vowel =0;
+			s =br.readLine().trim();
+			for(int i =0; i <s.length(); i++)
+			{
+				char ch =s.charAt(i);
+				if(ch ==' ')
+					continue;
+				else		//공백이 아니라 알파벳일때,
+				{
+					total++;
+					for(int j =0; j <vowels.length; j++)
+					{
+						if(ch ==vowels[j])
+							vowel++;
+					}
+				}
+			}
+			bw.write((total -vowel) + " " +vowel + "\n");
+		}
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+}

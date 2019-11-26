@@ -1,0 +1,41 @@
+import java.util.Scanner;
+
+public class Main
+{
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		long n =input.nextLong();
+		int sum =0;
+		for(long i =1; i <=n; i++)
+		{
+			long copy =i;
+			while(copy >0)
+			{
+				copy /=10;
+				sum++;
+			}
+		}
+		System.out.println(sum);
+	}
+}
+참고로 아래와같이 푼사람들도 있는데.. 대단하다..
+
+///////////////////////////////////////////////// 
+import java.util.*;
+public class Main {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        // N까지 수를 이어씀 
+        int n = scan.nextInt();
+        long ans = 0;
+        for(int start=1, len=1; start<=n; start*=10, len++) {
+            int end = start*10-1;
+            if(end > n) {
+                end = n;
+            }
+            ans += (end-start+1)*len;
+        }
+        System.out.println(ans);
+    }
+}

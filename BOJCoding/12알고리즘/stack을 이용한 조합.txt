@@ -1,0 +1,46 @@
+package test;
+
+import java.util.Stack;
+
+public class PermutationAndCombination
+{
+	static Stack<Integer> stack =new Stack<Integer>();
+	public static void main(String[] args)
+	{
+		int[] arr = {1, 2, 3, 4, 5};
+		combination(arr.length, 3, 0, arr);
+	}
+	public static void combination(int n, int r, int index, int[] arr)
+	{
+		System.out.println("n: " +n);
+		System.out.println("r: " +r);
+		System.out.println("index: " +index);
+		System.out.println("===================================");
+		if(r ==0)
+		{
+			printStack();
+			return;
+		}else if(n ==r)
+		{
+			for(int i =0; i <n; i++)
+				stack.add(arr[index +i]);
+			printStack();
+			for(int i =0; i <n; i++)
+				stack.pop();
+		}else
+		{
+			stack.add(arr[index]);
+			combination(n-1, r-1, index+1, arr);
+			stack.pop();
+			combination(n-1, r, index+1, arr);
+		}
+	}
+	public static void printStack()
+	{
+		for(int i =0; i <stack.size(); i++)
+			System.out.print(stack.get(i) + " ");
+		System.out.println();
+		System.out.println("===================================");
+	}
+
+}

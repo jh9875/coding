@@ -1,0 +1,32 @@
+import java.util.Scanner;
+import java.util.TreeSet;
+
+public class Main
+{
+
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		String s =input.next();
+		int length =1;
+		TreeSet tree =new TreeSet();
+		while(length <s.length())
+		{
+			int i =0;
+			while(i+length <=s.length())
+			{
+				if(i+length <=s.length())
+				{
+					String temp =s.substring(i, i+length);
+					tree.add(temp);
+				}
+					
+				i++;
+			}
+			length++;
+		}
+		System.out.println(tree.size() +1);		//전체길이+1
+	}
+	
+	
+}

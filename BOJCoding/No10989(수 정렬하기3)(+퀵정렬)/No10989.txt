@@ -1,0 +1,60 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+public class Main
+{
+	static int[] arr;
+	public static void main(String[] args) throws NumberFormatException, IOException
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int n =Integer.parseInt(br.readLine());
+		arr =new int[n];
+		
+		for(int i =0; i <arr.length; i++)
+			arr[i] =Integer.parseInt(br.readLine());
+		
+		quick(arr, 0, arr.length-1);
+		for(int i =0; i <arr.length; i++)
+			bw.write(String.valueOf(arr[i]) +"\n");
+		bw.flush();
+		bw.close();
+		br.close();
+		
+	}
+	
+	public static void quick(int[] arr, int l, int r)
+	{
+		int left =l;
+		int right =r;
+		int pivot =arr[(l+r) /2];
+		
+		while(left <=right)
+		{
+			while(arr[left] <pivot)
+				left++;
+			while(pivot <arr[right])
+				right--;
+			
+			if(left <=right)
+			{
+				swap(arr, left, right);
+				left++;
+				right--;
+			}
+		}
+		if(l <right)
+			quick(arr, l ,right);
+		if(r >left)
+			quick(arr, left, r);
+	}
+	public static void swap(int[] arr, int i, int j)
+	{
+		int temp =arr[i];
+		arr[i] =arr[j];
+		arr[j] =temp;
+	}
+}

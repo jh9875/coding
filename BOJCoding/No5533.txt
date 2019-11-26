@@ -1,0 +1,43 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Main
+{
+	
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		int N =input.nextInt();
+		int[][] arr =new int[N][3];
+		for(int i =0; i <N; i++)
+			for(int j =0; j <3; j++)
+				arr[i][j] =input.nextInt();
+		
+		for(int i =0; i <3; i++)
+		{
+			for(int j =0; j <arr.length; j++)
+			{
+				ArrayList<Integer> al =new ArrayList<Integer>();
+				for(int l =0; l <arr.length; l++)
+					if(arr[j][i] ==arr[l][i] && j !=l && arr[j][i] !=0)
+						al.add(l);
+				if(al.size() !=0)
+				{
+					al.add(j);
+					for(int l =0; l <al.size(); l++)
+						arr[al.get(l)][i] =0;
+				}
+				
+			}
+		}
+
+		for(int i =0; i <arr.length; i++)
+		{
+			int sum =0;
+			for(int j =0; j <arr[i].length; j++)
+				sum +=arr[i][j];
+			System.out.println(sum);
+		}
+	}
+
+}

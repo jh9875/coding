@@ -1,0 +1,25 @@
+
+import java.util.Scanner;
+
+public class Main
+{
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		Boolean[] check =new Boolean[30];
+		for(int i =0; i <check.length; i++)
+			check[i] =false;
+		
+		for(int i =0; i <28; i++)
+		{
+			int n =input.nextInt();
+			check[n -1] =true;
+		}
+		
+		for(int i =0; i <check.length; i++)
+			if(check[i] ==false)
+				System.out.println(i+1);
+		
+	}
+	
+}

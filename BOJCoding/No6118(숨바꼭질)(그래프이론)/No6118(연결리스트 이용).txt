@@ -1,0 +1,115 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Main
+{
+	static class Edge
+	{
+		int dest;
+		int weight;
+		
+		Edge(int d, int w)
+		{
+			this.dest =d;
+			this.weight =w;
+		}
+	}
+	static int N, M;
+	static int a, b, c;
+	static ArrayList<Integer>[] list;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		String[] input;
+		
+		input =br.readLine().split(" ");
+		N =Integer.parseInt(input[0]);
+		M =Integer.parseInt(input[1]);
+		list =new ArrayList[N+1];
+		for(int i =0; i <N+1; i++)
+			list[i] =new ArrayList<>();
+		
+		for(int i =0; i <M; i++)
+		{
+			input =br.readLine().split(" ");
+			int n1 =Integer.parseInt(input[0]);
+			int n2 =Integer.parseInt(input[1]);
+			
+			list[n1].add(n2);
+			list[n2].add(n1);
+		}
+		bfs();
+		
+		bw.write(a +" " +b +" " +c + "\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	public static void bfs()
+	{
+		Queue<Edge> q =new LinkedList<>();
+		boolean[] visited =new boolean[N+1];
+		int[] distance =new int[N+1];
+		int len =0;
+		
+		for(int i =1; i <N+1; i++)
+			distance[i] =Integer.MAX_VALUE;
+		
+		visited[1] =true;
+		distance[1] =0;
+		
+		//1에 연결된 점들.
+		len =list[1].size();
+		for(int i =0; i <len; i++)
+		{
+			int n =list[1].get(i);
+			q.offer(new Edge(n, 1));
+			distance[n] =1;
+			visited[n] =true;
+		}
+		
+		while(!q.isEmpty())
+		{
+			Edge e =q.poll();
+			
+			len =list[e.dest].size();
+			for(int i =0; i <len; i++)		//현재 점과 연결된 것들.
+			{
+				int n =list[e.dest].get(i);
+				
+				if(!visited[n])
+				{
+					visited[n] =true;
+					distance[n] =Math.min(distance[n], e.weight+1);
+					q.offer(new Edge(n, distance[n]));
+				}
+			}
+			
+		}
+		int max =0;
+		int maxIndex= 0;
+		int count =0;
+		
+		for(int i =1; i<N+1; i++)
+		{
+			if(max <distance[i])
+			{
+				max =distance[i];
+				maxIndex= i;
+				count =0;
+			}
+			if(max ==distance[i])
+				count++;
+		}
+		a =maxIndex;
+		b =max;
+		c =count;
+	}
+}

@@ -1,0 +1,21 @@
+import java.util.Scanner;
+
+public class Main
+{
+	
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		int A =input.nextInt();
+		int B =input.nextInt();
+		String a =String.valueOf(A);
+		String b =String.valueOf(B);
+		String maxA =a.replaceAll("5", "6");
+		String minA =a.replaceAll("6", "5");
+		String maxB =b.replaceAll("5", "6");
+		String minB =b.replaceAll("6", "5");
+		System.out.print((Integer.parseInt(minA) + Integer.parseInt(minB)) 
+		+ " " + (Integer.parseInt(maxA) + Integer.parseInt(maxB)));
+	}
+
+}

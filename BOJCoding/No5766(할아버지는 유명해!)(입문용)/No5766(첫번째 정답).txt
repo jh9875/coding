@@ -1,0 +1,111 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	static class P implements Comparable<P>
+	{
+		int index;
+		int point;
+		P(int index, int point)
+		{
+			this.index =index;
+			this.point =point;
+		}
+		@Override
+		public int compareTo(P p)
+		{
+			if(p.point ==this.point)
+				return p.index -this.index;
+			else
+				return p.point -this.point;
+		}
+	}
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int N =1, M =1;
+		StringTokenizer st;
+		
+		while(N !=0 && M !=0)
+		{
+			List<Integer> list =new LinkedList<>();
+			st =new StringTokenizer(br.readLine());
+			N =Integer.parseInt(st.nextToken());
+			M =Integer.parseInt(st.nextToken());
+			
+			if(N ==0 && M ==0)
+				continue;
+			
+			P[] arr =new P[10001];
+			for(int i =0; i <10001; i++)
+				arr[i] =new P(i, 0);
+			
+			for(int i =0; i <N; i++)
+			{
+				st =new StringTokenizer(br.readLine());
+				while(st.hasMoreTokens())
+					arr[Integer.parseInt(st.nextToken())].point++;
+			}
+			Arrays.sort(arr);
+			
+			if(arr[0].point !=arr[1].point)		//첫번째랑 두번째랑 점수가 다를때
+			{
+				int secondPoint =arr[1].point;
+				int count =2;
+				list.add(arr[1].index);
+				
+				while(true)
+				{
+					if(arr[count].point ==secondPoint)
+					{
+						list.add(arr[count].index);
+						count++;
+					}else
+						break;
+				}
+			}else		//여러명의 일등이 있는경우.
+			{
+
+				int firstPoint =arr[1].point;
+				int count =2;
+				while(true)
+				{
+					if(arr[count].point ==firstPoint)
+						count++;
+					else
+						break;
+				}
+				int secondPoint =arr[count].point;
+				list.add(arr[count++].index);
+				while(true)
+				{
+					if(arr[count].point ==secondPoint)
+					{
+						list.add(arr[count].index);
+						count++;
+					}	
+					else
+						break;
+				}
+				
+			}
+			int size =list.size();
+			Collections.sort(list);
+			for(int i =0; i <size; i++)
+				bw.write(list.get(i) +" ");
+			bw.write("\n");
+		}
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+}

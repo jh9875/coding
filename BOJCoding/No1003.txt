@@ -1,0 +1,34 @@
+/*--동적프로그래밍??--*/
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+public class Main
+{
+	public static void main(String[] args) throws NumberFormatException, IOException
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int t =Integer.parseInt(br.readLine());
+		for(int i =0; i <t; i++)
+		{
+			int n =Integer.parseInt(br.readLine());
+			int[][] arr =new int[41][2];
+			arr[0][0] =1;		//n ==0일때
+			arr[0][1] =0;
+			arr[1][0] =0;		//n ==1일때
+			arr[1][1] =1;	
+			
+			for(int j =2; j <41; j++)
+				for(int k =0; k <2; k++)
+					arr[j][k] =arr[j-1][k] +arr[j-2][k];
+			
+			bw.write(arr[n][0] + " " + arr[n][1] + "\n");
+		}
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+}

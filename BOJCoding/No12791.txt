@@ -1,0 +1,79 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.HashMap;
+
+public class Main
+{
+	static class RDBMS
+	{
+		int year;
+		String album;
+		
+		RDBMS(int year, String album)
+		{
+			this.year =year;
+			this.album =new String(album);
+		}
+	}
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		RDBMS[] a = {new RDBMS(1967, "DavidBowie"),
+				new RDBMS(1969, "SpaceOddity"),
+				new RDBMS(1970, "TheManWhoSoldTheWorld"),
+				new RDBMS(1971, "HunkyDory"),
+				new RDBMS(1972, "TheRiseAndFallOfZiggyStardustAndTheSpidersFromMars"),
+				new RDBMS(1973, "AladdinSane"),
+				new RDBMS(1973, "PinUps"),
+				new RDBMS(1974, "DiamondDogs"),
+				new RDBMS(1975, "YoungAmericans"),
+				new RDBMS(1976, "StationToStation"),
+				new RDBMS(1977, "Low"),
+				new RDBMS(1977, "Heroes"),
+				new RDBMS(1979, "Lodger"),
+				new RDBMS(1980, "ScaryMonstersAndSuperCreeps"),
+				new RDBMS(1983, "LetsDance"),
+				new RDBMS(1984, "Tonight"),
+				new RDBMS(1987, "NeverLetMeDown"),
+				new RDBMS(1993, "BlackTieWhiteNoise"),
+				new RDBMS(1995, "1.Outside"),
+				new RDBMS(1997, "Earthling"),
+				new RDBMS(1999, "Hours"),
+				new RDBMS(2002, "Heathen"),
+				new RDBMS(2003, "Reality"),
+				new RDBMS(2013, "TheNextDay"),
+				new RDBMS(2016, "BlackStar")
+				};
+		int Q =0, S =0, E =0;
+		String[] input =null;
+		
+		Q =Integer.parseInt(br.readLine());
+		
+		while(Q-- >0)
+		{
+			int count =0;
+			input =br.readLine().split(" ");
+			S =Integer.parseInt(input[0]);
+			E =Integer.parseInt(input[1]);
+			
+			for(int i =0; i <25; i++)
+			{
+				if(S <=a[i].year && a[i].year <=E)
+					count++;
+			}
+			bw.write(count +"\n");
+			for(int i =0; i <25; i++)
+			{
+				if(S <=a[i].year && a[i].year <=E)
+					bw.write(a[i].year + " " +a[i].album +"\n");
+			}
+		}
+		
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+}

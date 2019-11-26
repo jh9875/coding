@@ -1,0 +1,33 @@
+import java.util.Scanner;
+
+public class Main
+{
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		
+		int testCaseNum =input.nextInt();
+		
+		for(int i =0; i <testCaseNum; i++)
+		{
+			int n =input.nextInt();
+			int[] scores =new int[n];
+			for(int j =0; j <n; j++)
+				scores[j] =input.nextInt();
+			int sum =0;
+			for(int j =0; j <n; j++)
+				sum+= scores[j];
+			double ave =(double)sum /scores.length;
+			int count =0;
+			for(int j =0; j <scores.length; j++)
+			{
+				if((double)scores[j] >ave)
+					count++;
+			}
+			System.out.printf("%.3f", 100.0 * count / n);
+            System.out.println("%");
+		}
+		
+	}
+	
+}

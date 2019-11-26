@@ -1,0 +1,66 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	public static void main(String[] args) throws IOException
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		String s =br.readLine();
+		StringTokenizer st =new StringTokenizer(s);
+		int n =Integer.parseInt(st.nextToken());
+		int m =Integer.parseInt(st.nextToken());
+		int[][] arr =new int[n][m];
+		int[][] dp =new int[n][m];
+		for(int i =0; i <n; i++)
+		{
+			s =br.readLine();
+			st =new StringTokenizer(s);
+			for(int j =0; j <arr[i].length; j++)
+			{
+				arr[i][j] =Integer.parseInt(st.nextToken());
+				if(j ==0)
+					dp[i][j] =arr[i][j];
+			}
+		}
+		//dp배열 만들기.
+		for(int i =0; i <n; i++)
+		{
+			for(int j =1; j <m; j++)
+			{
+				dp[i][j] =dp[i][j -1] +arr[i][j];
+			}
+		}
+		for(int i =0; i <dp.length; i++)
+		{
+			for(int j =0; j <dp[i].length; j++)
+				System.out.print(dp[i][j] + " ");
+			System.out.println();
+		}
+		
+		/*
+		int k =Integer.parseInt(br.readLine());
+		for(int a =0; a <k; a++)
+		{
+			s =br.readLine();
+			st =new StringTokenizer(s);
+			int i =Integer.parseInt(st.nextToken());
+			int j =Integer.parseInt(st.nextToken());
+			int x =Integer.parseInt(st.nextToken());
+			int y =Integer.parseInt(st.nextToken());
+			
+			bw.write(String.valueOf(dp[x-1][y-1] -dp[i-1][j-1] + arr[i-1][j-1] +arr[x-1][y-1]) +"\n");
+			
+		}
+		bw.flush();
+		bw.close();
+		br.close();
+		*/
+	}
+	
+}

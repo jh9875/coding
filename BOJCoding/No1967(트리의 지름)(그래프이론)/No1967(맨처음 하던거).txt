@@ -1,0 +1,124 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	static int max =0;
+	
+	static class Node
+	{
+		int index;
+		int weight;		//현재 node와 부모node사이의 가중치
+		Node left;
+		Node right;
+		
+		Node(int index)
+		{
+			this.index =index;
+			this.weight =0;
+			left =null;
+			right =null;
+		}
+		Node(int index, int weight)
+		{
+			this.index =index;
+			this.weight =weight;
+			left =null;
+			right =null;
+		}
+	}
+	static class Tree
+	{
+		Node root;
+		
+		Tree()
+		{
+			root =new Node(1);
+		}
+		public void insert(Node node, int p, int c, int w)		//parent, child, weight
+		{
+			if(node ==null)
+				return;
+			
+			if(node.index ==p)
+			{
+				Node n =new Node(c, w);
+				if(node.left ==null)
+					node.left =n;
+				else
+					node.right =n;
+			}else
+			{
+				insert(node.left, p, c, w);
+				insert(node.right, p, c, w);
+			}
+		}
+		public static void search(Node node)
+		{
+			if(node ==null)
+				return;
+			
+			System.out.println(node.index);
+			search(node.left);
+			search(node.right);
+		}
+		
+		public void measure(Node node, int index, int sum)
+		{
+			if(node ==null)
+			{
+				if(max <sum)
+					max =sum;
+				return;
+			}
+			if(node.index ==index)
+			{
+				measure(node.left, 0);
+				measure(node.right, 0);
+			}
+			if(sum ==0)
+			{
+				measure(node.left, 0);
+				measure(node.right, 0);
+			}
+		}
+		
+		public void measure(Node node, int sum)
+		{
+			if(node ==null)
+			{
+				if(max <sum)
+					max =sum;
+				return;
+			}
+				
+			measure(node.left, sum +node.weight);
+			measure(node.right, sum +node.weight);
+		}
+		
+		
+	}
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int n, p, c, w;
+		StringTokenizer st;
+		Tree t = new Tree();
+		
+		n =Integer.parseInt(br.readLine());
+		
+		for(int i =0; i <n-1; i++)
+		{
+			st =new StringTokenizer(br.readLine());
+			p =Integer.parseInt(st.nextToken());
+			c =Integer.parseInt(st.nextToken());
+			w =Integer.parseInt(st.nextToken());
+			t.insert(t.root, p, c, w);
+		}
+		bw.write(t.measure(n) + "\n");
+	}
+}

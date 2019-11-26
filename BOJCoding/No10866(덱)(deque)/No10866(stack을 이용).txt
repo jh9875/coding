@@ -1,0 +1,80 @@
+import java.util.Scanner;
+import java.util.Stack;
+
+public class Main
+{
+	static Stack<Integer> frontStack =new Stack<Integer>();
+	static Stack<Integer> backStack =new Stack<Integer>();
+	static int size =0;
+	
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		int N =input.nextInt();
+		
+		for(int i =0; i <N; i++)
+		{
+			String s =input.next();
+			if(s.equals("push_front"))
+			{
+				int n =input.nextInt();
+				frontStack.push(n);
+				size++;
+				
+			}else if(s.equals("push_back"))
+			{
+				int n =input.nextInt();
+				backStack.push(n);
+				size++;
+			}
+			else if(s.equals("pop_front"))
+			{
+				if(size ==0)
+					System.out.println(-1);
+				else
+				{
+					System.out.println(frontStack.pop());
+					size--;
+				}
+					
+			}
+			else if(s.equals("pop_back"))
+			{
+				if(size ==0)
+					System.out.println(-1);
+				else
+				{
+					System.out.println(backStack.pop());
+					size--;
+				}
+			}
+			else if(s.equals("size"))
+			{
+				System.out.println(size);
+			}
+			else if(s.equals("empty"))
+			{
+				if(size ==0)
+					System.out.println(1);
+				else
+					System.out.println(0);
+			}
+			else if(s.equals("front"))
+			{
+				if(size ==0)
+					System.out.println(-1);
+				else
+					System.out.println(frontStack.peek());
+			}
+			else if(s.equals("back"))
+			{
+				if(size ==0)
+					System.out.println(-1);
+				else
+					System.out.println(backStack.peek());
+			}
+		}
+		 
+	} 
+	
+}

@@ -1,0 +1,118 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	static class TurnInfo 
+	{
+		int num;
+		int wise;
+		
+		TurnInfo(int n, int w)
+		{
+			this.num =n;
+			this.wise =w;
+		}
+	}
+	
+	static int K;
+	static int[][] gears =new int[4][8];		//4개의 톱니, 8극
+	static TurnInfo[] turn;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		String input;
+		
+		for(int i =0; i <4; i++)
+		{
+			input =br.readLine();
+			for(int j =0; j <8; j++)
+				gears[i][j] =input.charAt(j) -'0';
+		}
+		
+		K =Integer.parseInt(br.readLine());
+		turn =new TurnInfo[K];
+		for(int i =0; i <K; i++)
+		{
+			st =new StringTokenizer(br.readLine());
+			int n =Integer.parseInt(st.nextToken())-1;
+			int w =Integer.parseInt(st.nextToken());
+			turn[i] =new TurnInfo(n, w);
+		}
+		act();
+		
+		int sum =0;
+		for(int i =0; i <4; i++)
+		{
+			if(gears[i][0] ==1)
+				sum +=Math.pow(2, i);
+		}
+		
+		bw.write(sum +"\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+	public static void act()
+	{
+		int cnt =0;
+		boolean[] visited;
+		Queue<TurnInfo> q;		//돌려야 되는 정보들.
+			
+		while(cnt <K)
+		{
+			TurnInfo ti =turn[cnt++];			//회전 정보를 하나씩 poll
+			visited =new boolean[4];
+			q =new LinkedList<>();
+			
+			q.offer(ti);
+			visited[ti.num] =true;
+			
+			while(!q.isEmpty())
+			{
+				TurnInfo t =q.poll();
+				
+				if(0 <=t.num-1 && !visited[t.num-1])		//왼쪽 톱니가 존재할때.
+				{
+					if(gears[t.num][6] !=gears[t.num-1][2])			//왼쪽것과 다를때(움직인다면)
+						q.offer(new TurnInfo(t.num-1, t.wise*(-1)));	//반대방향.
+					visited[t.num-1] =true;
+				}
+				if(t.num+1 <4 && !visited[t.num+1])					//오른쪽 톱니가 존재할때.
+				{
+					if(gears[t.num][2] !=gears[t.num+1][6])			//오른쪽것과 다를때
+						q.offer(new TurnInfo(t.num+1, t.wise*(-1)));	//반대방향.
+					visited[t.num+1] =true;
+				}
+				turn(t.num, t.wise);
+			}
+			
+		}
+	}
+	
+	public static void turn(int num, int wise)
+	{
+		if(wise ==1)			//시계방향
+		{
+			int last =gears[num][7];
+			for(int i =7; i >0; i--)
+				gears[num][i] =gears[num][i-1];
+			gears[num][0] =last;
+		}else		//wise ==-1
+		{
+			int first =gears[num][0];
+			for(int i =0; i <7; i++)
+				gears[num][i] =gears[num][i+1];
+			gears[num][7] =first;
+		}
+	}
+}

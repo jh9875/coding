@@ -1,0 +1,35 @@
+import java.util.Scanner;
+import java.util.Stack;
+
+public class Main
+{
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		String s =input.next();
+		Stack<Character> stack =new Stack<Character>();
+		for(int i =s.length()-1; i >=0; i--)
+			stack.push(s.charAt(i));
+		while(stack.size() %3 !=0)
+			stack.push('0');
+		
+		int count =2;
+		int sum =0;
+		StringBuilder sb =new StringBuilder();
+		while(!stack.isEmpty())
+		{
+			int num =stack.pop() -'0';
+			if(num ==1)
+				sum +=Math.pow(2, count);
+			count--;
+			if(count <0)
+			{
+				sb.append(sum);
+				count =2;
+				sum =0;
+			}
+		}
+		System.out.println(sb.toString());
+	}
+	
+}

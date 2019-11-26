@@ -1,0 +1,64 @@
+import java.util.Scanner;
+
+public class Main
+{
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		int n =input.nextInt();
+		if(n ==1)
+			System.out.println("1/1");
+		else
+			System.out.println(fractionNumber(n));
+	}
+	
+	public static String fractionNumber(int n)
+	{
+		int num1 =1;
+		int num2 =1;
+		int max1 =1;
+		int max2 =2;
+		int count1 =1;
+		int count2 =1;
+		boolean status1 =true;		//수의 증가, 감소 체크
+		boolean status2 =true;		//수의 증가, 감소 체크
+		
+		for(int i =0; i <n -1; i++)
+		{
+			if(num1 ==max1)
+			{
+				status1 =false;				//최대치에 닿으면 내림으로 바뀜
+				max1 =2*++count1-1;			//최대치를 늘려줌
+			}
+			if(num2 ==max2)
+			{
+				status2 =false;				//최대치에 닿으면 내림으로 바뀜
+				max2 =2*++count2;			//최대치를 늘려줌
+			}
+			
+			if(status1)						//오름상태이면 값 증가
+				num1++;
+			else							//아니면 값 감소
+			{
+				if(num1 ==1 && status1 ==false)			//값이1이면서 내림상태이면	
+						status1 =true;
+				else									//둘다 아니면 갑소
+					num1--;
+			}
+			if(status2)						//오름상태이면 값 증가
+				num2++;
+			else							//아니면 값 감소
+			{
+				if(num2 ==1 && status2 ==false)			//값이1이면서 내림상태이면	
+						status2 =true;
+				else									//둘다 아니면 갑소
+					num2--;
+			}
+		}
+		StringBuilder sb =new StringBuilder();
+		sb.append(num1).append("/").append(num2);
+		
+		return sb.toString();
+		
+	}
+}

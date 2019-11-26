@@ -1,0 +1,24 @@
+import java.util.Scanner;
+
+public class Main
+{
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		int N =input.nextInt();
+		
+		for(int i =0; i <N; i++)
+		{
+			int r =input.nextInt();
+			int e =input.nextInt();
+			int c =input.nextInt();
+			
+			if(r >(e-c))
+				System.out.println("do not advertise");
+			else if(r <(e-c))
+				System.out.println("advertise");
+			else
+				System.out.println("does not matter");
+		}
+	}
+}

@@ -1,0 +1,46 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+public class Main
+{	
+	public static void main(String[] args) throws IOException
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int n0 =0;
+		int n1 =0;
+		int n2 =0;
+		int n3 =0;
+		int n4 =0;
+		int count =1;
+		do
+		{
+			n0 =Integer.parseInt(br.readLine());
+			if(n0 !=0)
+			{
+				bw.write((count++) + ". ");
+				n1 =3*n0;
+				if(n1 %2 ==0)
+				{
+					n2 =n1/2;
+					bw.write("even ");
+				}else
+				{
+					n2 =(n1+1)/2;
+					bw.write("odd ");
+				}
+					
+				n3 =3*n2;
+				n4 =n3/9;
+				bw.write(String.valueOf(n4) +"\n");
+			}
+		}while(n0 !=0);
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+}

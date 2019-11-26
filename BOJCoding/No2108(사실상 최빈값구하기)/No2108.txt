@@ -1,0 +1,73 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+
+public class Main
+{
+	public static void main(String[] args) throws IOException, NumberFormatException
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int N =Integer.parseInt(br.readLine());
+		int[] arr =new int[N];
+		int sum =0;
+		for(int i =0; i <arr.length; i++)
+		{
+			int n =Integer.parseInt(br.readLine());
+			arr[i] =n;
+			sum +=n;
+		}
+		Arrays.sort(arr);
+			
+		int[] mode =new int[8001];
+		for(int i =0; i <arr.length; i++)
+			mode[arr[i] +4000]++;
+		int maxCount =0;
+		int overlapCount =1;
+		int maxValue =0;
+		for(int i =0; i <mode.length; i++)
+		{
+			if(mode[i] >maxCount)
+			{
+				maxCount =mode[i];
+				maxValue =i -4000;
+			
+				overlapCount =1;
+			}else if(mode[i] ==maxCount)
+			{
+				overlapCount++;
+			}
+		}
+		
+		if(overlapCount >1)
+		{
+			ArrayList<Integer> al =new ArrayList<Integer>();
+			for(int i =0; i <mode.length; i++)
+			{
+				if(maxCount ==mode[i])
+					al.add(i -4000);
+			}
+			Collections.sort(al);
+			maxValue =al.get(1);
+		}
+			
+		bw.write(String.valueOf(Math.round((double)sum /arr.length)) + "\n");		//»ê¼úÆò±Õ
+		bw.write(String.valueOf(arr[arr.length /2]) + "\n");	//Áß¾Ó°ª
+		bw.write(String.valueOf(maxValue) + "\n");						//ÃÖºó°ª
+		if(arr.length !=1)										//¹üÀ§
+			bw.write(String.valueOf(arr[arr.length-1] -arr[0]));
+		else
+			bw.write(String.valueOf(0));
+		
+		bw.flush();
+		bw.close();
+		br.close();
+			
+	}
+	
+}

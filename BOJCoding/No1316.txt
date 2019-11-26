@@ -1,0 +1,65 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Main
+{
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		int n =input.nextInt();
+		int count =0;
+		
+		for(int i =0; i <n; i++)
+		{
+			String s =input.next();
+			if(s.length() ==1)
+			{
+				count++;
+			}else
+			{
+				if(groupWordChecker(s))
+					count++;
+			}
+			
+		}
+		
+		System.out.println(count);
+		input.close();
+	}
+	
+	public static boolean groupWordChecker(String s)
+	{
+		boolean check =true;
+		ArrayList<Character> al =new ArrayList<Character>();
+		
+		al.add(s.charAt(0));
+		int count =0;
+		char prev;
+		char curr;
+		
+		
+		for(int i =1; i <s.length(); i++)
+		{
+			prev =s.charAt(i -1);
+			curr =s.charAt(i);
+			
+			if(prev ==curr)			//전알파벳과 현재 알파벳이 같으면
+			{
+				count++;
+			}else
+			{
+				if(!al.contains(curr))	//전 알파벳과 현재 알파벳이 다른데 리스트 안에없으면 추가
+				{
+					al.add(curr);
+					count =0;
+				}else					//전 알파벳과 현재 알파벳이 다른데리스트에있으면 중복
+				{
+					check =false;
+					break;
+				}
+			}
+		}
+		
+		return check;
+	}
+}

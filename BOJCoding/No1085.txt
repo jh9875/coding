@@ -1,0 +1,28 @@
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Main
+{
+	
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		int x =input.nextInt();
+		int y =input.nextInt();
+		int w =input.nextInt();
+		int h =input.nextInt();
+		
+		int l1 =Math.abs(x -0);
+		int l2 =Math.abs(y -0);
+		int l3 =Math.abs(w -x);
+		int l4 =Math.abs(h -y);
+		int[] arr =new int[4];
+		arr[0] =l1;
+		arr[1] =l2;
+		arr[2] =l3;
+		arr[3] =l4;
+		Arrays.sort(arr);
+		System.out.println(arr[0]);
+	}
+
+}

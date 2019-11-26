@@ -1,0 +1,47 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+public class Main
+{	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int[] arr =new int[101];	//0이면 닫힌거, 1이면 열린거
+		int[] arr2 =new int[101];	//index번째 까지 열린 방번호
+		for(int i =1; i <=100; i++)
+		{
+			for(int j =1; j <=100; j++)
+			{
+				if(i%j ==0)
+				{
+					if(arr[i] ==0)
+						arr[i] =1;
+					else
+						arr[i] =0;
+				}
+			}
+		}
+		for(int i =1; i <=100; i++)
+		{
+			for(int j =1; j <=i; j++)
+				if(arr[j] ==1)
+					arr2[i]++;
+		}
+		
+		int t =Integer.parseInt(br.readLine());
+		int n =0;
+		while(t-- >0)
+		{
+			n =Integer.parseInt(br.readLine());
+			bw.write(arr2[n] + "\n");
+			
+		}
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+}

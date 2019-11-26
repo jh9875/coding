@@ -1,0 +1,57 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+
+public class Main
+{	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int n, m, a, b;
+		int count =0;
+		boolean[][] arr;
+		boolean[] visited;
+		String[] input;
+		ArrayList<Integer> friends =new ArrayList<>();
+		
+		n =Integer.parseInt(br.readLine());
+		m =Integer.parseInt(br.readLine());
+		arr =new boolean[n+1][n+1];
+		visited =new boolean[n+1];
+		while(m-->0)
+		{
+			input =br.readLine().split(" ");
+			a =Integer.parseInt(input[0]);
+			b =Integer.parseInt(input[1]);
+			if(a ==1)
+			{
+				friends.add(b);
+				visited[b] =true;
+				count++;
+			}
+				
+			arr[a][b] =true;
+			arr[b][a] =true;
+		}
+		int len =friends.size();
+		for(int i =0; i <len; i++)
+		{
+			int from =friends.get(i);
+			for(int j =2; j <=n; j++)
+			{
+				if(arr[from][j]  && !visited[j])
+				{
+					visited[j] =true;
+					count++;
+				}
+			}
+		}
+		bw.write(count + "\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+}

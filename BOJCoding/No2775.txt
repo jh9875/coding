@@ -1,0 +1,42 @@
+import java.util.Scanner;
+
+public class Main
+{
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		int testCaseNum =input.nextInt();
+		
+		for(int i =0; i <testCaseNum; i++)
+		{
+			int k =input.nextInt();
+			int n =input.nextInt();
+			System.out.println(apartment(k, n));
+		}
+		
+	}
+	
+	public static int apartment(int k, int n)
+	{
+		int[] prev =new int[n];
+		int[] curr =new int[n];
+		for(int i =0; i <prev.length; i++)
+			prev[i] =i+1;
+		for(int i =0; i <curr.length; i++)
+			curr[i] =i+1;
+		
+		for(int i =0; i <k; i++)			//kÃþÀÌ ÀÖÀ»¶§ ¹Ýº¹È½½¬
+		{
+			for(int j =0; j <curr.length; j++)
+			{
+				for(int l =0; l <j; l++)
+					curr[j] +=prev[l];
+			}
+			for(int j =0; j <curr.length; j++)
+				prev[j] =curr[j];
+		}
+		
+		
+		return curr[n -1];
+	}
+}

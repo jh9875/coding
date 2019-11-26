@@ -1,0 +1,45 @@
+import java.util.Scanner;
+
+public class Main
+{
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		
+		int n =input.nextInt();
+		if(n <100)
+		{
+			System.out.println(n);
+		}else if(n ==1000)
+		{
+			int count =0;
+			for(int i =100; i <=999; i++)
+				if(han(i))
+					count++;
+			System.out.println(count +99);
+		}else
+		{
+			int count =0;
+			for(int i =100; i <=n; i++)
+				if(han(i))
+					count++;
+			
+			System.out.println(count +99);
+		}
+		
+	}
+	
+	static boolean han(int n)		//find han number??
+	{
+		int n1, n2, n3;
+		
+		n1 =n /100;
+		n2 =n /10 -n1*10;
+		n3 =n -n1*100 -n2*10;
+		
+		if((n1 -n2) ==(n2-n3) || (n2-n1) ==(n3 -n2))
+			return true;
+		else
+			return false;
+	}
+}

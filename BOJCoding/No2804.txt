@@ -1,0 +1,46 @@
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Main
+{	
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		String a =input.next();
+		String b =input.next();
+		char[][] arr =new char[b.length()][a.length()];
+		
+		for(int i =0; i <arr.length; i++)
+			Arrays.fill(arr[i], '.');
+		
+		int I =0;
+		int J =0;
+		boolean check =false;
+		for(int i =0; i <a.length(); i++)
+		{
+			for(int j =0; j <b.length(); j++)
+			{
+				if(a.charAt(i) ==b.charAt(j))
+				{
+					I =i;
+					J =j;
+					check =true;
+					break;
+				}
+			}
+			if(check)
+				break;
+		}
+		for(int i =0; i <a.length(); i++)
+			arr[J][i] =a.charAt(i);
+		for(int j =0; j <b.length(); j++)
+			arr[j][I] =b.charAt(j);
+		
+		for(int i =0 ; i <arr.length; i++)
+		{
+			for(int j =0; j <arr[i].length; j++)
+				System.out.print(arr[i][j]);
+			System.out.println();
+		}
+	}
+}

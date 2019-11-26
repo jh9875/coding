@@ -1,0 +1,59 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.Arrays;
+
+public class Main
+{	
+	static class Body
+	{
+		int w;
+		int h;
+		
+		Body(int w, int h)
+		{
+			this.w =w;
+			this.h =h;
+		}
+	}
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int n;
+		Body[] bodies =null;
+		String[] input =new String[2];
+		
+		n =Integer.parseInt(br.readLine());
+		bodies =new Body[n];
+		
+		for(int i =0; i <n; i++)
+		{
+			input =br.readLine().split(" ");
+			int w =Integer.parseInt(input[0]);
+			int h =Integer.parseInt(input[1]);
+			
+			Body b =new Body(w, h);
+			bodies[i] =b;
+		}
+		
+		int count =1;
+		
+		for(int i =0; i <n; i++)
+		{
+			for(int j =0; j <n; j++)
+			{
+				if(bodies[i].w <bodies[j].w && bodies[i].h <bodies[j].h)
+					count++;
+			}
+			bw.write(count + " ");
+			count =1;
+		}
+		bw.write("\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+}

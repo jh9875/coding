@@ -1,0 +1,36 @@
+import java.util.Scanner;
+
+public class Main
+{
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		
+		int num =input.nextInt();
+		int[] arr =new int[num];
+		double sum =0;
+		
+		for(int i =0; i <num; i++)
+			arr[i] =input.nextInt();
+		
+		int max =max(arr);
+		
+		for(int i =0; i <num; i++)
+		{
+			double temp =(double)arr[i]/max*100;
+			sum +=temp;
+		}
+		
+		System.out.println(sum/arr.length);
+	}
+	
+	public static int max(int[] arr)
+	{
+		int max =arr[0];
+		for(int i =1; i <arr.length; i++)
+			if(arr[i] >max)
+				max =arr[i];
+		
+		return max;
+	}
+}

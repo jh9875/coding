@@ -1,0 +1,14 @@
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class Main
+{
+	public static void main(String[] args)
+	{
+		long time =System.currentTimeMillis();
+		SimpleDateFormat dayTime =new SimpleDateFormat("yyyy\nMM\ndd");
+		String str =dayTime.format(new Date(time));
+		System.out.println(str);
+	}
+	
+}

@@ -1,0 +1,70 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	static int[] first = {5000000, 3000000, 2000000, 500000, 300000, 100000};
+	static int[] second = {5120000, 2560000, 1280000, 640000, 320000};
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		int T;
+		
+		T =Integer.parseInt(br.readLine());
+		while(T-- >0)
+		{
+			st =new StringTokenizer(br.readLine());
+			int a =Integer.parseInt(st.nextToken());
+			int b =Integer.parseInt(st.nextToken());
+			bw.write(reward(a, b) +"\n");
+		}
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+	public static int reward(int a, int b)
+	{
+		int sum =0;
+		int cnt =1;
+		int order =0;
+		
+		if(a !=0)
+		{
+			while(a >0)
+			{
+				a -=cnt;
+				cnt++;
+				order++;
+			}
+			order--;
+			if(order <first.length)
+				sum +=first[order];
+			
+			cnt =1;
+			order =0;
+		}
+		if(b !=0)
+		{
+			while(b >0)
+			{
+				b -=cnt;
+				cnt *=2;
+				order++;
+			}
+			order--;
+			if(order <second.length)
+				sum +=second[order];
+		}
+		
+		return sum;
+	}
+}

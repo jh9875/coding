@@ -1,0 +1,28 @@
+처음 틀린거는 부분수열을 잘못 이해한 것이 있었다.
+부분수열은 수열에서 연속된 부분이어야 하는줄 알았다..
+
+if(level >=N)
+	return;
+if(sum ==S)
+	count++;
+search(level+1, sum);
+search(level+1, sum+arr[level]);
+
+=====================================
+
+sum +=arr[level];
+if(level >=N)
+	return;
+if(sum ==S)
+	count++;
+search(level+1, sum -arr[level]);	//포함 안한거
+search(level+1, sum);		//포함 한거
+
+위가 내가 시도해 본것이고, 아래가 다른사람것이다.
+
+순서에 약간 차이가 있는것 같지만 결과가 다르게 나온다.
+
+위에한것은 만약 level이 0일때 처음꺼를 포함 안하게 된다..
+이제야 깨달았다..
+
+대충 아이디어는 얼추 맞췄으나 디테일한 부분이 모자랐다.

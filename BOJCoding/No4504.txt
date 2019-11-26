@@ -1,0 +1,32 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+public class Main
+{
+	public static void main(String[] args) throws IOException, NumberFormatException
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int n =Integer.parseInt(br.readLine());
+		int num =0;
+		do
+		{
+			num =Integer.parseInt(br.readLine());
+			if(num !=0)
+			{
+				if(num %n ==0)
+					bw.write(num + " is a multiple of " + n + ".\n" );
+				else
+					bw.write(num + " is NOT a multiple of " + n + ".\n");
+			}
+		}while(num !=0);
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+
+	
+}

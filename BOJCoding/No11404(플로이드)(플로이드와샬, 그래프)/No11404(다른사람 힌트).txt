@@ -1,0 +1,70 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+public class Main
+{	
+	public static void main(String[] args) throws IOException, NumberFormatException
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int n =Integer.parseInt(br.readLine());
+		int m =Integer.parseInt(br.readLine());
+		int[][] ad =new int[n+1][n+1];
+		
+		for(int i =1; i <=n; i++)
+			for(int j =1; j <=n; j++)
+				if(i !=j)
+					ad[i][j] =100001;
+		
+		String[] inputs;
+		for(int i =0; i <m; i++)
+		{
+			inputs =br.readLine().split(" ");
+			int s =Integer.parseInt(inputs[0]);
+			int e =Integer.parseInt(inputs[1]);
+			int c =Integer.parseInt(inputs[2]);
+			
+			if(ad[s][e] ==100001)		//아직 할당되지 않은경우(무한대)
+			{
+				ad[s][e] =c;
+			}else
+			{
+				if(ad[s][e] >c)		//최소값을 구하므로 같은길이면 최솟값으로 덮어씌운다.
+					ad[s][e] =c;
+			}
+			
+		}
+		
+		for(int k =1; k <=n; k++)			//거쳐가는 지점
+		{
+			for(int i =1; i <=n; i++)		//출발지점
+			{
+				for(int j =1; j <=n; j++)	//도착지점
+				{
+					if(ad[i][j] >ad[i][k] +ad[k][j])
+						ad[i][j] =ad[i][k] +ad[k][j];
+				}
+			}
+		}
+		
+		for(int i =1; i <=n; i++)
+		{
+			for(int j =1; j <=n; j++)
+			{
+				if(ad[i][j] <=100000)
+					bw.write(ad[i][j] + " ");
+				else
+					bw.write(0 + " ");
+			}
+				
+			bw.write("\n");
+		}
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+}

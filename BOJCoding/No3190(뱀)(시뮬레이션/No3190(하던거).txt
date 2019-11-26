@@ -1,0 +1,72 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	static class Turn
+	{
+		int x;
+		char c;
+		
+		Turn(int x, char c)
+		{
+			this.x =x;
+			this.c =c;
+		}
+	}
+	static int N;
+	static int L;
+	static int[][] map;			//ºó°ø°£Àº 0, ¹ìÀº 1, »ç°ú´Â 2.
+	static Turn[] turn;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		int K;
+		
+		N =Integer.parseInt(br.readLine());
+		map =new int[N+1][N+1];
+		
+		K =Integer.parseInt(br.readLine());
+		for(int i =0; i <K; i++)
+		{
+			st =new StringTokenizer(br.readLine());
+			map[Integer.parseInt(st.nextToken())][Integer.parseInt(st.nextToken())] =2;
+		}
+		
+		L =Integer.parseInt(br.readLine());
+		for(int i =0; i <L; i++)
+		{
+			st =new StringTokenizer(br.readLine());
+			int x =Integer.parseInt(st.nextToken());
+			char c =st.nextToken().charAt(0);
+			turn[i] =new Turn(x, c);
+		}
+		
+		map[1][1] =1;			//¹ì ½ÃÀÛÀ§Ä¡
+		bw.write(dummy() +"\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+	public static int dummy()
+	{
+		int T =0;
+		int index =0;
+		int m =turn[index].x;
+		
+		while(true)
+		{
+			
+		}
+		
+		return T;
+	}
+	
+}

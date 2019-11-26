@@ -1,0 +1,102 @@
+import java.util.Scanner;
+
+public class Main
+{	
+	public static class Heap
+	{
+		int[] data;
+		int lastIndex;
+		public Heap()
+		{
+			this.data =new int[101];		//처음엔 최대 100개의 데이터만 받는다.
+			this.lastIndex =1;				//1번부터 시작하므로.
+		}
+		public void insert(int n)		//데이터 삽입
+		{
+			int cur =lastIndex;
+			data[lastIndex++] =n;			//트리의 마지막에 입력수를 넣어주고 마지막 인덱스 늘려줌.
+			
+			while(cur >=2)
+			{
+				if(data[cur] <data[cur/2])	//자식노드가 부모노드보다 작은경우
+				{
+					swap(cur, cur/2);
+					cur /=2;
+				}else						//순서가 맞으면 멈춘다.
+				{
+					break;
+				}
+			}
+			
+		}
+		public int minData()				//최솟값 반환
+		{
+			int minData =data[1];			//제일 위에있는 반환할 데이터
+			
+			data[1] =data[--lastIndex];		//제일 끝에있는값을 제일위로 올려준다.
+			data[lastIndex] =0;
+			int cur =1;
+			
+			while(cur <lastIndex -1)			//위에서부터 밑으로 비교해가면서 내려간다.
+			{
+				int left =cur*2;
+				int right =cur*2+1;
+				if(data[left] <data[right])			//자식중 왼쪽이 더 작은경우
+				{
+					if(data[cur] >data[left])		//왼쪽자식이 더 작은 와중에 부모보다 더 작은경우 
+					{
+						swap(cur, left);
+						cur =left;
+					}else							//부모다 더 작은경우.
+						break;
+					
+				}else					//오른쪽이 더 작은경우.
+				{
+					if(data[cur] >data[right])
+					{
+						swap(cur, right);
+						cur =right;
+					}else
+						break;
+				}
+			}
+			return minData;
+			
+		}
+		public void swap(int i, int j)
+		{
+			int temp =data[i];
+			data[i] =data[j];
+			data[j] =temp;
+		}
+		public void print()
+		{
+			for(int i =1; i <10; i++)
+				System.out.print(data[i] + " ");
+			System.out.println();
+		}
+	}
+	
+	
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		Heap heap =new Heap();
+		String command ="";
+		do
+		{
+			command =input.next();
+			if(command.equals("insert"))
+			{
+				int n =input.nextInt();
+				heap.insert(n);
+				heap.print();
+			}else if(command.equals("last"))
+			{
+				heap.minData();
+				heap.print();
+			}
+		}while(!command.equals("q"));
+		
+	}
+}

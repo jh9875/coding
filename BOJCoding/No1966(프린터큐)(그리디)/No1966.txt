@@ -1,0 +1,81 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Main
+{
+	static class P
+	{
+		int index;
+		int priority;
+		
+		P(int i, int p)
+		{
+			this.index =i;
+			this.priority =p;
+		}
+	}
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int T, N;
+		int index;
+		String[] input;
+		
+		T =Integer.parseInt(br.readLine());
+		
+		while(T-- >0)
+		{
+			input =br.readLine().split(" ");
+			N =Integer.parseInt(input[0]);
+			index =Integer.parseInt(input[1]);
+			
+			input =br.readLine().split(" ");
+			bw.write(func(N, index, input) +"\n");
+		}
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	public static int func(int N, int index, String[] inPrint)
+	{
+		Queue<P> queue =new LinkedList<>();
+		int count =0;
+		int best =0;
+		
+		for(int i =0; i <N; i++)
+			queue.offer(new P(i, Integer.parseInt(inPrint[i])));
+		
+		while(!queue.isEmpty())
+		{
+			P temp =null;
+			for(int i =0; i <queue.size(); i++)
+			{
+				temp =queue.poll();
+				if(best <temp.priority)
+					best =temp.priority;
+				queue.offer(temp);
+			}
+			
+			for(int i =0; i <N; i++)
+			{
+				temp =queue.poll();
+				if(best ==temp.priority)
+				{
+					count++;
+					break;
+				}
+				else
+					queue.offer(temp);
+			}
+			if(temp.index ==index)
+				break;
+			best =0;
+		}
+		return count;
+	}
+}

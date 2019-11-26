@@ -1,0 +1,30 @@
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Scanner;
+
+public class Main
+{
+	public static void main(String[] args) throws IOException
+	{
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		Scanner input =new Scanner(System.in);
+		int n =input.nextInt();
+		Queue<Integer> q =new LinkedList<Integer>();
+		for(int i =1; i <=n; i++)
+			q.add(i);
+		
+		while(q.size() >1)
+		{
+			bw.write(q.poll() + " ");
+			int temp =q.poll();
+			q.add(temp);
+		}
+		bw.write(q.poll() +"\n");
+		bw.flush();
+		bw.close();
+	}
+	
+}

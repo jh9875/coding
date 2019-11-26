@@ -1,0 +1,27 @@
+import java.util.Scanner;
+
+public class Main
+{
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		int caseNum =input.nextInt();
+		
+		for(int i =0; i <caseNum; i++)
+		{
+			int n =input.nextInt();
+			String s =input.next();
+			print(n, s);
+		}
+	}
+	public static void print(int n, String s)
+	{
+		for(int i =0; i <s.length(); i++)
+		{
+			char ch =s.charAt(i);
+			for(int j =0; j <n; j++)
+				System.out.print(ch);
+		}
+		System.out.println();
+	}
+}

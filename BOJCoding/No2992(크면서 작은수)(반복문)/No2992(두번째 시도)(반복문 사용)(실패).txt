@@ -1,0 +1,61 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Main
+{
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int len =0;
+		char[] arr =null;
+		int x =Integer.parseInt(br.readLine());
+		String num =String.valueOf(x);
+		
+		len =num.length();
+		arr =new char[len];
+		
+		for(int i =0; i <len; i++)
+			arr[i] =num.charAt(i);
+			
+		Arrays.sort(arr);
+		
+		for(int i =x+1; i <1000000; i++)
+		{
+			String temp =String.valueOf(i);
+			char[] digits =temp.toCharArray();
+			Arrays.sort(digits);
+				
+			if(temp.length() >len)		//자릿수가 달라지면 틀린거이므로
+			{
+				bw.write(0 +"\n");
+				break;
+			}
+			
+			boolean check =true;
+			
+			for(int j =0; j <len; j++)
+			{
+				if(digits[j] !=arr[j])
+				{
+					check =false;
+					break;
+				}
+			}
+			if(check)
+			{
+				bw.write(i +"\n");
+				break;
+			}
+		}
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+}

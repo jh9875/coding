@@ -1,0 +1,108 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Main
+{
+	static class Edge
+	{
+		int dest;
+		int weight;
+		
+		Edge(int d, int w)
+		{
+			this.dest =d;
+			this.weight =w;
+		}
+	}
+	static int N, M;
+	static int a, b, c;
+	static boolean[][] map;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		String[] input;
+		
+		input =br.readLine().split(" ");
+		N =Integer.parseInt(input[0]);
+		M =Integer.parseInt(input[1]);
+		map =new boolean[N+1][N+1];
+		
+		for(int i =0; i <M; i++)
+		{
+			input =br.readLine().split(" ");
+			int n1 =Integer.parseInt(input[0]);
+			int n2 =Integer.parseInt(input[1]);
+			
+			map[n1][n2] =true;
+			map[n2][n1] =true;
+		}
+		
+		bfs();
+		
+		bw.write(a +" " +b +" " +c + "\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	public static void bfs()
+	{
+		Queue<Edge> q =new LinkedList<>();
+		boolean[] visited =new boolean[N+1];
+		int[] distance =new int[N+1];
+		for(int i =1; i <N+1; i++)
+			distance[i] =Integer.MAX_VALUE;
+		
+		visited[1] =true;
+		distance[1] =0;
+		
+		for(int i =1; i <N+1; i++)			//처음 1과 인접한것들
+		{
+			if(map[1][i])
+			{
+				q.offer(new Edge(i, 1));
+				distance[i] =1;
+				visited[i] =true;
+			}
+				
+		}
+		
+		while(!q.isEmpty())
+		{
+			Edge e =q.poll();
+			
+			for(int i =1; i <N+1; i++)
+			{
+				if(map[e.dest][i] && !visited[i])
+				{
+					visited[i] =true;
+					distance[i] =Math.min(distance[i], e.weight +1);
+					q.offer(new Edge(i, distance[i]));
+				}
+			}
+		}
+		int max =0;
+		int maxIndex= 0;
+		int count =0;
+		
+		for(int i =1; i<N+1; i++)
+		{
+			if(max <distance[i])
+			{
+				max =distance[i];
+				maxIndex= i;
+				count =0;
+			}
+			if(max ==distance[i])
+				count++;
+		}
+		a =maxIndex;
+		b =max;
+		c =count;
+	}
+}

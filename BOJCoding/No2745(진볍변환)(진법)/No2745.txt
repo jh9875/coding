@@ -1,0 +1,45 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+public class Main
+{
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		String[] input;
+		String N;
+		int B;
+		
+		input =br.readLine().split(" ");
+		N =input[0];
+		B =Integer.parseInt(input[1]);
+		
+		bw.write(convert(N, B) +"\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+	public static int convert(String N, int B)
+	{
+		int sum =0;
+		int len =N.length();
+		
+		for(int i =0; i <len; i++)
+		{
+			char c =N.charAt(len-i-1);		//뒤에서부터.
+			int n =0;
+			if(c-0 <58)		//숫자인 경우
+				n =c-'0';
+			else			//알파벳인 경우.
+				n =(c-'A') +10;
+			
+			sum +=Math.pow(B, i)*n;
+		}
+		
+		return sum;
+	}
+}

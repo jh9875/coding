@@ -1,0 +1,41 @@
+import java.math.BigInteger;
+import java.util.Scanner;
+
+public class Main
+{
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		int n =input.nextInt();
+		for(int i =0; i <n; i++)
+		{
+			String s =input.next();
+			BigInteger big =new BigInteger(s);
+			String zero ="0";
+			BigInteger bigZero =new BigInteger(zero);
+			String two ="2";
+			BigInteger bigTwo =new BigInteger(two);
+			if(big.mod(bigTwo).compareTo(bigZero) ==0)
+				System.out.println("even");
+			else
+				System.out.println("odd");
+		}
+	}
+
+}
+/////////////////////////////////////////////////////////////////////// 더 좋아보이는 코드
+import java.math.*;
+import java.util.*;
+public class Main {
+	public static void main(String[] args) {	
+		Scanner sc = new Scanner(System.in);
+		int k = sc.nextInt();
+		for(int i = 0; i < k; i++) {
+			BigInteger a = sc.nextBigInteger();
+			if(a.mod(BigInteger.valueOf(2)).compareTo(BigInteger.ZERO) == 0)
+				System.out.println("even");
+			else
+				System.out.println("odd");
+		}
+	}	
+}

@@ -1,0 +1,80 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+public class Main
+{
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int N, K;
+		int[][] arr;
+		int[] dirR = {1, 0, -1, 0};		//³² µ¿ ºÏ ¼­
+		int[] dirC = {0, 1, 0, -1};
+		boolean[][] visited;
+		
+		N =Integer.parseInt(br.readLine());
+		K =Integer.parseInt(br.readLine());
+		arr =new int[N][N];
+		visited =new boolean[N][N];
+		
+		int count =N*N;
+		int nextR =0, nextC =0;
+		arr[nextR][nextC] =count--;
+		visited[nextR][nextC] =true;
+		boolean check =false;
+		
+		while(true)
+		{
+			for(int i =0; i <4; i++)
+			{
+				nextR +=dirR[i];
+				nextC +=dirC[i];
+				
+				while(0 <=nextR && nextR <N && 0 <=nextC && nextC <N  && !visited[nextR][nextC])
+				{
+					arr[nextR][nextC] =count--;
+					visited[nextR][nextC] =true;
+					nextR +=dirR[i];
+					nextC +=dirC[i];
+					
+					if(count ==0)
+					{
+						check =true;
+						break;
+					}
+				}
+				nextR =nextR -dirR[i];
+				nextC =nextC -dirC[i];
+				if(check)
+					break;	
+			}
+			if(check)
+				break;
+		}
+		
+		int indexR =0;
+		int indexC =0;
+		
+		for(int i =0; i <N; i++)
+		{
+			for(int j =0; j <N; j++)
+			{
+				bw.write(arr[i][j] +" ");
+				if(arr[i][j] ==K)
+				{
+					indexR =i;
+					indexC =j;
+				}
+			}
+			bw.write("\n");
+		}
+		bw.write((indexR+1) +" " +(indexC+1) +"\n");
+		
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+}

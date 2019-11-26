@@ -1,0 +1,75 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.Scanner;
+
+public class Main
+{
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		int N =input.nextInt();
+		int[] A =new int[N];
+		int[] B =new int[N];
+		for(int i =0; i <N; i++)
+			A[i] =input.nextInt();
+		for(int i =0; i <N; i++)
+			B[i] =input.nextInt();
+		
+		Arrays.sort(A);
+		Arrays.sort(B);
+		
+		int S =0;
+		for(int i =0; i <N; i++)
+			S +=A[i]*B[B.length -i -1];
+		System.out.println(S);
+	}
+}
+///////////////////////////////////////////////////////////밑에건 왜 런타임에러가 뜨는걸까..
+
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Scanner;
+
+public class Main
+{
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		int N =input.nextInt();
+		int[] A =new int[N];
+		int[] B =new int[N];
+		for(int i =0; i <N; i++)
+			A[i] =input.nextInt();
+		for(int i =0; i <N; i++)
+			B[i] =input.nextInt();	
+		
+		ArrayList<Integer> al =new ArrayList<Integer>();	//B를 내림차순으로 담을 리스트
+		Queue<Integer> queue =new LinkedList<Integer>();
+		for(int i =0; i <N; i++)
+			al.add(B[i]);
+		Collections.sort(al);
+		Collections.reverse(al);
+		Arrays.sort(A);
+		for(int i =0; i <N; i++)
+			queue.add(A[i]);
+		
+		for(int i =0; i <al.size(); i++)
+		{
+			int n =al.get(i);
+			for(int j =0; j <B.length; j++)
+				if(n ==B[j])
+					A[j] =queue.poll();
+		}
+	
+		int S =0;
+		for(int i =0; i <N; i++)
+			S +=A[i]*B[i];
+		System.out.println(S);
+	}
+}

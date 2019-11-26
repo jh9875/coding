@@ -1,0 +1,65 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+public class Main
+{	
+	static int[][] friends;
+	static boolean[] visited;
+	static int n;
+	static int count =0;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int m, a, b;
+		String[] input;
+		n =Integer.parseInt(br.readLine());
+		m =Integer.parseInt(br.readLine());
+		friends =new int[n+1][n+1];
+		visited =new boolean[n+1];
+		
+		for(int i =0 ; i <m; i++)
+		{
+			input =br.readLine().split(" ");
+			a =Integer.parseInt(input[0]);
+			b =Integer.parseInt(input[1]);
+			friends[a][b] =1;
+		}
+		
+		visited[1] =true;
+		
+		for(int to =2; to <=n; to++)
+		{
+			if(friends[1][to] ==1)
+			{
+				search(to, 1);
+			}
+		}
+		bw.write(count + "\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	public static void search(int from, int level)
+	{
+		if(level >2)
+			return;
+		if(!visited[from])
+		{
+			count++;
+			visited[from] =true;
+		}
+			
+		
+		for(int to =1; to <=n; to++)
+		{
+			if(friends[from][to] ==1)
+			{
+				search(to, level+1);
+			}
+		}
+	}
+}

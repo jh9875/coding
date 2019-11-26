@@ -1,0 +1,56 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.Arrays;
+import java.util.HashSet;
+
+public class Main
+{	
+	static int len =0;
+	static int best =0;
+	static String s;
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int N =Integer.parseInt(br.readLine());
+		s =Integer.toString(N);
+		len =s.length();
+		
+		for(int i =0; i <len; i++)
+		{
+			search(1, "", new boolean [len], i);
+		}
+		if(best ==0)
+			bw.write(-1 + "\n");
+		else
+			bw.write(best + "\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	public static void search(int level, String number, boolean[] visited, int next)
+	{
+		if(level ==len)
+		{
+			number +=s.charAt(next);
+			visited[next] =true;
+			int n =Integer.parseInt(number);
+			if(n%30 ==0)
+			{
+				if(best <n)
+					best =n;
+			}
+			return;
+		}
+		number +=s.charAt(next);
+		visited[next] =true;
+		
+		for(int i =0; i <len; i++)
+		{
+			if(!visited[i])
+				search(level+1, number, visited, i);
+		}
+	}
+}

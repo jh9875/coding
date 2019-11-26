@@ -1,0 +1,56 @@
+import java.util.Scanner;
+
+public class Main
+{	
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		int a =input.nextInt();
+		int b =input.nextInt();
+		int c =input.nextInt();
+		int x =input.nextInt();
+		int y =input.nextInt();
+		
+		int sum =0;
+		int diff =0;
+		
+		if(a+b <2*c)	//양념, 후라이드 한마리씩 사는게 더 싼경우
+		{
+			sum +=x*(a+b);
+			if(x <y)
+			{
+				diff =y-x;
+				if(b <2*c)
+					sum +=diff*b;
+				else
+					sum +=diff*2*c;
+			}else
+			{
+				diff =x-y;
+				if(a <2*c)
+					sum +=diff*a;
+				else
+					sum +=diff*2*c;
+			}
+		}else			//반반2마리 사는게 더 싼경우.
+		{
+			sum +=x*2*c;
+			if(x <y)
+			{
+				diff =y-x;
+				if(b <2*c)
+					sum +=diff*b;
+				else
+					sum +=diff*2*c;
+			}else
+			{
+				diff =x-y;
+				if(a <2*c)
+					sum +=diff*a;
+				else
+					sum +=diff*2*c;
+			}
+		}
+		System.out.println(sum);
+	}
+}

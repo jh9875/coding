@@ -1,0 +1,55 @@
+import java.util.Scanner;
+import java.util.Stack;
+
+public class Main
+{
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		int n1 =input.nextInt();
+		int n2 =input.nextInt();
+		
+		System.out.println(gcd(n1, n2));
+		System.out.println(lcm(n1, n2));
+	}
+	public static int gcd(int n1, int n2)			//최대공약수
+	{
+		Stack<Integer> st1 =new Stack<Integer>();
+		Stack<Integer> st2 =new Stack<Integer>();
+		
+		for(int i =1; i <=n1; i++)			//각 수의 약수들을 stack에 담음.
+			if(n1 %i ==0)
+				st1.push(i);
+		for(int i =1; i <=n2; i++)
+			if(n2 %i ==0)
+				st2.push(i);
+		
+		int num1 =st1.pop();				//stack이므로 제일 큰수부터 시작.
+		int num2 =st2.pop();
+		
+		while(num1 !=num2)					//두 수의 공통의 약수를 구할때 까지 반복
+		{
+			if(num1 <num2)					//num2의 약수가 크다면 하나 더 작은 약수 
+				num2 =st2.pop();
+			else							//num1의 약수가 크다면 num1의 작은약수
+				num1 =st1.pop();
+		}
+		return num1;
+		
+	}
+	
+	public static int lcm(int n1, int n2)			//최소공배수
+	{
+		int num1 =n1;
+		int num2 =n2;
+		while(num1 !=num2)
+		{
+			if(num1 <num2)
+				num1 +=n1;
+			else
+				num2 +=n2;
+		}
+		return num1;
+	}
+	
+}

@@ -1,0 +1,167 @@
+
+import java.util.Scanner;
+
+public class Main
+{
+	private static int[] queue =new int[10];
+	private static int front =0;
+	private static int back =0;
+	private static int size =0;
+	
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		int testCaseN =input.nextInt();
+		
+		for(int i =0; i <testCaseN; i++)
+		{
+			String s =input.next();
+			int n =0;
+			
+			if(s.equals("push"))
+			{
+				n =input.nextInt();
+				push(n);
+			}
+			else if(s.equals("pop"))
+			{
+				System.out.println(pop());
+			}
+			else if(s.equals("size"))
+			{
+				System.out.println(size());
+			}
+			else if(s.equals("empty"))
+			{
+				System.out.println(empty());
+			}
+			else if(s.equals("front"))
+			{
+				System.out.println(front());
+			}
+			else if(s.equals("back"))
+			{
+				System.out.println(back());
+			}
+			
+		}
+	}
+	public static void push(int n)
+	{
+		if(size() ==queue.length)			//가득 찬 경우
+			resize();
+		size++;
+		queue[(back++) %queue.length] =n;
+		
+	}
+	public static int pop()
+	{
+		if(empty() ==1)
+			return -1;
+		size--;
+		return queue[(front++) %queue.length];
+	}
+	public static int size()
+	{
+		return size;
+	}
+	public static int empty()
+	{
+		if(size ==0)
+			return 1;
+		else
+			return 0;
+	}
+	public static int front()
+	{
+		if(empty() ==1)
+			return -1;
+		return queue[(front) %queue.length];
+	}
+	public static int back()
+	{
+		if(empty() ==1)
+			return -1;
+		return queue[(back -1) %queue.length];
+	}
+	public static void resize()
+	{
+		int[] newQueue =new int[queue.length *2];
+		int count =0;
+		int copySize =size;
+		int first =front;
+		
+		while(copySize >0)
+		{
+			newQueue[count++] =queue[(first++) %queue.length];
+			copySize--;
+		}
+		front =0;
+		back =queue.length;
+		queue =newQueue;
+	}
+}
+//=====================================================
+Queue 라이브러리 활용
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Scanner;
+
+public class Main
+{
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		Queue<Integer> queue =new LinkedList<Integer>();
+		int testCaseN =input.nextInt();
+		
+		for(int i =0; i <testCaseN; i++)
+		{
+			String s =input.next();
+			int n =0;
+			
+			if(s.equals("push"))
+			{
+				n =input.nextInt();
+				queue.add(n);
+			}
+			else if(s.equals("pop"))
+			{
+				if(queue.size() ==0)
+					System.out.println(-1);
+				else
+					System.out.println(queue.poll());
+			}
+			else if(s.equals("size"))
+			{
+				System.out.println(queue.size());
+			}
+			else if(s.equals("empty"))
+			{
+				if(queue.size() ==0)
+					System.out.println(1);
+				else
+					System.out.println(0);
+			}
+			else if(s.equals("front"))
+			{
+				if(queue.size() ==0)
+					System.out.println(-1);
+				else
+					System.out.println(queue.peek());
+			}
+			else if(s.equals("back"))
+			{
+				if(queue.size() ==0)
+					System.out.println(-1);
+				else
+				{
+					Object[] arr =queue.toArray();
+					System.out.println((int)arr[arr.length-1]);
+				}
+			}
+			
+		}
+	}
+	
+}

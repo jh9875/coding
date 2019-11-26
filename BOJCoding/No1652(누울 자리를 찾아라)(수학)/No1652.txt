@@ -1,0 +1,92 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+public class Main
+{	
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int n =0;
+		int rc =0, cc =0;
+		String input;
+		char[][] map;
+		n =Integer.parseInt(br.readLine());
+		map =new char[n][n];
+		
+		for(int i =0; i <n; i++)
+		{
+			input =br.readLine();
+			for(int j =0; j <n; j++)
+				map[i][j] =input.charAt(j);
+		}
+		rc =countRowPlace(map);
+		cc =countColPlace(map);
+		
+		bw.write(rc + " " +cc +"\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	static int countRowPlace(char[][] map)
+	{
+		int totalCount =0;
+		int len =map[0].length;
+		
+		for(int i =0; i <len; i++)
+		{
+			int count =0;
+			
+			for(int j =0; j <len; j++)
+			{
+				if(map[i][j] =='.')
+					count++;
+				else if(map[i][j] =='X')
+				{
+					if(count >=2)
+						totalCount++;
+					count =0;
+				}
+				
+				if(j ==len-1 && count >=2)
+				{
+					count =0;
+					totalCount++;
+				}
+			}
+		}
+		return totalCount;
+	}
+	static int countColPlace(char[][] map)
+	{
+		int totalCount =0;
+		int len =map[0].length;
+		
+		for(int i =0; i <len; i++)
+		{
+			int count =0;
+			
+			for(int j =0; j <len; j++)
+			{
+				if(map[j][i] =='.')
+					count++;
+				else if(map[j][i] =='X')
+				{
+					if(count >=2)
+						totalCount++;
+					count =0;
+				}
+				
+				if(j ==len-1 && count >=2)
+				{
+					count =0;
+					totalCount++;
+				}
+			}
+		}
+		return totalCount;
+	}
+}

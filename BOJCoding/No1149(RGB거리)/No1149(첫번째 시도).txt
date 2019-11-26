@@ -1,0 +1,78 @@
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Main
+{	
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		int n =input.nextInt();
+		int[][] arr =new int[1000][3];
+		int[]dp =new int[1000];
+		for(int i =0; i <n; i++)
+		{
+			arr[i][0] =input.nextInt();		//r
+			arr[i][1] =input.nextInt();		//g
+			arr[i][2] =input.nextInt();		//b
+		}
+		int lastMinIndex =minIndex(arr[0][0], arr[0][1], arr[0][2]);
+		dp[0] =arr[0][lastMinIndex];
+		
+		for(int i =1; i <n; i++)
+		{
+			if(lastMinIndex ==0)
+			{
+				if(arr[i][1] <arr[i][2])
+				{
+					dp[i] =arr[i][1];
+					lastMinIndex =1;
+				}else
+				{
+					dp[i] =arr[i][2];
+					lastMinIndex =2;
+				}
+			}else if(lastMinIndex ==1)
+			{
+				if(arr[i][0] <arr[i][2])
+				{
+					dp[i] =arr[i][0];
+					lastMinIndex =0;
+				}else
+				{
+					dp[i] =arr[i][2];
+					lastMinIndex =2;
+				}
+			}else
+			{
+				if(arr[i][0] <arr[i][1])
+				{
+					dp[i] =arr[i][0];
+					lastMinIndex =0;
+				}else
+				{
+					dp[i] =arr[i][1];
+					lastMinIndex =1;
+				}
+			}
+				
+		}
+		int sum =0;
+		for(int i =0; i <n; i++)
+			sum +=dp[i];
+		System.out.println(sum);
+	}
+	public static int minIndex(int n1, int n2, int n3)
+	{
+		int[] temp =new int[3];
+		temp[0] =n1;
+		temp[1] =n2;
+		temp[2] =n3;
+		Arrays.sort(temp);
+		if(temp[0] ==n1)
+			return 0;
+		else if(temp[0] ==n2)
+			return 1;
+		else
+			return 2;
+	}
+}

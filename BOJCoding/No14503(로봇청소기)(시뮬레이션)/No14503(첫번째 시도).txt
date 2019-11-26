@@ -1,0 +1,120 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+public class Main
+{	
+	static int N, M;
+	static int count =0;
+	static int[][] map;
+	static int[] dirR = {-1, 0, 1, 0};		//북, 동, 남, 서
+	static int[] dirC = {0, 1, 0, -1};
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int r, c, d;
+		String[] input;
+		
+		input =br.readLine().split(" ");
+		N =Integer.parseInt(input[0]);
+		M =Integer.parseInt(input[1]);
+		
+		input =br.readLine().split(" ");
+		r =Integer.parseInt(input[0]);
+		c =Integer.parseInt(input[1]);
+		d =Integer.parseInt(input[2]);
+		
+		map =new int[N][M];
+		
+		for(int i =0; i <N; i++)
+		{
+			input =br.readLine().split(" ");
+			for(int j =0; j <M; j++)
+				map[i][j] =input[j].charAt(0)-'0';
+		}
+		search(r, c, d);
+		
+		bw.write(count +"\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	public static void search(int r, int c, int d)
+	{
+		System.out.println("r: " +r);
+		System.out.println("c: " +c);
+		System.out.println("d: " +d);
+		print(map);
+		
+		if(map[r][c] ==0)			//1
+		{
+			map[r][c] =1;
+			count++;
+		}
+		
+		if(checkDir(r, c, d))
+		{
+			d--;
+			if(d <0)
+				d =3;
+			search(r+dirR[d], c+dirC[d], d);
+		}else
+		{
+			d--;
+			if(d <0)
+				d =3;
+		}
+		
+		for(int i =0; i <3; i++)	//3번 턴
+		{			
+			if(checkDir(r, c, d))
+			{
+				d--;
+				if(d <0)
+					d =3;
+				search(r+dirR[d], c+dirC[d], d);
+			}else
+			{
+				d--;
+				if(d <0)
+					d =3;
+			}
+				
+		}
+		return;
+	}
+	public static boolean checkDir(int r, int c, int d)		//현재방향의 왼쪽으로 돌고 1보앞에 자리가 있는지 확인
+	{
+		System.out.println("check");
+		System.out.print("다음방향: ");
+		d--;
+		if(d <0)
+			d =3;
+		System.out.println(d);
+		
+		if(0 <=r+dirR[d] && r+dirR[d] <N
+				&& 0 <=c+dirC[d] && c+dirC[d] <M
+				&& map[r+dirR[d]][c+dirC[d]] ==0)
+		{
+			System.out.println("nextR: " +(r+dirR[d]));
+			System.out.println("nextC: " +(c+dirC[d]));
+			return true;
+		}
+			
+		return false;
+	}
+	public static void print(int[][] map)
+	{
+		for(int i =0; i <N; i++)
+		{
+			for(int j =0; j <M; j++)
+				System.out.print(map[i][j] +" ");
+			System.out.println();
+		}
+		System.out.println("=======================");
+		
+	}
+}

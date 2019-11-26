@@ -1,0 +1,23 @@
+import java.util.Scanner;
+
+public class Main
+{
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		int[] dp =new int[1000001];
+		dp[1] =0;
+		dp[2] =1;
+		for(int i =3; i <dp.length; i++)
+		{
+			dp[i] =dp[i-1] +1;		//dp는 방법의 수인데, 전보다 한번더연산을 하므로.
+			if(i %3 ==0)
+				dp[i] =Math.min(dp[i/3] +1, dp[i]);
+			if(i %2 ==0)
+				dp[i] =Math.min(dp[i/2] +1, dp[i]);
+		}
+		int n =input.nextInt();
+		System.out.println(dp[n]);
+	}
+	
+}

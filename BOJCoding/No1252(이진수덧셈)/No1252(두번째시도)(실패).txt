@@ -1,0 +1,103 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+public class Main
+{
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		String[] input;
+		String s1 ="", s2 ="";
+		
+		input =br.readLine().split(" ");
+		if(input[0].contains("1"))			//아예 0인경우는 제거할 필요가 없음.
+			s1 =removeZero(input[0]);
+		else
+			s1 =input[0];
+		if(input[1].contains("1"))
+			s2 =removeZero(input[1]);
+		else
+			s2 =input[1];
+		bw.write(addBinary(s1, s2) +"\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	public static String removeZero(String s)			//수의 처음에 0이 오는경우 제거.
+	{
+		StringBuilder sb =new StringBuilder();
+		int len =s.length();
+		int index =0;
+		
+		for(int i =0; i <len; i++)
+		{
+			if(s.charAt(i) =='0')
+				index++;
+			else
+				break;
+		}
+		
+		for(int i =index; i <len; i++)
+			sb.append(s.charAt(i));
+		
+		return sb.toString();
+	}
+	public static String addBinary(String s1, String s2)
+	{
+		StringBuilder sb;
+		String b1 =new StringBuilder(s1).reverse().toString();		//거꾸로
+		String b2 =new StringBuilder(s2).reverse().toString();
+		int len1 =b1.length();
+		int len2 =b2.length();
+		int len =len1;
+		int carrying =0;
+		
+		if(len1 <len2)						//길이 맞추기
+		{
+			sb =new StringBuilder(b1);
+			for(int i =len1; i <len2; i++)
+				sb.append(0);
+			b1 =sb.toString();
+			len =len2;
+		}else if(len1 >len2)
+		{
+			sb =new StringBuilder(b2);
+			for(int i =len2; i <len1; i++)
+				sb.append(0);
+			b2 =sb.toString();
+			len =len1;
+		}
+		sb =new StringBuilder();
+		
+		for(int i =0; i <len; i++)
+		{
+			int n1 =b1.charAt(i) -'0';
+			int n2 =b2.charAt(i) -'0';
+			int sum =n1+n2+carrying;
+			carrying =0;
+			
+			if(sum ==0)
+				sb.append(0);
+			else if(sum ==1)
+				sb.append(1);
+			else if(sum ==2)
+			{
+				carrying =1;
+				sb.append(0);
+			}else if(sum ==3)
+			{
+				carrying =1;
+				sb.append(1);
+			}
+		}
+		
+		if(carrying ==1)
+			sb.append(1);
+		
+		return sb.reverse().toString();
+	}
+}

@@ -1,0 +1,77 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	static int[][] arr1;
+	static int[][] arr2;
+	static boolean[][] visited;
+	
+	public static void main(String[] args) throws IOException
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		String s;
+		StringTokenizer st;
+		int n =Integer.parseInt(br.readLine());
+		arr1 =new int[n][n];
+		arr2 =new int[n][n];
+		for(int i =0; i <n; i++)
+		{
+			s =br.readLine();
+			st =new StringTokenizer(s);
+			for(int j =0; j <n; j++)
+				arr1[i][j] =Integer.parseInt(st.nextToken());
+		}
+		for(int i =0; i <arr1.length; i++)
+		{
+			for(int j =0; j <arr1[i].length; j++)
+			{
+				if(arr1[i][j] ==1)
+					bfs(i, j);
+			}
+		}
+		for(int i =0; i <arr2.length; i++)
+		{
+			for(int j =0; j <arr2[i].length; j++)
+			{
+				bw.write(arr2[i][j] + " ");
+			}
+			bw.write("\n");
+		}
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	public static void bfs(int x, int y)
+	{
+		Queue<Integer> queue =new LinkedList<Integer>();
+		visited =new boolean[arr1.length][arr1.length];
+		int cur =x;
+		int next =y;
+		arr2[cur][next] =1;
+		visited[cur][next]= true;
+		queue.add(next);
+		while(queue.size() >0)
+		{
+			cur =queue.poll();
+			for(int i =0; i <arr1[cur].length; i++)
+			{
+				if(arr1[cur][i] ==1 && !visited[cur][i])
+				{
+					arr2[x][i] =1;
+					arr2[cur][i] =1;
+					visited[x][i] =true;
+					visited[cur][i] =true;
+					queue.add(i);
+				}
+			}
+		}
+	}
+}

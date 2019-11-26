@@ -1,0 +1,74 @@
+No10866
+1) 직접구현한것
+
+
+2) 라이브러리 이용.
+import java.util.ArrayDeque;
+import java.util.Scanner;
+
+public class Main
+{
+	
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		ArrayDeque<Integer> deque =new ArrayDeque<Integer>();
+		int N =input.nextInt();
+		
+		for(int i =0; i <N; i++)
+		{
+			String s =input.next();
+			if(s.equals("push_front"))
+			{
+				int n =input.nextInt();
+				deque.addFirst(n);
+				
+			}else if(s.equals("push_back"))
+			{
+				int n =input.nextInt();
+				deque.addLast(n);
+			}
+			else if(s.equals("pop_front"))
+			{
+				if(deque.size() ==0)
+					System.out.println(-1);
+				else
+					System.out.println(deque.removeFirst());
+			}
+			else if(s.equals("pop_back"))
+			{
+				if(deque.size() ==0)
+					System.out.println(-1);
+				else
+					System.out.println(deque.removeLast());
+			}
+			else if(s.equals("size"))
+			{
+				System.out.println(deque.size());
+			}
+			else if(s.equals("empty"))
+			{
+				if(deque.size() ==0)
+					System.out.println(1);
+				else
+					System.out.println(0);
+					
+			}
+			else if(s.equals("front"))
+			{
+				if(deque.size() ==0)
+					System.out.println(-1);
+				else
+					System.out.println(deque.getFirst());
+			}
+			else if(s.equals("back"))
+			{
+				if(deque.size() ==0)
+					System.out.println(-1);
+				else
+					System.out.println(deque.getLast());
+			}
+		}
+		 
+	} 
+}

@@ -1,0 +1,33 @@
+import java.util.Scanner;
+
+public class Main
+{
+
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		int n =0;
+		do
+		{
+			n =input.nextInt();
+			if(n !=0)
+			{
+				String s =String.valueOf(n);
+				boolean check =true;
+				for(int i =0; i <s.length(); i++)
+				{
+					if(s.charAt(i) !=s.charAt(s.length() -i -1))
+					{
+						check =false;
+						break;
+					}
+				}
+				if(check)
+					System.out.println("yes");
+				else
+					System.out.println("no");
+			}
+		}while(n !=0);
+	}
+	
+}

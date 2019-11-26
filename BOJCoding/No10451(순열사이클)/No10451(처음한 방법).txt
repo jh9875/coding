@@ -1,0 +1,71 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.Stack;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	static BufferedReader br;
+	static BufferedWriter bw;
+	public static void main(String[] args) throws NumberFormatException, IOException
+	{
+		br =new BufferedReader(new InputStreamReader(System.in));
+		bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int t =Integer.parseInt(br.readLine());
+		
+		while(t-- >0)
+		{
+			int n =Integer.parseInt(br.readLine());
+			int[] arr =new int[n];
+			String s =br.readLine();
+			StringTokenizer st =new StringTokenizer(s);
+			for(int i =0; i <arr.length; i++)
+				arr[i] =Integer.parseInt(st.nextToken());
+			bw.write(cycle(arr)+"\n");
+		}
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	public static int cycle(int[] array)
+	{
+		int[][] arr =new int[array.length][array.length];
+		boolean[][] visited =new boolean[array.length][array.length];
+		
+		for(int i =0; i <arr.length; i++)
+			arr[i][array[i] -1]++;
+		Stack<Integer> stack =new Stack<Integer>();
+		int count =0;
+		
+		for(int i =0; i <arr.length; i++)
+		{
+			for(int j =0; j <arr[i].length; j++)
+			{
+				if(arr[i][j] ==1 && !visited[i][j])
+				{
+					visited[i][j] =true;
+					int start =i;
+					stack.push(j);
+					while(stack.size() >0)
+					{
+						int num =stack.pop();
+						if(num ==start)
+						{
+							count++;
+							break;
+						}
+							
+						for(int l =0; l <arr.length; l++)
+							if(arr[num][l] ==1 && !visited[num][l])
+								stack.add(l);
+					}
+					break;
+				}
+			}
+		}
+		return count;
+	}
+}

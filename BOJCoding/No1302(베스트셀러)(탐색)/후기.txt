@@ -1,0 +1,16 @@
+많이 풀어본 문제라서 비교적 쉽게 풀수있었다.
+Compatator를 이용해서 푼 문제다.
+이 문제는 몇번씩 풀어봤지만 형식을 자주 까먹는것같다.
+Collections.sort(books, new Comparator<Book>()
+		{
+			@Override
+			public int compare(Book book1, Book book2)
+			{
+				if(book1.num ==book2.num)
+					return book1.name.compareTo(book2.name);
+				else
+					return Integer.compare(book2.num, book1.num);
+			}
+		});
+특히 Comparator옆에있는 제네릭? 저걸 자주 잊곤한다.
+그리고 compare메서드 옆에 파라미터로 받는것도 좀 햇갈린다.

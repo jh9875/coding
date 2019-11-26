@@ -1,0 +1,44 @@
+참고: http://palpit.tistory.com/126
+퀵정렬의 원리
+배열의 기준값을 정하고 오른쪽엔 기준값보다 큰 값을, 왼쪽엔 기준값보다 작은값을
+두는 정렬방식이다.
+
+밑에 메서드에서 left가 하는일은 기준값(pivot)보다 큰거나 같은값을 찾는것이다.
+right가 하는일은 기준값보다 작은값을 찾는것이다.
+규칙
+1. left와 right가 만나기 전에 둘다 값을 찾으면 left와 right를 swap해준다.
+2. left와 right가 하나만 찾고 나머지가 만나면 만난값을 기준값과 swap해준다.
+
+
+
+public static void quick(int[] arr, int l, int r)
+	{
+		int left =l;	//파라미터로 받아온 제일 왼쪽값.
+		int right =r;	//제일 오른쪽값
+		int pivot =arr[(l+r) /2];	//중간값.
+		
+		while(left <=right)	//left와 right가 만날때 까지 반복.
+		{
+			while(arr[left] <pivot)	//left가 하는일이 기준값보다 큰값을 찾는것이므로 
+				left++;		//기준값보다 작으면 left를 오른쪽으로 이동시켜준다.
+			while(pivot <arr[right])	//right가 하는일은 left의 반대.
+				right--;
+			
+			if(left <=right)		//이 경우는 서로 원하는 값을 찾은경우.
+			{			//(left는 기준값보다 큰값을 찾고, right는 기준값보다 작은값을 찾은경우)
+				swap(arr, left, right);	//규칙1)에 의해서 바꿔준다.
+				left++;
+				right--;
+			}
+		}
+		if(l <right)		//right가 왼쪽 끝까지 가지 못한경우.
+			quick(arr, l ,right);	//l부터 right는 기준값보다 작은값들..?
+		if(r >left)		//left가 오른쪽 끝까지 가지못한경우
+			quick(arr, left, r);	//left부터 r까지는 기준값보다 큰값들..?
+	}
+	public static void swap(int[] arr, int i, int j)
+	{
+		int temp =arr[i];
+		arr[i] =arr[j];
+		arr[j] =temp;
+	}

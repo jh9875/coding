@@ -1,0 +1,26 @@
+import java.util.Scanner;
+
+public class Main
+{
+	
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		int e =input.nextInt();
+		int s =input.nextInt();
+		int m =input.nextInt();
+		int n1 =0;
+		int n2 =0;
+		int n3 =0;
+		int count =0;
+		while(n1 !=e -1 || n2 !=s -1 || n3 !=m -1)
+		{
+			n1 =(n1+1) %15;
+			n2 =(n2+1) %28;
+			n3 =(n3+1) %19;
+			count++;
+		}
+		System.out.println(count+1);
+	}
+
+}

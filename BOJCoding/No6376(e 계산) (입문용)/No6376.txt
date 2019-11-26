@@ -1,0 +1,37 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+public class Main
+{	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		double var =1;
+		double e =0;
+		
+		bw.write("n e\n");
+		bw.write("- -----------\n");
+		for(int n =0; n <10; n++)
+		{
+			var =1;
+			for(int i =1; i <=n; i++)
+			{
+				var *=i;
+			}
+			var = 1/var;
+			e +=var;
+			if(n ==0 || n ==1)
+				bw.write(n + " " + (int)e +"\n");
+			else if(n ==2)
+				bw.write(n + " " + (float)e +"\n");
+			else
+				bw.write(n + " " + String.format("%.9f", e) +"\n");
+		}
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+}

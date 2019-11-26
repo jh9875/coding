@@ -1,0 +1,40 @@
+import java.util.Scanner;
+
+public class Main
+{
+	static int[] cols;
+	static int count;
+	public static void main(String[] args) 
+	{
+		Scanner input =new Scanner(System.in);
+		int n =input.nextInt();
+		cols =new int[n];
+		count =0;
+		backTracking(0);
+		System.out.println(count);
+	}
+	public static void backTracking(int level)
+	{
+		if(level ==cols.length)
+			count++;
+		else
+		{
+			for(int i =0; i <cols.length; i++)
+			{
+				cols[level] =i;
+				if(isPossible(level))
+					backTracking(level +1);
+			}
+		}
+	}
+	public static boolean isPossible(int level)
+	{
+		for(int i =0; i <level; i++)
+		{
+			if(cols[level] ==cols[i] || Math.abs(level -i) == Math.abs(cols[level] -cols[i]))
+				return false;
+		}
+		return true;
+	}
+	
+}

@@ -1,0 +1,188 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	static class Dust
+	{
+		int before;
+		int after;
+		Dust()
+		{
+			this.before =0;
+			this.after =0;
+		}
+		Dust(int b, int a)
+		{
+			this.before =b;
+			this.after =a;
+		}
+	}
+	static int R, C, T;
+	static int[] dirR = {0, 1, 0, -1};	
+	static int[] dirC = {1, 0, -1, 0};
+	static Dust[][] map;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		
+		st =new StringTokenizer(br.readLine());
+		R =Integer.parseInt(st.nextToken());
+		C =Integer.parseInt(st.nextToken());
+		T =Integer.parseInt(st.nextToken());
+		
+		map =new Dust[R][C];
+		
+		for(int i =0; i <R; i++)							//data input
+		{
+			st =new StringTokenizer(br.readLine());
+			for(int j =0; j <C; j++)
+			{
+				map[i][j] =new Dust();
+				map[i][j].before =Integer.parseInt(st.nextToken());
+			}
+		}
+		
+		for(int i =0; i <T; i++)		//T번 실행
+			action();
+		
+		bw.write(sumMicroDust() +"\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	public static void action()		//동작1, 동작2
+	{
+		act1();
+		act2();
+	}
+	public static void act1()		//미세먼지 확산
+	{
+		for(int i =0; i <R; i++)
+			for(int j =0; j <C; j++)
+				spread(i, j);
+		
+		for(int i =0; i <R; i++)
+		{
+			for(int j =0; j <C; j++)
+			{
+				map[i][j].before =map[i][j].after;
+				map[i][j].after =0;
+			}
+		}
+	}
+	public static void act2()		//공기청정기 동작.
+	{
+		int topR =0;
+		int topC =0;
+		int bottomR =0;
+		int bottomC =0;
+		boolean check =false;
+		
+		for(int i =0; i <R; i++)
+		{
+			for(int j =0; j <C; j++)
+			{
+				if(map[i][j].before ==-1)
+				{
+					if(!check)
+					{
+						topR =i;
+						topC =j;
+						check =true;
+					}else
+					{
+						bottomR =i;
+						bottomC =j;
+					}
+				}
+			}
+		}
+		
+		airCleaner(topR, topC, true);
+		airCleaner(bottomR, bottomC, false);
+	}
+	public static void spread(int r, int c)
+	{
+		int count =0;
+		
+		for(int i =0; i <4; i++)
+		{
+			int nextR =r+dirR[i];
+			int nextC =c+dirC[i];
+			
+			if(0 <=nextR && nextR <R && 0 <=nextC && nextC < C && map[nextR][nextC].before !=-1)
+			{
+				count++;
+				map[nextR][nextC].after +=map[r][c].before/5;
+			}
+		}
+		map[r][c].after +=map[r][c].before -(map[r][c].before/5)*count;
+	}
+	public static void airCleaner(int r, int c, boolean type)		//type이 true면 위쪽, false면 아래쪽.
+	{
+		int prev =0;
+		int nextR =r;
+		int nextC =c;
+		int[] dirR =new int[4];
+		int[] dirC =new int[4];
+		if(type)		//top
+		{
+			dirR[0] =0;			//동,북,서,남
+			dirR[1] =-1;
+			dirR[2] =0;
+			dirR[3] =1;
+			dirC[0] =1;
+			dirC[1] =0;
+			dirC[2] =-1;
+			dirC[3] =0;
+		}else			//bottom
+		{
+			dirR[0] =0;			//동,남,서,북
+			dirR[1] =1;
+			dirR[2] =0;
+			dirR[3] =-1;
+			dirC[0] =1;
+			dirC[1] =0;
+			dirC[2] =-1;
+			dirC[3] =0;
+		}
+		for(int i =0; i <4; i++)
+		{
+			nextR +=dirR[i];
+			nextC +=dirC[i];
+			while(0 <=nextR && nextR <R && 0 <=nextC && nextC < C && map[nextR][nextC].before !=-1)
+			{
+				int temp =map[nextR][nextC].before;
+				map[nextR][nextC].before =prev;
+				prev =temp;
+				nextR =nextR +dirR[i];
+				nextC =nextC +dirC[i];
+			}
+			nextR =nextR +(-1)*dirR[i];
+			nextC =nextC +(-1)*dirC[i];
+		}
+	}
+	
+	public static int sumMicroDust()
+	{
+		int sum =0;
+		
+		for(int i =0; i <R; i++)
+		{
+			for(int j =0; j <C; j++)
+			{
+				if(map[i][j].before !=-1)
+					sum +=map[i][j].before;
+			}
+		}
+		
+		return sum;
+	}
+}

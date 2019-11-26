@@ -1,0 +1,38 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+public class Main
+{	
+	public static void main(String[] args) throws IOException, NumberFormatException
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int[][] dp =new int[31][31];
+		for(int i =1; i <31; i++)
+			dp[1][i] =i;
+		for(int i =2; i <31; i++)
+		{
+			for(int j =i; j <31; j++)
+			{
+				for(int k =1; k <j; k++)
+					dp[i][j] +=dp[i-1][k];
+			}
+		}
+		String[] inputs;
+		int t =Integer.parseInt(br.readLine());
+		while(t-- >0)
+		{
+			inputs =br.readLine().split(" ");
+			int n =Integer.parseInt(inputs[0]);
+			int m =Integer.parseInt(inputs[1]);
+			bw.write(dp[n][m] + "\n");
+		}
+		bw.flush();
+		bw.close();
+		br.close();
+		
+	}
+}

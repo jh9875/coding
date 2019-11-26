@@ -1,0 +1,22 @@
+import java.util.Scanner;
+
+public class Main
+{	
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		int A =input.nextInt();
+		int B =input.nextInt();
+		int V =input.nextInt();
+		int count =0;
+		while(V >0)
+		{
+			V -=A;
+			count++;				//낮에 올라간것을 기준으로 하므로 올라가고난후 
+			if(V <=0)				//count를 세고, 밤에 내려간것을 계산함.
+				break;
+			V +=B;
+		}
+		System.out.println(count);
+	}
+}

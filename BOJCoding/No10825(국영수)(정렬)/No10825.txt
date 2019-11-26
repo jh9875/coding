@@ -1,0 +1,76 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
+public class Main
+{	
+	static class Student
+	{
+		String name;
+		int korean;
+		int english;
+		int math;
+		Student(String name, int korean, int english, int math)
+		{
+			this.name =name;
+			this.korean =korean;
+			this.english =english;
+			this.math =math;
+		}
+	}
+	public static void main(String[] args) throws NumberFormatException, IOException
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int N =Integer.parseInt(br.readLine());
+		ArrayList<Student> al =new ArrayList<Student>();
+		String[] inputs;
+		while(N-- >0)
+		{
+			inputs =br.readLine().split(" ");
+			String name =inputs[0];
+			int korean =Integer.parseInt(inputs[1]);
+			int english =Integer.parseInt(inputs[2]);
+			int math =Integer.parseInt(inputs[3]);
+			Student s =new Student(name, korean, english, math);
+			al.add(s);
+		}
+		Collections.sort(al, new Comparator<Student>()
+		{
+			@Override
+			public int compare(Student s1, Student s2) 
+			{
+				if(s1.korean ==s2.korean)		//국어점수가 같으면
+				{
+					if(s1.english ==s2.english)	//국어점수와 영어점수가 같으면
+					{
+						if(s1.math ==s2.math)	//국어,영어,수학점수가 같을때
+						{						//(이름순)
+							return s1.name.compareTo(s2.name);
+						}else					//국어,영어점수가 같고 수학점수가 다를때
+						{						
+							return (-1)*Integer.compare(s1.math, s2.math);
+						}
+					}else						//국어점수가 같고 영어점수가 다르면
+					{
+						return Integer.compare(s1.english, s2.english);
+					}
+				}else							//국어점수가 다르면
+				{
+					return (-1)*Integer.compare(s1.korean, s2.korean);
+				}
+			}
+		});
+		
+		for(int i =0; i <al.size(); i++)
+			bw.write(al.get(i).name +"\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+}

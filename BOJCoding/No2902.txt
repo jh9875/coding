@@ -1,0 +1,20 @@
+import java.util.Scanner;
+
+public class Main
+{
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		String s =input.next();
+		StringBuilder sb =new StringBuilder();
+		
+		for(int i =0; i <s.length(); i++)
+		{
+			char ch =s.charAt(i);
+			if(65 <=ch && ch <=90)
+				sb.append(ch);
+		}
+		System.out.println(sb.toString());
+	}
+	
+}

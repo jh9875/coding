@@ -1,0 +1,117 @@
+import java.util.Scanner;
+
+public class Main
+{
+	public static class Tree
+	{
+		class Node
+		{
+			char data;
+			Node left;
+			Node right;
+			Node(char data)
+			{
+				this.data =data;
+				this.left =null;
+				this.right =null;
+			}
+			Node(char data, Node left, Node right)
+			{
+				this.data =data;
+				this.left =left;
+				this.right =right;
+			}
+		}
+		Node root;
+		public Tree()
+		{
+			this.root =null;
+		}
+		
+		public void add(char data, char left, char right)
+		{
+			if(root ==null)
+			{
+				if(data !='.')
+					root =new Node(data);
+				if(left !='.')
+					root.left =new Node(left);
+				if(right !='.')
+					root.right =new Node(right);
+			}else
+			{
+				search(root, data, left, right);
+			}
+		}
+		public void search(Node node, char data, char left, char right)
+		{
+			if(node ==null)
+				return;
+			else if(node.data ==data)
+			{
+				if(left !='.')
+					node.left =new Node(left);
+				if(right !='.')
+					node.right =new Node(right);
+			}else
+			{
+				search(node.left, data, left, right);
+				search(node.right, data, left, right);
+			}
+		}
+		public void preorder(Node node)
+		{
+			if(node ==null)
+				return;
+			else
+			{
+				System.out.print(node.data);
+				preorder(node.left);
+				preorder(node.right);
+			}
+		}
+		public void inorder(Node node)
+		{
+			if(node ==null)
+				return;
+			else
+			{
+				inorder(node.left);
+				System.out.print(node.data);
+				inorder(node.right);
+			}
+		}
+		public void postorder(Node node)
+		{
+			if(node ==null)
+				return;
+			else
+			{
+				postorder(node.left);
+				postorder(node.right);
+				System.out.print(node.data);
+			}
+		}
+		
+	}
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		int N =input.nextInt();
+		Tree tree =new Tree();
+		for(int i =0; i <N; i++)
+		{
+			char data =input.next().charAt(0);
+			char left =input.next().charAt(0);
+			char right =input.next().charAt(0);
+			tree.add(data, left, right);
+		}
+		tree.preorder(tree.root);
+		System.out.println();
+		tree.inorder(tree.root);
+		System.out.println();
+		tree.postorder(tree.root);
+		System.out.println();
+	}
+
+}

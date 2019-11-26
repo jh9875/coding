@@ -1,0 +1,52 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+
+public class Main
+{	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int N =Integer.parseInt(br.readLine());		//토핑의 종류
+		int[] dough =new int[N];
+		int A, B;			//도우의 가격, 토핑의 가격
+		int C;				//도우의 열량
+		int cal =0;
+		int price =0;
+		int best =Integer.MIN_VALUE;
+		String[] input;
+		input =br.readLine().split(" ");
+		A =Integer.parseInt(input[0]);
+		B =Integer.parseInt(input[1]);
+		C =Integer.parseInt(br.readLine());
+		for(int i =0; i <N; i++)
+			dough[i] =Integer.parseInt(br.readLine());
+		
+		Arrays.sort(dough);
+		
+		best =C/A;
+		int j;
+		for(int i =N-1; i >=0; i--)
+		{
+			cal =C;
+			price =0;
+			for(j =N-1; j >=i; j--)
+			{
+				cal +=dough[j];
+			}
+			price +=A + B*(N-i);
+			if(best <cal/price)
+				best =cal/price;
+		}
+		bw.write(best + "\n");
+		bw.flush();
+		bw.close();
+		br.close();
+		
+	}
+}

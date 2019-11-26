@@ -1,0 +1,72 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.Arrays;
+
+public class Main
+{	
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int N, M, K;
+		int[][] map;
+		String[] input;
+		
+		input =br.readLine().split(" ");		//N, M, K
+		N =Integer.parseInt(input[0]);
+		M =Integer.parseInt(input[1]);
+		K =Integer.parseInt(input[2]);
+		
+		map =new int[N+1][N+1];
+		
+		for(int i =1; i <N+1; i++)
+			Arrays.fill(map[i], 1000000);
+		
+		for(int i =0; i <M; i++)
+		{
+			input =br.readLine().split(" ");
+			int s =Integer.parseInt(input[0]);
+			int e =Integer.parseInt(input[1]);
+			int c =Integer.parseInt(input[2]);
+			map[s][e] =c;
+		}
+		
+		fw(map);
+		
+		int max =0;
+		
+		for(int i =1; i <N+1; i++)
+		{
+			if(map[i][K] +map[K][i] >max)
+				max =map[i][K] +map[K][i];
+		}
+		bw.write(max +"\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	public static void fw(int[][] arr)
+	{
+		int len =arr.length;
+		for(int k =1; k <len; k++)
+		{
+			for(int i =1; i <len; i++)
+			{
+				for(int j =1; j <len; j++)
+				{
+					if(i ==j)
+					{
+						arr[i][j] =0;
+						continue;
+					}
+					if(arr[i][j] >arr[i][k] +arr[k][j])
+						arr[i][j] =arr[i][k] +arr[k][j];
+				}
+			}
+		}
+	}
+	
+}

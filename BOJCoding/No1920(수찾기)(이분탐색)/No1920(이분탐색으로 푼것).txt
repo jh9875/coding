@@ -1,0 +1,59 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.Arrays;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	public static void main(String[] args) throws IOException, NumberFormatException
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int n =Integer.parseInt(br.readLine());
+		int[] A =new int[n];
+		String s =br.readLine();
+		StringTokenizer st =new StringTokenizer(s);
+		for(int i =0; i <A.length; i++)
+			A[i] =Integer.parseInt(st.nextToken());
+		Arrays.sort(A);
+		int m =Integer.parseInt(br.readLine());
+		s =br.readLine();
+		st =new StringTokenizer(s);
+		while(st.hasMoreTokens())
+		{
+			int temp =Integer.parseInt(st.nextToken());
+			if(binarySearch(A, temp))
+				bw.write(1 + " \n");
+			else
+				bw.write(0 + "\n");
+		}
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	public static boolean binarySearch(int[] arr, int n)
+	{
+		int left =0;
+		int right =arr.length -1;
+		int mid =(left +right) /2;
+		while(left <=right)
+		{
+			if(n ==arr[mid])
+				return true;
+			else if(n > arr[mid])
+			{
+				left =mid +1;
+				mid =(left +right) /2;
+			}else
+			{
+				right =mid -1;
+				mid =(left +right) /2;
+			}
+		}
+		return false;
+	}
+	
+}

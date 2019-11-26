@@ -1,0 +1,20 @@
+import java.util.Scanner;
+
+public class Main
+{
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		int first =input.nextInt();
+		int second =input.nextInt();
+		if(first >0 && second >0)
+			System.out.println(1);
+		else if(first >0 && second <0)
+			System.out.println(4);
+		else if(first <0 && second >0)
+			System.out.println(2);
+		else if(first <0 && second <0)
+			System.out.println(3);
+	}
+	
+}

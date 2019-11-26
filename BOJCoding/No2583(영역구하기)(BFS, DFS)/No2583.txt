@@ -1,0 +1,110 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Main
+{	
+	static class Point
+	{
+		int x;
+		int y;
+		Point(int x, int y)
+		{
+			this.x =x;
+			this.y =y;
+		}
+	}
+	static int totalCount =0;
+	static int[][] direction ={{-1, 0, 1, 0},{0, -1, 0, 1}};
+	static ArrayList<Integer> counts =new ArrayList<>();
+	public static void main(String[] args) throws IOException, NumberFormatException
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		String[] inputs =br.readLine().split(" ");
+		int m =Integer.parseInt(inputs[0]);
+		int n =Integer.parseInt(inputs[1]);
+		int k =Integer.parseInt(inputs[2]);
+		int[][] arr =new int[m][n];
+		boolean[][] visited =new boolean[m][n];
+		
+		
+		for(int i =0; i <k; i++)
+		{
+			inputs =br.readLine().split(" ");
+			int x1 =Integer.parseInt(inputs[0]);
+			int y1 =Integer.parseInt(inputs[1]);
+			int x2 =Integer.parseInt(inputs[2]);
+			int y2 =Integer.parseInt(inputs[3]);
+			
+			for(int a =y1; a <y2; a++)
+				for(int b =x1; b <x2; b++)
+				{
+					arr[a][b] =1;
+					visited[a][b] =true;
+				}
+					
+		}
+		//bfs
+		for(int i =0; i <m; i++)
+		{
+			for(int j =0; j <n; j++)
+			{
+				if(arr[i][j] ==0)
+				{
+					counts.add(bfs(arr, visited, i, j));
+					totalCount++;
+				}
+			}
+		}
+		bw.write(totalCount + "\n");
+		Collections.sort(counts);
+		for(int i =0; i <counts.size(); i++)
+			bw.write(counts.get(i) + " ");
+		bw.write("\n");
+		bw.close();
+		br.close();
+		
+	}
+	public static int bfs(int[][] arr, boolean[][] visited, int x, int y)
+	{
+		Queue<Point> queue =new LinkedList<>();
+		int count =0;
+		queue.add(new Point(x, y));
+		int tempx;
+		int tempy;
+		
+		while(!queue.isEmpty())
+		{
+			Point tempP =queue.poll();
+			tempx =tempP.x;
+			tempy =tempP.y;
+			arr[tempx][tempy] =1;
+			count++;
+			
+			//4가지 방향 확인
+			for(int i =0; i <4; i++)
+			{
+				if(0 <=tempx+direction[0][i] && tempx+direction[0][i] <arr.length 
+						&& 0 <= tempy+direction[1][i] && tempy+direction[1][i] <arr[0].length)
+				{
+					Point newPoint =new Point(tempx+direction[0][i], tempy+direction[1][i]);
+					if(arr[newPoint.x][newPoint.y] ==0 
+							&& visited[newPoint.x][newPoint.y] ==false)
+					{
+						visited[newPoint.x][newPoint.y] =true;
+						queue.add(newPoint);
+					}
+				}
+			}
+		}
+		return count;
+	}
+}

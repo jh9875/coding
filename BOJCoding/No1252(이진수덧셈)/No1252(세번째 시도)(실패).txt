@@ -1,0 +1,125 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+public class Main
+{
+	static class Pair
+	{
+		String s1;
+		String s2;
+		Pair(String s1, String s2)
+		{
+			this.s1 =s1;
+			this.s2 =s2;
+		}
+	}
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		String[] input;
+		String s1 ="", s2 ="";
+		
+		input =br.readLine().split(" ");
+		s1 =input[0];
+		s2 =input[1];
+		Pair p =setLength(s1, s2);
+		s1 =p.s1;
+		s2 =p.s2;
+		
+		p =removeZero(s1, s2);
+		s1 =p.s1;
+		s2 =p.s2;
+		
+		bw.write(addBinary(s1, s2) +"\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	public static Pair setLength(String s1, String s2)		//길이가 다른경우 똑같이 해주고
+	{
+		int len1 =s1.length();
+		int len2 =s2.length();
+		String b1 =new StringBuilder(s1).reverse().toString();		//거꾸로
+		String b2 =new StringBuilder(s2).reverse().toString();
+		StringBuilder sb;
+		
+		if(len1 <len2)						//길이 맞추기
+		{
+			sb =new StringBuilder(b1);
+			for(int i =len1; i <len2; i++)
+				sb.append(0);
+			s1 =new String(sb.reverse().toString());
+		}else if(len1 >len2)
+		{
+			sb =new StringBuilder(b2);
+			for(int i =len2; i <len1; i++)
+				sb.append(0);
+			s2 =new String(sb.reverse().toString());
+		}
+		return new Pair(s1, s2);
+	}
+	
+	public static Pair removeZero(String s1, String s2)	//수의 처음에 0이 오는경우 제거.(같은수만큼)
+	{
+		StringBuilder sb1 =new StringBuilder();
+		StringBuilder sb2 =new StringBuilder();
+		int len =s1.length();
+		int index =0;
+		
+		for(int i =0; i <len; i++)
+		{
+			if(s1.charAt(i) =='0' && s2.charAt(i) =='0')
+				index++;
+			else
+				break;
+		}
+		
+		for(int i =index; i <len; i++)
+		{
+			sb1.append(s1.charAt(i));
+			sb2.append(s2.charAt(i));
+		}
+		return new Pair(sb1.toString(), sb2.toString());
+	}
+	
+	public static String addBinary(String s1, String s2)
+	{
+		StringBuilder sb =new StringBuilder();
+		String b1 =new StringBuilder(s1).reverse().toString();		//거꾸로
+		String b2 =new StringBuilder(s2).reverse().toString();
+		int len =b1.length();
+		int carrying =0;
+		
+		
+		for(int i =0; i <len; i++)
+		{
+			int n1 =b1.charAt(i) -'0';
+			int n2 =b2.charAt(i) -'0';
+			int sum =n1+n2+carrying;
+			carrying =0;
+			
+			if(sum ==0)
+				sb.append(0);
+			else if(sum ==1)
+				sb.append(1);
+			else if(sum ==2)
+			{
+				carrying =1;
+				sb.append(0);
+			}else if(sum ==3)
+			{
+				carrying =1;
+				sb.append(1);
+			}
+		}
+		
+		if(carrying ==1)
+			sb.append(1);
+		
+		return sb.reverse().toString();
+	}
+	
+}

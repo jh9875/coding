@@ -1,0 +1,41 @@
+import java.util.Scanner;
+
+public class Main
+{	
+
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		int tempNum =0;
+		String s =" ";
+		char operator =' ';
+		int sum =input.nextInt();
+		while(true)
+		{
+			s =input.next();
+			if(s.equals("+"))
+				operator ='+';
+			else if(s.equals("-"))
+				operator ='-';
+			else if(s.equals("*"))
+				operator ='*';
+			else if(s.equals("/"))
+				operator ='/';
+			else if(s.equals("="))
+				break;
+			else
+			{
+				tempNum =Integer.parseInt(s);
+				if(operator =='+')
+					sum +=tempNum;
+				else if(operator =='-')
+					sum -=tempNum;
+				else if(operator =='*')
+					sum *=tempNum;
+				else if(operator =='/')
+					sum =sum /tempNum;
+			}
+		}
+		System.out.println(sum);
+	}
+}

@@ -1,0 +1,44 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.Arrays;
+
+public class Main
+{	
+	static int N, S;
+	static int[] arr;
+	static int count =0;
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		
+		String[] input =br.readLine().split(" ");
+		N =Integer.parseInt(input[0]);
+		S =Integer.parseInt(input[1]);
+		arr =new int[21];
+		input =br.readLine().split(" ");
+		
+		for(int i =0; i <N; i++)
+			arr[i] =Integer.parseInt(input[i]);
+		
+		search(0, 0);
+		
+		bw.write(count + "\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	public static void search(int level, int sum)
+	{
+		sum +=arr[level];
+		if(level >=N)
+			return;
+		if(sum ==S)
+			count++;
+		search(level+1, sum -arr[level]);	//포함 안한거
+		search(level+1, sum);				//포함 한거
+	}
+	
+}

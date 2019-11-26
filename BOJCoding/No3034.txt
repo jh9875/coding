@@ -1,0 +1,24 @@
+import java.util.HashSet;
+import java.util.Scanner;
+
+public class Main
+{	
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		int n =input.nextInt();
+		int w =input.nextInt();
+		int h =input.nextInt();
+		
+		while(n-- >0)
+		{
+			int k =input.nextInt();
+			
+			if(k <=w || k <=h || (double)k <=Math.sqrt(h*h +w*w))
+				System.out.println("DA");
+			else
+				System.out.println("NE");
+		}
+	}
+	
+}

@@ -1,0 +1,21 @@
+이 문제를 보고 떠오른게 트리가 생각났다.
+포함 하냐, 안하냐.
+만약 포함한다면 현재 트리 level에 T[i]만큼 더해주고 P[i]만큼
+sum을 더하고, 만약 sum이 최대치를 찍으면 best가 된다.
+결국 마지막에는 best를 반환하면 된다.
+
+내가쓴 search함수는 이렇다.
+
+public static void search(int level, int sum)
+{
+	if(sum >best)
+		best =sum;
+	
+	for(int i =level; i <=N; i++)
+	{
+		if(i+T[i] <=N+1)
+			search(i+T[i], sum +P[i]);
+	}
+}
+
+for문으로 함수를 호출해 나가기 때문에 포함, 미포함을 둘다 사용할 수 있었다.

@@ -1,0 +1,47 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	public static void main(String[] args) throws IOException
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		String s =br.readLine();
+		StringTokenizer st =new StringTokenizer(s);
+		int n1 =Integer.parseInt(st.nextToken());
+		int n2 =Integer.parseInt(st.nextToken());
+		
+		printDecimal(n1, n2);
+		br.close();
+	}
+	
+	public static void printDecimal(int n1, int n2) throws IOException
+	{
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		
+		for(int i =n1; i <=n2; i++)
+		{
+			if(i ==1)
+				continue;
+			
+			boolean check =true;
+			
+			for(int j =2; j <(int)Math.sqrt(i)+1; j++)
+			{
+				if(i %j ==0)
+				{
+					check =false;
+					break;
+				}
+			}
+			if(check)
+				bw.write(String.valueOf(i)+"\n");//출력
+		}
+		bw.flush();//남아있는 데이터를 모두 출력시킴
+		bw.close();
+	}
+}

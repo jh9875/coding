@@ -1,0 +1,112 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	static class Knight
+	{
+		int r;
+		int c;
+		int count;
+		boolean[][] visited;
+		Knight(int r, int c, int count, int I)		//처음 이동하지 않은 상태
+		{
+			this.r =r;
+			this.c =c;
+			this.count =count;
+			visited =new boolean[I][I];
+		}
+		Knight(int r, int c, int count, boolean[][] visited)		//이동한 부분을 이어받을 때
+		{
+			this.r =r;
+			this.c =c;
+			this.count =count;
+			this.visited =visited;
+		}
+	}
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int T, I, sr, sc, er, ec;
+		StringTokenizer st;
+		
+		T =Integer.parseInt(br.readLine());
+		
+		while(T-- >0)
+		{
+			I =Integer.parseInt(br.readLine());
+			st =new StringTokenizer(br.readLine());
+			sr =Integer.parseInt(st.nextToken());
+			sc =Integer.parseInt(st.nextToken());
+			st =new StringTokenizer(br.readLine());
+			er =Integer.parseInt(st.nextToken());
+			ec =Integer.parseInt(st.nextToken());
+			bw.write(bfs(I, sr, sc, er, ec) +"\n");
+		}
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	public static int bfs(int I, int sr, int sc, int er, int ec)
+	{
+		int count =0;
+		int[] moveR = {-2, -1, 1, 2, 2, 1, -1, -2};
+		int[] moveC = {1, 2, 2, 1, -1, -2, -2, -1};
+		Queue<Knight> queue =new LinkedList<>();
+		
+		queue.offer(new Knight(sr, sc, 0, I));
+		
+		while(!queue.isEmpty())
+		{
+			Knight k =queue.poll();
+			k.visited[k.r][k.c] =true;
+			System.out.println("k.r: " +k.r);
+			System.out.println("k.c: " +k.c);
+			System.out.println("k.count: " +k.count);
+			printVisited(k.visited);
+			System.out.println("===================");
+			
+			if(k.r ==er && k.c ==ec)
+			{
+				count =k.count;
+				break;
+			}
+			
+			for(int i =0; i <8; i++)
+			{
+				if(0 <=k.r +moveR[i] && k.r +moveR[i] <I
+						&& 0 <=k.c +moveC[i] && k.c +moveC[i] <I)
+				{
+					if(!k.visited[k.r +moveR[i]][k.c +moveC[i]])
+					{
+						boolean[][] visited =new boolean[I][I];
+						for(int j =0; j <I; j++)
+							System.arraycopy(k.visited[j], 0, visited[j], 0, 8);
+						queue.offer(new Knight(k.r+moveR[i], k.c+moveC[i], k.count+1, visited));
+					}
+					
+				}
+			}
+		}
+		
+		return count;
+	}
+	public static void printVisited(boolean[][] visited)
+	{
+		int len =visited.length;
+		
+		for(int i =0; i <len; i++)
+		{
+			for(int j =0; j <len; j++)
+				System.out.print(visited[i][j] + " ");
+			System.out.println();
+		}
+		System.out.println("================");
+	}
+}

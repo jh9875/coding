@@ -1,0 +1,49 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
+
+public class Main
+{	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		
+		ArrayList<Integer> al =new ArrayList<>();
+		
+		String[] inputs;
+		int count =0;
+		while(true)
+		{
+			inputs =br.readLine().split(" ");
+			int i =0;
+			int j =0;
+			if(inputs[0].equals("-1"))		//-1이 나오면 중지
+				break;
+			while(!inputs[i].equals("0"))
+			{
+				while(!inputs[j].equals("0"))
+				{
+					if(Integer.parseInt(inputs[i]) ==2*Integer.parseInt(inputs[j]))
+						count++;
+					j++;
+				}
+				i++;
+				j =0;
+			}
+			bw.write(count + "\n");
+			i =0;
+			j =0;
+			count =0;
+		}
+		
+		
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+}

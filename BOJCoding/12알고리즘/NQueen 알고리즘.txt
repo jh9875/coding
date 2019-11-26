@@ -1,0 +1,48 @@
+package test;
+
+import java.util.Scanner;
+
+public class NQueen
+{
+	static int[] cols;
+	static int count =0;
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		int n =input.nextInt();
+		cols =new int[n];
+		backTracking(0);
+	}
+	public static void backTracking(int level)
+	{
+		if(level ==cols.length)				//끝까지 다 온경우.
+		{
+			for(int i =0; i <cols.length; i++)
+				System.out.print(cols[i]);
+			System.out.println();
+		}else
+		{
+			for(int i =0; i <cols.length; i++)	//지금 level이 행이므로 이 행의 모든열에 둬서 가능한지 확인
+			{
+				cols[level] =i;
+				if(isPossible(level))
+					backTracking(level +1);
+			}
+		}
+	}
+	public static boolean isPossible(int level)
+	{
+		for(int i =0; i <level; i++)		//i가 level까지 이므로, 전에 있는것들이랑 현제 둘려는 것이랑 비교
+		{
+			//cols[i] ==cols[level] 이거는 같은 열에 있는지 확인
+			
+			//Math.abs(level -i) ==Math.abs(cols[level] -cols[i])
+			//이거는 같은 대각선상에 있는지확인.(밑변과 높이가 같으면 대각선상에 있다고 볼수있음)
+			//(부가설명. level -i는 행의 차이이므로 높이를 의미하고, cols[level] -cols[i]는 열의 차이이므로 밑변을 의미.)
+			if(cols[i] ==cols[level] || Math.abs(level -i) ==Math.abs(cols[level] -cols[i]))
+				return false;
+		}
+		return true;
+	}
+
+}

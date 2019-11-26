@@ -1,0 +1,32 @@
+import java.io.*;
+import java.util.*;
+public class Main
+{
+	public static void main(String[] args) throws IOException, NumberFormatException
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int n =Integer.parseInt(br.readLine());
+		String s =br.readLine();
+		StringTokenizer st =new StringTokenizer(s);
+		HashSet<Integer> set =new HashSet<Integer>();
+		while(st.hasMoreTokens())
+			set.add(Integer.parseInt(st.nextToken()));
+		int m =Integer.parseInt(br.readLine());
+		s =br.readLine();
+		st =new StringTokenizer(s);
+		while(st.hasMoreTokens())
+		{
+			int temp =Integer.parseInt(st.nextToken());
+			if(set.contains(temp))
+				bw.write(1 + " ");
+			else
+				bw.write(0 + " ");
+		}
+		bw.write("\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+}

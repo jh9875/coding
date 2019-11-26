@@ -1,0 +1,21 @@
+import java.util.Scanner;
+
+public class Main
+{
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		int N =input.nextInt();
+		int kim =input.nextInt();
+		int lim =input.nextInt();
+		int round =0;
+		while(kim !=lim)
+		{
+			kim =kim/2 + kim%2;
+			lim =lim/2 + lim%2;
+			round++;
+		}
+		System.out.println(round);
+	}
+	
+}

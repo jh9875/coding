@@ -1,0 +1,56 @@
+import java.util.HashSet;
+import java.util.Scanner;
+
+public class Main
+{	
+	static HashSet<Character> hs =new HashSet<>();
+	static char[][] map =new char[20][20];
+	static int[] moveR = {1, 0, -1, 0};		//남,동,서,북
+	static int[] moveC = {0, 1, 0, -1};
+	static int max =0;
+	static int r =0, c =0;
+	
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		r =input.nextInt();
+		c =input.nextInt();
+		for(int i =0; i <r; i++)
+		{
+			String s =input.next();
+			for(int j =0; j <c; j++)
+				map[i][j] =s.charAt(j);
+		}
+		
+		dfs(0, 0);
+		System.out.println(max);
+	}
+	
+	static void dfs(int row, int col)
+	{
+		//이미 지나온 문자이면 되돌아가고 아니면 지나온 길을 기록한다.
+		boolean check =true;			//갈곳이 없으면 false;
+		if(hs.contains(map[row][col]))
+			return;
+		else
+			hs.add(map[row][col]);
+		
+		if(max <hs.size())		//제일 멀리간것을 찾는것이므로 최대사이즈를 기록.
+			max =hs.size();
+		
+		for(int i =0; i <4; i++)
+		{
+			if(0 <=(row+moveR[i]) && (row+moveR[i]) <r &&
+					0 <=(col+moveC[i]) && (col+moveC[i]) <c)
+			{
+				check =false;
+				dfs(row +moveR[i], col +moveC[i]);
+			}
+		}
+		if(true)			//아무곳도 못간경우.
+		{
+			hs.remove(map[row][col]);
+		}
+	}
+	
+}

@@ -1,0 +1,120 @@
+import java.util.Scanner;
+
+public class Main
+{	
+	public static class Heap
+	{
+		int[] data;
+		int lastIndex;
+		public Heap()
+		{
+			this.data =new int[101];		//처음엔 최대 100개의 데이터만 받는다.
+			this.lastIndex =0;				//1번부터 시작하므로.
+		}
+		public void insert(int n)		//데이터 삽입
+		{
+			int cur =++lastIndex;
+			data[lastIndex] =n;			//트리의 마지막에 입력수를 넣어주고 마지막 인덱스 늘려줌.
+			
+			while(cur >=2)				//cur가 1인경우 =>데이터가 1개만 있는경우는 지나치고, 2개이상부터 검사.
+			{
+				if(data[cur] <data[cur/2])	//자식노드가 부모노드보다 작은경우
+				{
+					swap(cur, cur/2);
+					cur /=2;
+				}else						//순서가 맞으면 멈춘다.
+				{
+					break;
+				}
+			}
+			
+		}
+		public int minData()				//최솟값 반환
+		{
+			if(lastIndex ==1)
+				return data[lastIndex--];
+			int minData =data[1];			//제일 위에있는 반환할 데이터
+			data[1] =data[lastIndex];		//제일 끝에있는 수를 제일 위로 올림
+			data[lastIndex--] =0;			//제일 끝수 제거하고, 마지막인덱스 커서를 줄여줌.
+			int cur =1;						//위에서부터 비교할 커서.
+			while(true)			
+			{
+				if(cur >lastIndex)
+					break;
+				System.out.println("cur: " +data[cur]);
+				int left =cur*2;
+				int right =cur*2 +1;
+				System.out.println("left: " +data[left]);
+				System.out.println("right: " +data[right]);
+				
+				if(data[left] !=0 && data[right] !=0)	//자식 둘다 있을때
+				{
+					if(data[left] <data[right])	//왼쪽자식이 더 작을때
+					{
+						if(data[left] <data[cur])	//왼쪽자식이 더 작으면서 부모보다 작을때
+						{
+							swap(left, cur);
+							cur =left;
+						}
+					}else						//오른쪽 자식이 더 작을때
+					{
+						if(data[right] <data[cur])
+						{
+							swap(right, cur);
+							cur =right;
+						}
+					}
+				}else if(data[left] !=0 && data[right] ==0)	//왼쪽자식만 있고 오른쪽 자식을 없을때
+				{
+					if(data[left] <data[cur])	//왼쪽자식이 더 작으면서 부모보다 작을때
+					{
+						swap(left, cur);
+						cur =left;
+					}
+				}else if(data[left] ==0 && data[right] ==0)	//자식 둘다 없을때
+				{
+					break;
+				}
+				
+			}
+			
+			return minData;
+			
+		}
+		public void swap(int i, int j)
+		{
+			int temp =data[i];
+			data[i] =data[j];
+			data[j] =temp;
+		}
+		public void print()
+		{
+			for(int i =1; i <10; i++)
+				System.out.print(data[i] + " ");
+			System.out.println();
+		}
+	}
+	
+	
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		Heap heap =new Heap();
+		String command ="";
+		do
+		{
+			command =input.next();
+			if(command.equals("insert"))
+			{
+				int n =input.nextInt();
+				heap.insert(n);
+				heap.print();
+			}else if(command.equals("last"))
+			{
+				heap.minData();
+				heap.print();
+			}
+		}while(!command.equals("q"));
+		
+	}
+}

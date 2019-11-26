@@ -1,0 +1,26 @@
+import java.util.Scanner;
+
+public class Main
+{
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		int h =input.nextInt();
+		int m =input.nextInt();
+		
+		if(m <45)
+		{
+			if(h !=0)
+			{
+				h -=1;
+				m +=60;
+			}else
+			{
+				h +=23;
+				m +=60;
+			}
+			
+		}
+		System.out.println(h + " " + (m -45));
+	}
+}

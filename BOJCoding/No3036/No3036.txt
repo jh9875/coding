@@ -1,0 +1,55 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Stack;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	public static void main(String[] args) throws NumberFormatException, IOException
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		int n =Integer.parseInt(br.readLine());
+		int[] arr =new int[n];
+		String s =br.readLine();
+		StringTokenizer st =new StringTokenizer(s);
+		int k =0;
+		while(st.hasMoreTokens())
+			arr[k++] =Integer.parseInt(st.nextToken());
+		
+		for(int i =1; i <n; i++)
+			fraction(arr[0], arr[i]);
+	}
+	public static void fraction(int n1, int n2)
+	{
+		int gcd =gcd(n1, n2);
+		StringBuilder sb =new StringBuilder();
+		sb.append(n1/gcd).append("/").append(n2/gcd);
+		System.out.println(sb.toString());
+	}
+	public static int gcd(int n1, int n2)			//최대공약수
+	{
+		Stack<Integer> st1 =new Stack<Integer>();
+		Stack<Integer> st2 =new Stack<Integer>();
+		
+		for(int i =1; i <=n1; i++)			//각 수의 약수들을 stack에 담음.
+			if(n1 %i ==0)
+				st1.push(i);
+		for(int i =1; i <=n2; i++)
+			if(n2 %i ==0)
+				st2.push(i);
+		
+		int num1 =st1.pop();				//stack이므로 제일 큰수부터 시작.
+		int num2 =st2.pop();
+		
+		while(num1 !=num2)					//두 수의 공통의 약수를 구할때 까지 반복
+		{
+			if(num1 <num2)					//num2의 약수가 크다면 하나 더 작은 약수 
+				num2 =st2.pop();
+			else							//num1의 약수가 크다면 num1의 작은약수
+				num1 =st1.pop();
+		}
+		return num1;
+		
+	}
+}

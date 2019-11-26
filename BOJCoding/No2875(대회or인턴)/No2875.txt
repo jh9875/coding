@@ -1,0 +1,28 @@
+import java.util.Scanner;
+
+public class Main
+{	
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		int n =input.nextInt();
+		int m =input.nextInt();
+		int k =input.nextInt();
+
+		while(k-- >0)
+		{
+			if(n/m >=2)	//n:m 비율이 2:1을 넘어갈때
+			{
+				n--;
+			}else if(n/m <2)
+			{
+				m--;
+			}
+		}
+		if(n/m >=2)						//정확히 2:1일때
+			System.out.println(m);
+		else if(n/m <2)
+			System.out.println(n/2);
+	}
+	
+}

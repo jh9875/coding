@@ -1,0 +1,115 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.PriorityQueue;
+
+public class Main
+{
+	public static class Vertex implements Comparable<Vertex>
+	{
+		int index;
+		int distance;
+		public Vertex(int index, int distance)
+		{
+			this.index =index;
+			this.distance =distance;
+		}
+		@Override
+		public int compareTo(Vertex v)
+		{
+			if(this.distance ==v.distance)
+				return this.index -v.index;
+			else	//this.distance != v.distance
+				return this.distance -v.distance;
+		}
+	}
+	public static class Graph
+	{
+		static int n;
+		int[][] map;
+		static int[] distance;
+		
+		public Graph(int n)
+		{
+			this.n =n;
+			this.map =new int[n+1][n+1];
+			this.distance =new int[n+1];
+			
+			for(int i =1; i <n+1; i++)
+				distance[i] =Integer.MAX_VALUE;
+		}
+		public void input(int u, int v, int w)
+		{
+			this.map[u][v] =w;
+		}
+		
+		public void dijkstra(int k)	//k ==start index
+		{
+			PriorityQueue<Vertex> pq =new PriorityQueue<>();
+			distance[k] =0;
+			pq.add(new Vertex(k, distance[k]));
+			
+			while(!pq.isEmpty())
+			{
+				int index =pq.peek().index;
+				int dist =pq.peek().distance;
+				pq.poll();
+				
+				if(dist >distance[index])
+					continue;
+				
+				for(int i =1; i <n+1; i++)
+				{
+					if(map[index][i] !=0 && distance[i] >distance[index] +map[index][i])
+					{
+						distance[i] =distance[index] +map[index][i];
+						pq.add(new Vertex(i, distance[i]));
+					}
+				}
+			}
+		}
+		public String toString()
+		{
+			StringBuilder sb =new StringBuilder();
+			
+			for(int i =1; i <n+1; i++)
+				if(distance[i] ==Integer.MAX_VALUE)
+					sb.append("INF\n");
+				else
+					sb.append(distance[i] +"\n");
+			return sb.toString();
+		}
+	}
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		Graph g =null;
+		String[] input =null;
+		int V =0, E =0, K =0;
+		int u =0, v =0, w =0;
+		
+		input =br.readLine().split(" ");
+		V =Integer.parseInt(input[0]);
+		E =Integer.parseInt(input[1]);
+		input =br.readLine().split(" ");
+		K =Integer.parseInt(input[0]);
+		
+		g =new Graph(V);
+		
+		for(int i =0; i <E; i++)
+		{
+			input =br.readLine().split(" ");
+			u =Integer.parseInt(input[0]);
+			v =Integer.parseInt(input[1]);
+			w =Integer.parseInt(input[2]);
+			g.input(u, v, w);
+		}
+		g.dijkstra(K);
+		bw.write(g +"\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+}

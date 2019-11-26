@@ -1,0 +1,33 @@
+import java.util.Scanner;
+
+public class Main
+{
+	public static void main(String[] args)
+	{	
+		Scanner input =new Scanner(System.in);
+		int n=input.nextInt();
+		String[] names =new String[n];
+		char[] alphabets =new char[26];
+		
+		for(int i =0; i <n; i++)
+			names[i] =input.next();
+		
+		for(int i =0; i <names.length; i++)
+		{
+			String temp =names[i];
+			char ch =temp.charAt(0);
+			alphabets[(int)ch -97]++;
+		}
+		boolean check =false;
+		for(int i =0; i <alphabets.length; i++)
+		{
+			if(alphabets[i] >=5)
+			{
+				System.out.print((char)(i+97));
+				check =true;
+			}
+		}
+		if(check ==false)
+			System.out.println("PREDAJA");
+	}	
+}

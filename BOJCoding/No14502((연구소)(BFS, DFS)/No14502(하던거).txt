@@ -1,0 +1,193 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Main
+{
+	static class Point
+	{
+		int r;
+		int c;
+		Point(int r, int c)
+		{
+			this.r =r;
+			this.c =c;
+		}
+	}
+	static int max =Integer.MIN_VALUE;
+	static int N, M;
+	static int[][] map;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		String[] input;
+		
+		input =br.readLine().split(" ");
+		N =Integer.parseInt(input[0]);
+		M =Integer.parseInt(input[1]);
+		map =new int[N][M];
+		
+		for(int i =0; i <N; i++)
+		{
+			input =br.readLine().split(" ");
+			for(int j =0; j <M; j++)
+				map[i][j] =Integer.parseInt(input[j]);
+		}
+		
+		for(int i =0; i <N; i++)
+		{
+			for(int j =0; j <M; j++)
+			{
+				if(map[i][j] ==0)
+				{
+					int[][] copy =new int[N][M];
+					copy =copyMap();
+					erectWall(i, j, 0, copy);
+				}
+				
+			}
+		}
+		bw.write(max +"\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	public static void erectWall(int r, int c, int count, int[][] copy)		//벽 3개 세우기  
+	{
+		if(count >3)
+		{
+			spreadVirus(copy);
+			int n =0;
+			for(int i =0; i <N; i++)
+			{
+				for(int j =0; j <M; j++)
+				{
+					if(copy[i][j] ==1)
+					{
+						n +=safeZone(i, j, copy);
+					}
+				}
+			}
+			
+			if(n >max)
+				max =n;
+			return;
+		}
+		copy[r][c] =1;
+		
+		for(int i =0; i <N; i++)
+		{
+			for(int j =0; j <M; j++)
+			{
+				if(copy[i][j] ==0)
+				{
+					erectWall(i, j, count+1, copy);
+					copy[i][j] =0;
+				}
+					
+			}
+		}
+	}
+	public static void spreadVirus(int[][] copy)			//안전구역
+	{
+		for(int i =0; i <N; i++)
+		{
+			for(int j =0; j <M; j++)
+			{
+				if(copy[i][j] ==2)
+					spreadVirus(i,j, copy);
+			}
+		}
+	}
+	public static void spreadVirus(int r, int c, int[][] copy)
+	{
+		int[] dirR = {0, 1, 0, -1};
+		int[] dirC = {1, 0, -1, 0};
+		boolean[][] visited =new boolean[N][M];
+		Queue<Point> q =new LinkedList<>();
+		q.offer(new Point(r, c));
+		visited[r][c] =true;
+		
+		while(!q.isEmpty())
+		{
+			Point p =q.poll();
+			
+			for(int i =0; i <4; i++)
+			{
+				int nextR =p.r +dirR[i];
+				int nextC =p.c +dirC[i];
+				
+				if(0 <=nextR && nextR <N &&
+						0 <=nextC && nextC <M)
+				{
+					if(copy[nextR][nextC] ==0 && !visited[nextR][nextC])
+					{
+						copy[nextR][nextC] =2;
+						q.offer(new Point(nextR, nextC));
+						visited[nextR][nextC] =true;
+					}
+				}
+			}
+		}
+	}
+	
+	public static int safeZone(int r, int c, int[][] copy)
+	{
+		int count =0;
+		int[] dirR = {0, 1, 0, -1};
+		int[] dirC = {1, 0, -1, 0};
+		boolean[][] visited =new boolean[N][M];
+		
+		Queue<Point> q =new LinkedList<>();
+		q.offer(new Point(r, c));
+		visited[r][c] =true;
+		count++;
+		
+		while(!q.isEmpty())
+		{
+			Point p =q.poll();
+			
+			for(int i =0; i <4; i++)
+			{
+				int nextR =p.r +dirR[i];
+				int nextC =p.c +dirC[i];
+				
+				if(0 <=nextR && nextR <N &&
+						0 <=nextC && nextC <M)
+				{
+					if(copy[nextR][nextC] ==0 && !visited[nextR][nextC])
+					{
+						visited[nextR][nextC] =true;
+						count++;
+						q.offer(new Point(nextR, nextC));
+					}
+				}
+			}
+		}
+		return count;
+	}	
+	public static int[][] copyMap()	//벽을 세울때마다 map을 복사하기 위한 메서드
+	{
+		int[][] copy =new int[N][M];
+		
+		for(int i =0; i <N; i++)
+			for(int j =0; j <M; j++)
+				copy[i][j] =map[i][j];
+		return copy;
+	}
+	public static void printMap(int[][] arr)
+	{
+		for(int i =0; i <N; i++)
+		{
+			for(int j =0; j <M; j++)
+				System.out.print(arr[i][j] +" ");
+			System.out.println();
+		}
+		System.out.println("==============");
+	}
+}

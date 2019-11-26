@@ -1,0 +1,90 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+public class Main
+{
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		String input =null;
+		
+		while(true)
+		{
+			input =br.readLine();
+			if(input.equals("end"))
+				break;
+
+			if(check1(input) && check2(input) && check3(input))
+				bw.write("<" +input +"> is acceptable.\n");
+			else
+				bw.write("<" +input +"> is not acceptable.\n");
+		}
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	public static boolean checkVowel(char c)
+	{
+		char[] vowel = {'a', 'e', 'i', 'o','u'};
+		
+		for(int i =0; i <5; i++)
+		{
+			if(c ==vowel[i])
+				return true;
+		}
+		return false;
+	}
+	public static boolean check1(String s)
+	{
+		char[] vowel = {'a', 'e', 'i', 'o','u'};
+		int len =s.length();
+		for(int i =0; i <len; i++)
+		{
+			char c =s.charAt(i);
+			for(int j =0; j <5; j++)
+				if(c ==vowel[j])
+					return true;
+		}
+				
+		return false;
+	}
+	public static boolean check2(String s)
+	{
+		int len =s.length();
+		StringBuilder sb =new StringBuilder();
+		for(int i =0; i <len; i++)
+		{
+			if(checkVowel(s.charAt(i)))
+				sb.append("V");		//모음
+			else
+				sb.append("C");		//자음
+		}
+		if(sb.toString().contains("VVV") || sb.toString().contains("CCC"))
+			return false;
+		else
+			return true;
+	}
+	public static boolean check3(String s)
+	{
+		int len =s.length();
+		char prev =s.charAt(0);
+		
+		for(int i =1; i <len; i++)
+		{
+			
+			if(prev =='e' || prev =='o')
+			{
+				prev =s.charAt(i);
+				continue;
+			}
+			if(s.charAt(i) ==prev)
+				return false;
+			
+			prev =s.charAt(i);
+		}
+		return true;
+	}
+}

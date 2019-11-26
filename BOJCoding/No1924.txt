@@ -1,0 +1,27 @@
+import java.util.Scanner;
+
+public class Main
+{
+	public static void main(String[] args)
+	{
+		int[] months ={31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+		String[] dayOfTheWeek = {"MON", "TUE", "WED", "THU", "FRI","SAT", "SUN"};
+		
+		Scanner input =new Scanner(System.in);
+		
+		int month =input.nextInt();
+		int day =input.nextInt();
+		int diff =0;
+		
+		month =month-1;
+		day =day-1;
+		
+		for(int i =0; i <month; i++)
+			diff +=months[i];
+		diff +=day;
+		
+		System.out.println(dayOfTheWeek[diff%dayOfTheWeek.length]);
+		
+	}
+	
+}

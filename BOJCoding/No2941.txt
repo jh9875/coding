@@ -1,0 +1,104 @@
+import java.util.Scanner;
+
+public class Main
+{
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		String s =input.next();
+		
+		System.out.println(findCroatia(s));
+		
+	}
+	
+	public static int findCroatia(String s)
+	{
+		int count =0;
+		char curr;
+		for(int i =0; i <s.length(); i++)
+		{
+			curr =s.charAt(i);
+			
+			if(curr =='c')
+			{
+				if((i+1) <s.length() && s.charAt(i +1) =='=')
+				{
+					count++;
+					i +=1;
+				}else if((i+1) <s.length() && s.charAt(i +1) =='-')
+				{
+					count++;
+					i +=1;
+				}else
+				{
+					count++;
+				}
+			}else if(curr =='d')
+			{
+				if((i+1) <s.length() && s.charAt(i +1) =='z')
+				{
+					if((i+2) <s.length() && s.charAt(i +2) =='=')
+					{
+						count++;
+						i +=2;
+					}else
+					{
+						count++;
+					}
+				}else if((i+1) <s.length() && s.charAt(i +1) =='-')
+				{
+					count++;
+					i +=1;
+				}else
+				{
+					count++;
+				}
+			}else if(curr =='l')
+			{
+				if((i+1) <s.length() && s.charAt(i +1) =='j' )
+				{
+					count++;
+					i +=1;
+				}else
+				{
+					count++;
+				}
+			}else if(curr =='n')
+			{
+				if((i+1) <s.length() && s.charAt(i +1) =='j' )
+				{
+					count++;
+					i +=1;
+				}else
+				{
+					count++;
+				}
+			}else if(curr =='s')
+			{
+				if((i+1) <s.length() && s.charAt(i +1) =='=')
+				{
+					count++;
+					i +=1;
+				}else
+				{
+					count++;
+				}
+			}else if(curr =='z')
+			{
+				if((i+1) <s.length() && s.charAt(i +1) =='=')
+				{
+					count++;
+					i +=1;
+				}else
+				{
+					count++;
+				}
+			}else
+			{
+				count++;
+			}	
+		}
+		
+		return count;
+	}
+}

@@ -1,0 +1,57 @@
+import java.io.*;
+import java.util.*;
+public class Main
+{
+	public static void main(String[] args) throws IOException, NumberFormatException
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int n =Integer.parseInt(br.readLine());
+		int[] cards =new int[n];
+		String s =br.readLine();
+		StringTokenizer st =new StringTokenizer(s);
+		for(int i =0; i <n; i++)
+			cards[i] =Integer.parseInt(st.nextToken());
+		Arrays.sort(cards);
+		int m =Integer.parseInt(br.readLine());
+		s =br.readLine();
+		st =new StringTokenizer(s);
+		while(st.hasMoreTokens())
+		{
+			int temp =Integer.parseInt(st.nextToken());
+			if(binarySearch(cards, temp))
+				bw.write(1 + " ");
+			else
+				bw.write(0 + " ");
+		}
+		bw.write("\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	public static boolean binarySearch(int[] arr, int n)
+	{
+		boolean check =false;
+		int first =0;
+		int last =arr.length -1;
+		int mid =(first +last) /2;
+		while(last -first >=0)
+		{
+			if(arr[mid] ==n)
+			{
+				check =true;
+				break;
+			}else if(arr[mid] <n)
+			{
+				first =mid +1;
+				mid =(first+last) /2;
+			}else if(arr[mid] >n)
+			{
+				last =mid -1;
+				mid =(first+last) /2;
+			}
+		}
+		return check;
+	}
+	
+}

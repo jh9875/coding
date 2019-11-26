@@ -1,0 +1,63 @@
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Scanner;
+
+public class Main
+{	
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		int n =input.nextInt();
+		int k =input.nextInt();
+		if(n <k)
+			System.out.println(bfs1(n, k));
+		else if(n ==k)
+			System.out.println(0);
+		else				//n이 더 큰경우 -1씩만 이동할수 있으므로
+			System.out.println(n -k);
+	}
+	public static int bfs1(int n, int k)
+	{
+		Queue<Integer> queue =new LinkedList<Integer>();
+		boolean[] visited =new boolean[100001];				//방문여부를 확인할 boolean배열
+		HashSet<Integer> set =new HashSet<Integer>();		//BFS에서 그래프의 같은라인에 가장 마지막 데이터를 저장할곳
+		int count =0;										//초를 카운트할 변수.
+		int num =0;											//queue에 담아뒀던 변수를 임시 저장하는 변수
+		
+		for(int i =n; i <=100000; i =i*2)					//트리의 마지막 데이터들을 담을 hashset
+			set.add(i);
+		
+		queue.offer(n);						//처음 방문위치
+		visited[n] =true;
+		
+		while(!queue.isEmpty())
+		{
+			num =queue.poll();
+			
+			if(num ==k)							//원하던 위치를 찾으면 멈춤
+				return count;
+			
+			if(set.contains(num))
+				count++;
+			
+			if(num-1 >=0 && !visited[num-1])	//방문여부와 범위 확인
+			{
+				visited[num-1] =true;
+				queue.offer(num-1);
+			}
+			if(num+1 <=100000 && !visited[num+1])
+			{
+				visited[num+1] =true;
+				queue.offer(num+1);
+			}
+			if(num*2 <=100000 && !visited[num*2])
+			{
+				visited[num*2] =true;
+				queue.offer(num*2);
+			}
+		}
+		return count;
+	}
+	
+}

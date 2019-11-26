@@ -1,0 +1,40 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.HashSet;
+
+public class Main
+{	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		HashSet<Integer> x =new HashSet<>();
+		HashSet<Integer> y =new HashSet<>();
+		String[] input;
+		int n1= 0, n2= 0;
+		
+		for(int i =0; i <3; i++)
+		{
+			input =br.readLine().split(" ");
+			n1 =Integer.parseInt(input[0]);
+			n2 =Integer.parseInt(input[1]);
+			
+			if(x.contains(n1))
+				x.remove(n1);
+			else
+				x.add(n1);
+			
+			if(y.contains(n2))
+				y.remove(n2);
+			else
+				y.add(n2);
+		}
+		
+		bw.write((int) x.toArray()[0] + " " + (int) y.toArray()[0] + "\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+}

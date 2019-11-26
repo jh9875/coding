@@ -1,0 +1,42 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.Arrays;
+
+public class Main
+{	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int N =Integer.parseInt(br.readLine());
+		int[] arr =new int[N];
+		int[] dp =new int[N];
+		String[] input =br.readLine().split(" ");
+		
+		for(int i =0; i <N; i++)
+			arr[i] =Integer.parseInt(input[i]);
+		Arrays.fill(dp, 1);
+		
+		for(int i =N-1; i >=0; i--)		//뒤에서부터 검사.
+		{
+			int bestLen =0;
+			for(int j =i+1; j <N; j++)	//현재 i인덱스로 부터 뒤에있는것들 검사.
+			{
+				if(arr[i] >arr[j])		//감소해야 하므로 작아야한다.
+				{
+					if(dp[j] >bestLen)
+						bestLen =dp[j];
+				}
+			}
+			dp[i] +=bestLen;
+		}
+		
+		Arrays.sort(dp);
+		bw.write(dp[N-1] + "\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+}

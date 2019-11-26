@@ -1,0 +1,163 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int[] dirR = {1, 0, -1, 0};
+		int[] dirC = {0, 1, 0, -1};
+		int R, C;
+		char[][] map;
+		char[][] after50;
+		String input;
+		
+		StringTokenizer st =new StringTokenizer(br.readLine());
+		R =Integer.parseInt(st.nextToken());
+		C =Integer.parseInt(st.nextToken());
+		map =new char[R][C];
+		after50 =new char[R][C];
+		
+		for(int i =0; i <R; i++)
+		{
+			input =br.readLine();
+			for(int j =0; j <C; j++)
+				map[i][j] =input.charAt(j);
+		}
+		
+		for(int i =0; i <R; i++)
+		{
+			for(int j =0; j <C; j++)
+			{
+				if(map[i][j] =='.')
+				{
+					after50[i][j] ='.';
+				}else	//map[i][j] =='X';
+				{
+					int count =0;
+					
+					for(int k =0; k <4; k++)		//4가지 방향 검사.
+					{
+						int nextR =i+dirR[k];
+						int nextC =j+dirC[k];
+						
+						if(!(0 <=nextR && nextR <R) || !(0 <=nextC && nextC <C)
+								|| map[nextR][nextC] =='.')
+						{
+							count++;
+							continue;
+						}
+						
+					}
+					if(count >=3)
+						after50[i][j] ='.';
+					else
+						after50[i][j] ='X';
+				}
+			}
+		}
+		//가로확인 위에서부터 확인.
+		for(int i =0; i <R; i++)
+		{
+			boolean check =true;
+			for(int j =0; j <C; j++)
+			{
+				if(after50[i][j] =='X')
+				{
+					check =false;
+					break;
+				}
+			}
+			if(check)			//X가 없는경우.
+			{
+				for(int j =0; j <C; j++)
+					after50[i][j] ='0';
+			}else
+				break;
+				
+		}
+		//가로 밑에서부터 확인.
+		for(int i =R-1; i >=0; i--)
+		{
+			boolean check =true;
+			for(int j =0; j <C; j++)
+			{
+				if(after50[i][j] =='X')
+				{
+					check =false;
+					break;
+				}
+			}
+			if(check)			//X가 없는경우.
+			{
+				for(int j =0; j <C; j++)
+					after50[i][j] ='0';
+			}else
+				break;
+				
+		}
+		//세로 확인 왼쪽부터
+		for(int i =0; i <C; i++)
+		{
+			boolean check =true;
+			for(int j =0; j <R; j++)
+			{
+				if(after50[j][i] =='X')
+				{
+					check =false;
+					break;
+				}
+			}
+			if(check)
+			{
+				for(int j =0; j <R; j++)
+					after50[j][i] ='0';
+			}else
+				break;
+		}
+		//세로 확인 오른쪽부터
+		for(int i =C-1; i >=0; i--)
+		{
+			boolean check =true;
+			for(int j =0; j <R; j++)
+			{
+				if(after50[j][i] =='X')
+				{
+					check =false;
+					break;
+				}
+			}
+			if(check)
+			{
+				for(int j =0; j <R; j++)
+					after50[j][i] ='0';
+			}else
+				break;
+		}		
+		
+		for(int i =0; i <R; i++)
+		{
+			boolean check =false;
+			for(int j =0; j <C; j++)
+			{
+				if(after50[i][j] =='X' ||after50[i][j] =='.')
+				{
+					bw.write(after50[i][j]);
+					check =true;
+				}
+					
+			}
+			if(check)
+				bw.write("\n");
+		}
+			
+		bw.flush();
+		bw.close();
+		br.close();
+	}	
+}

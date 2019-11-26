@@ -1,0 +1,70 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int r, c, a, b;
+		char[][] arr;
+		char[][] ans;
+		String input;
+		StringTokenizer st =new StringTokenizer(br.readLine());
+		r =Integer.parseInt(st.nextToken());
+		c =Integer.parseInt(st.nextToken());
+	
+		arr =new char[r][c];
+		ans =new char[2*r][2*c];
+		
+		for(int i =0; i <r; i++)
+		{
+			input =br.readLine();
+			for(int j =0; j <c; j++)
+				arr[i][j] =input.charAt(j);
+		}
+		st =new StringTokenizer(br.readLine());
+		a =Integer.parseInt(st.nextToken());
+		b =Integer.parseInt(st.nextToken());
+		
+		for(int i =0; i <r; i++)
+		{
+			for(int j =0; j <c; j++)
+			{
+				ans[i][j] =arr[i][j];
+				ans[i][c+j] =arr[i][c-j-1];
+			}
+		}
+		for(int i =r; i <2*r; i++)
+		{
+			for(int j =0; j <c; j++)
+			{
+				ans[i][j] =arr[2*r-i-1][j];
+				ans[i][c+j] =arr[2*r-i-1][c-j-1];
+			}
+		}
+		
+		if(ans[a-1][b-1] =='.')
+			ans[a-1][b-1] ='#';
+		else
+			ans[a-1][b-1] ='.';
+		
+		for(int i =0; i <2*r; i++)
+		{
+			for(int j =0; j <2*c; j++)
+			{
+				bw.write(ans[i][j]);
+			}
+			bw.write("\n");
+		}
+		
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+}

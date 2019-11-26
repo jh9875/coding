@@ -1,0 +1,47 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.Deque;
+import java.util.LinkedList;
+
+public class Main
+{	
+	static class Node
+	{
+		public int value;
+		public int index;
+
+		Node(int value, int index)
+		{
+			this.value = value;
+			this.index = index;
+		}    
+	}
+	public static void main(String[] args) throws IOException
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		String[] inputs =br.readLine().split(" ");
+		int N =Integer.parseInt(inputs[0]);
+		int L =Integer.parseInt(inputs[1]);
+		Deque<Node> deque =new LinkedList<>();
+		inputs =br.readLine().split(" ");
+		for(int i =0; i <N; i++)
+		{
+			int n =Integer.parseInt(inputs[i]);		//A[i]
+			while(!deque.isEmpty() && deque.getLast().value > n)
+				deque.removeLast();
+			deque.addLast(new Node(n, i));
+			// 너무 오래되서 빼야할 박스들을 빼는 부분
+			if (deque.getFirst().index <= i -L)
+                deque.removeFirst();
+			bw.write(deque.getFirst().value + " ");
+		}
+		
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+}

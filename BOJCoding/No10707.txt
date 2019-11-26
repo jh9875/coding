@@ -1,0 +1,27 @@
+import java.util.Scanner;
+
+public class Main
+{
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		int A=input.nextInt();
+		int B=input.nextInt();
+		int C=input.nextInt();
+		int D=input.nextInt();
+		int P=input.nextInt();
+		
+		int n1 =0;
+		int n2 =0;
+		n1 =A *P;
+		if(P <C)		//기본요금보다 적게
+			n2 =B;
+		else
+			n2 =B + (D *(P -C));
+		
+		if(n1 <n2)
+			System.out.println(n1);
+		else
+			System.out.println(n2);
+	}
+}

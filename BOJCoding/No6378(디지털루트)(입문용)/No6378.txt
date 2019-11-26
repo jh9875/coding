@@ -1,0 +1,42 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		String input =null;
+		int n =0;
+		
+		do
+		{
+			input =br.readLine();
+			if(input.equals("0"))
+				continue;
+			do
+			{
+				n =sum(input);
+				input =String.valueOf(n);
+			}while(n/10 >0);
+			bw.write(n +"\n");
+		}while(!input.equals("0"));
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	public static int sum(String s)
+	{
+		int sum =0;
+		int len =s.length();
+		
+		for(int i =0; i <len; i++)
+			sum +=s.charAt(i) -'0';
+		
+		return sum;
+	}
+}

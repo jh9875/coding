@@ -1,0 +1,29 @@
+import java.util.Scanner;
+
+public class Main
+{	
+
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		char ch =' ';
+		String sentence ="";
+		while(ch !='#')
+		{
+			ch =input.next().charAt(0);
+			if(ch !='#')
+			{
+				sentence =input.nextLine();
+				int count =0;
+				for(int i =0; i <sentence.length(); i++)
+				{
+					char temp =sentence.charAt(i);
+					if(ch ==temp || (int)(ch -32) ==(int)temp)
+						count++;
+				}
+				System.out.println(ch + " " + count);
+			}
+		}
+		
+	}
+}

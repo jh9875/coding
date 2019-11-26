@@ -1,0 +1,48 @@
+
+import java.util.Scanner;
+import java.util.Stack;
+
+public class Main
+{
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		int testCaseN =input.nextInt();
+		
+		for(int i =0; i <testCaseN; i++)
+		{
+			String s =input.next();
+			
+			if(parenthesis(s))
+				System.out.println("YES");
+			else
+				System.out.println("NO");
+		}
+	}
+	public static boolean parenthesis(String s)
+	{
+		Stack<Character> stack =new Stack<Character>();
+		boolean check =true;
+		
+		for(int i =0; i <s.length(); i++)
+		{
+			char ch =s.charAt(i);
+			
+			if(ch =='(')
+				stack.push(ch);
+			else if(ch ==')')
+			{
+				if(stack.size() ==0)
+				{
+					check =false;
+					break;
+				}
+				stack.pop();
+			}
+		}
+		if(stack.size() !=0)
+			check =false;
+		
+		return check;
+	}
+}

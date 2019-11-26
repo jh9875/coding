@@ -1,0 +1,114 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+public class Main
+{	
+	static class Graph
+	{
+		int n;
+		int[][] map;
+		int[] distance;
+		
+		Graph(int n)
+		{
+			this.n =n;
+			this.map =new int[n+1][n+1];
+			this.distance =new int[n+1];
+		}
+	 	public void input(int u, int v, int w)
+		{
+			map[u][v] =w;
+		}
+		
+		public void dijkstra(int v)
+		{
+			boolean[] check =new boolean[n+1];
+			
+			for(int i =1; i <n+1; i++)
+				distance[i] =Integer.MAX_VALUE;
+			
+			distance[v] =0;			//시작위치
+			check[v] =true;			
+			
+			for(int i =1; i <n+1; i++)
+			{
+				if(!check[i] && map[v][i] !=0)
+					distance[i] =map[v][i];
+			}
+			
+			for(int i =0; i <n-1; i++)
+			{
+				int min =Integer.MAX_VALUE;
+				int minIndex =-1;
+				
+				for(int j =1; j <n+1; j++)
+				{
+					if(!check[j] && distance[j] !=Integer.MAX_VALUE)
+					{		//인접해있는 점들 중 가장 가까운 점을 찾기위해
+						if(distance[j] <min)
+						{
+							min =distance[j];
+							minIndex =j;
+						}
+					}
+				}
+				if(minIndex ==-1)		//시작지점에서 갈 수 없는 경우.
+					break;
+				check[minIndex] =true;
+				
+				for(int j =1; j <n+1; j++)		//인접해있는 distance 갱신
+				{
+					if(!check[j] && map[minIndex][j] !=0)
+						distance[j] =Integer.min(distance[j], distance[minIndex]+map[minIndex][j]);
+				}
+				
+			}
+			
+		}
+		public String getDistance()
+		{
+			StringBuilder sb =new StringBuilder();
+			
+			for(int i =1; i <n+1; i++)
+			{
+				if(distance[i] ==Integer.MAX_VALUE)
+					sb.append("INF\n");
+				else
+					sb.append(distance[i] + "\n");
+			}
+			return sb.toString();
+		}
+	}
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int V =0, E =0, K =0;
+		String[] input =null;
+		
+		input =br.readLine().split(" ");
+		V =Integer.parseInt(input[0]);
+		E =Integer.parseInt(input[1]);
+		input =br.readLine().split(" ");
+		K =Integer.parseInt(input[0]);
+		
+		Graph g =new Graph(V);
+		
+		for(int i =0; i <E; i++)
+		{
+			input =br.readLine().split(" ");
+			int u =Integer.parseInt(input[0]);
+			int v =Integer.parseInt(input[1]);
+			int w =Integer.parseInt(input[2]);
+			g.input(u, v, w);
+		}
+        g.dijkstra(K);
+        bw.write(g.getDistance() +"\n");
+        bw.flush();
+        bw.close();
+        br.close();
+	}
+	
+}

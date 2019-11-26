@@ -1,0 +1,42 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+public class Main
+{	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		String[] input =br.readLine().split(" ");
+		int left =0, right =0, distance =0, n =0;;
+		int N =Integer.parseInt(input[0]);			//스크린 칸
+		int M =Integer.parseInt(input[1]);			//바구니 차지하는 칸
+		int J =Integer.parseInt(br.readLine());		//떨어지는 사과의 수
+		
+		left =1;									//바구니의 왼쪽 끝부분
+		right =M;									//바구니의 오른쪽 끝부분.
+		
+		for(int i =0; i <J; i++)
+		{
+			n =Integer.parseInt(br.readLine());		//떨어지는 사과의 위치
+			if(n <left)
+			{
+				distance +=(left-n);
+				left =n;
+				right =left+M-1;
+			}else if(right <n)
+			{
+				distance +=(n-right);
+				right =n;
+				left =right-M+1;
+			}
+		}
+		bw.write(distance + "\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+}

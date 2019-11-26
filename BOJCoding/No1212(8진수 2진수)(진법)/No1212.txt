@@ -1,0 +1,32 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+public class Main
+{
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		String s =br.readLine();
+		int len =s.length();
+
+		bw.write(Integer.toBinaryString(s.charAt(0)-'0'));
+		for(int i =1; i <len; i++)
+		{
+			int n =s.charAt(i)-'0';
+			String bin =Integer.toBinaryString(n);
+			if(bin.length() <2)	//1磊府 荐老都
+				bw.write("00" +bin);
+			else if(bin.length() <3)	//2磊府荐老锭
+				bw.write("0" +bin);
+			else
+				bw.write(bin);
+		}
+		bw.write("\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+}

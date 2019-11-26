@@ -1,0 +1,73 @@
+import java.util.Scanner;
+
+public class Main
+{	
+	static class Node
+	{
+		int data;
+		Node left;
+		Node right;
+		
+		public Node()
+		{
+			this.data =0;
+			this.left =null;
+			this.right =null;
+		}
+		public Node(int data)
+		{
+			this.data =data;
+			this.left =null;
+			this.right =null;
+		}
+		public void insert(Node node, int data)
+		{
+			if(node.data ==0)	//0은 처음 생성될때의 데이터
+			{
+				node.data =data;
+				return;
+			}
+			
+			if(node.data >data)	//현재 노드보다 작으면 왼쪽으로 재귀
+			{
+				if(node.left ==null)				//비어있으면 넣어주고
+					node.left =new Node(data);
+				else								//있으면 재귀호출해서 비교.
+					insert(node.left, data);
+			}
+			else if(node.data <data)
+			{
+				if(node.right ==null)
+					node.right =new Node(data);
+				else
+					insert(node.right, data);
+			}
+				 
+		}
+		
+		public void postOrder(Node node)
+		{
+			if(node ==null)	//트리의 끝부분에 도달시 되돌아감.
+				return;
+			
+			postOrder(node.left);
+			postOrder(node.right);
+			System.out.println(node.data);
+		}
+		
+	}
+
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		Node binaryTreeRoot =new Node();
+		int num =0;
+		while(input.hasNextInt())	//트리 입력받기
+		{
+			num =input.nextInt();
+			binaryTreeRoot.insert(binaryTreeRoot, num);
+		}
+		//후위순회
+		binaryTreeRoot.postOrder(binaryTreeRoot);
+	}
+}

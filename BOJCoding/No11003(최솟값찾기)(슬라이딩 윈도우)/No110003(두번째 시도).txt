@@ -1,0 +1,124 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+public class Main
+{	
+	public static class Heap
+	{
+		int[] data;
+		int lastIndex;
+		public Heap()
+		{
+			this.data =new int[101];		//처음엔 최대 100개의 데이터만 받는다.
+			this.lastIndex =0;				//1번부터 시작하므로.
+		}
+		public void insert(int n)		//데이터 삽입
+		{
+			int cur =++lastIndex;
+			data[lastIndex] =n;			//트리의 마지막에 입력수를 넣어주고 마지막 인덱스 늘려줌.
+			
+			while(cur >=2)				//cur가 1인경우 =>데이터가 1개만 있는경우는 지나치고, 2개이상부터 검사.
+			{
+				if(data[cur] <data[cur/2])	//자식노드가 부모노드보다 작은경우
+				{
+					swap(cur, cur/2);
+					cur /=2;
+				}else						//순서가 맞으면 멈춘다.
+				{
+					break;
+				}
+			}
+			
+		}
+		public int minDataDelete()				//최솟값 반환
+		{
+			int minData =data[1];			//제일 위에있는 반환할 데이터
+			data[1] =data[lastIndex];		//마지막거를 위로 올리고
+			data[lastIndex--] =0;			//제일 마지막 제거
+			int cur =1;						//현재 커서.
+			
+			while(true)
+			{
+				int left =cur*2;
+				int right =cur*2 +1;
+				
+				if(data[left] ==0 && data[right] ==0)		//왼쪽, 오른쪽 둘달 자식이 없을때.
+					break;
+				if(data[left] !=0 && data[right] ==0)		//왼쪽 자식만 있을때
+				{
+					if(data[left] < data[cur])			//부모보다 자식이 더 작으면
+					{
+						swap(left, cur);
+						cur =left;
+					}else								//바꿀게 없으면 멈춤
+						break;
+				}
+				if(data[left] !=0 && data[right] !=0)		//양쪽 자식 둘다 있을때
+				{
+					if(data[left] <data[right])				//왼쪽 자식이 더 작을때
+					{
+						if(data[left] < data[cur])			//부모보다 자식이 더 작으면
+						{
+							swap(left, cur);
+							cur =left;
+						}
+					}else									//오른쪽 자식이 더 작을때
+					{
+						if(data[right] < data[cur])			//부모보다 자식이 더 작으면
+						{
+							swap(right, cur);
+							cur =right;
+						}
+					}
+				}
+			}
+			
+			return minData;
+		}
+		public int minData()
+		{
+			return data[1];
+		}
+		public void swap(int i, int j)
+		{
+			int temp =data[i];
+			data[i] =data[j];
+			data[j] =temp;
+		}
+	}
+	
+	public static void main(String[] args) throws IOException
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		String[] inputs =br.readLine().split(" ");
+		int N =Integer.parseInt(inputs[0]);
+		int L =Integer.parseInt(inputs[1]);
+		int[] A =new int[N];
+		int[] D =new int[N];
+		inputs =br.readLine().split(" ");
+		for(int i =0; i <N; i++)
+			A[i] =Integer.parseInt(inputs[i]);
+		
+		for(int i =0; i <N; i++)
+		{
+			Heap heap =new Heap();
+			int start =i-L+1;
+			if(start <0)
+				start =0;
+			for(int j =start; j <=i; j++)
+				heap.insert(A[j]);			//구간내의 데이터를 힙에 넣어준다.
+			D[i] =heap.minData();			//구간 내의 최소값을 D배열에 저장.
+		}
+		
+		for(int i =0; i <D.length; i++)
+			bw.write(D[i] + " ");
+		bw.write("\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+}

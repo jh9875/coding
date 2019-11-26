@@ -1,0 +1,82 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Main
+{
+	public static void main(String[] args) throws IOException, NumberFormatException
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		boolean[] arr =new boolean[5100];
+		arr[2] =true;
+		for(int i =3; i <arr.length; i ++)
+		{
+			boolean check =true;
+			for(int j =2; j <Math.sqrt(i) +1; j++)
+				if(i %j ==0)
+				{
+					check =false;
+					break;
+				}
+			arr[i] =check;
+		}
+		int n =Integer.parseInt(br.readLine());
+		while(n >0)
+		{
+			int num =Integer.parseInt(br.readLine());
+			bw.write(goldbach(arr, num) +"\n");
+			n--;
+		}
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	public static String goldbach(boolean[] arr, int num)
+	{
+		StringBuilder sb =new StringBuilder();
+		Queue<Integer> q1 =new LinkedList<Integer>();
+		Queue<Integer> q2 =new LinkedList<Integer>();
+		for(int i =2; i <arr.length; i++)
+		{
+			if(i >num)
+				break;
+			for(int j =i; j <arr.length; j++)
+			{
+				if(i +j >num)
+					break;
+				if(arr[i] && arr[j])	//둘다 소수일때
+				{
+					if(i +j ==num)		//더해서 입력수가 되는것들을 queue에 담음
+					{
+						q1.add(i);
+						q2.add(j);
+					}
+						
+				}
+			}
+		}
+		int n1 =q1.poll();
+		int n2 =q2.poll();
+		int diffMin =n2 -n1;
+		while(q1.size() >0)
+		{
+			int temp1 =q1.poll();
+			int temp2 =q2.poll();
+			if(temp2 -temp1 <diffMin)
+			{
+				diffMin =temp2 -temp1;
+				n1 =temp1;
+				n2 =temp2;
+			}
+		}
+		
+		sb.append(n1).append(" ").append(n2);
+		return sb.toString();
+	}
+	
+}

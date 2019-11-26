@@ -1,0 +1,47 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	public static void main(String[] args) throws NumberFormatException, IOException
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int n =Integer.parseInt(br.readLine());
+		int[] arr =new int[n];
+		String  s =br.readLine();
+		StringTokenizer st =new StringTokenizer(s);
+		int c =0;
+		while(st.hasMoreTokens())
+			arr[c++] =Integer.parseInt(st.nextToken());
+		int[] dp =new int[n];
+		dp[0] =arr[0];
+		if(n !=1)
+		{
+			for(int i =1; i <dp.length; i++)
+				dp[i] =dp[i-1] +arr[i];
+		}
+		
+		int max =dp[0];
+		for(int i =0; i <dp.length; i++)
+		{
+			if(max <dp[i])
+				max =dp[i];
+			for(int j =0; j <i; j++)
+			{
+				int num =dp[i] -dp[j];
+				if(max <num)
+					max =num;
+			}
+		}
+		
+		bw.write(String.valueOf(max));
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+}

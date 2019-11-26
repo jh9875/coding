@@ -1,0 +1,30 @@
+import java.util.Scanner;
+
+public class Main
+{
+
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		
+		int[] alphabets =new int[26];
+		for(int i =0; i <alphabets.length; i++)
+			alphabets[i] =-1;
+		
+		String s =input.next();
+		
+		for(int i =0; i <s.length(); i++)
+		{
+			char ch =s.charAt(i);
+			int num =ch -97;
+			if(alphabets[num] ==-1)
+				alphabets[num] =i;
+		}
+		
+		for(int i =0; i <alphabets.length; i++)
+			System.out.print((int)alphabets[i] + " ");
+		
+		input.close();
+	}
+
+}

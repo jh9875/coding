@@ -1,0 +1,64 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Main
+{
+	static int ans =Integer.MAX_VALUE;
+	static int x =0;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int len =0;
+		int[] arr;
+		x =Integer.parseInt(br.readLine());
+		String temp =String.valueOf(x);
+		len =temp.length();
+		arr =new int[len];
+		
+		for(int i =0; i <len; i++)
+			arr[i] =temp.charAt(i)-'0';
+			
+		
+		for(int i =0; i <len; i++)
+		{
+			boolean[] visited =new boolean[len];
+			visited[i] =true;
+			search(i, len, arr, visited, arr[i]+"");
+		}
+		if(ans ==Integer.MAX_VALUE)
+			bw.write(0 +"\n");
+		else
+			bw.write(ans +"\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	public static void search(int index, int len, int[] arr, boolean[] visited, String num)
+	{
+		if(num.length() ==len)
+		{
+			int n =Integer.parseInt(num);
+			
+			if(x <n && n <ans)
+				ans =n;
+			return;
+		}
+		
+		for(int i =0; i <len; i++)
+		{
+			if(!visited[i])
+			{
+				boolean[] newVisited =new boolean[len];
+				System.arraycopy(visited, 0, newVisited, 0, len);
+				newVisited[i] =true;
+				search(i, len, arr, newVisited, num +arr[i]);
+			}
+		}
+	}
+}

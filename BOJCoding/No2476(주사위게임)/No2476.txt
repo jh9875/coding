@@ -1,0 +1,47 @@
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Main
+{	
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		int N =input.nextInt();
+		int max =0;
+		int sum =0;
+		
+		for(int i =0; i <N; i++)
+		{
+			int n1 =input.nextInt();
+			int n2 =input.nextInt();
+			int n3 =input.nextInt();
+			
+			if(n1 ==n2 && n2 ==n3)	//모두 같은경우
+			{
+				sum =10000 +1000*n1;
+			}else if(n1 ==n2 && n2 !=n3)	//n1,n2같고 n3 다른경우
+			{
+				sum =1000 +100*n1;
+			}else if(n2 ==n3 && n1 !=n3)	//n2, n3같고 n1 다른경우
+			{
+				sum =1000 +100*n2;
+			}else if(n1 ==n3 && n2 !=n3)	//n1, n3같고 n2다른경우
+			{
+				sum =1000 +100*n1;
+			}else if(n1 !=n2 && n2 !=n3 && n1 !=n3)	//n1,n2,n3 다 다른경우
+			{
+				int[] arr =new int[3];
+				arr[0] =n1;
+				arr[1] =n2;
+				arr[2] =n3;
+				Arrays.sort(arr);
+				sum =100*arr[2];
+			}
+			
+			if(max <sum)
+				max =sum;
+		}
+		System.out.println(max);
+	}
+	
+}

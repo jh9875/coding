@@ -1,0 +1,73 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+public class Main
+{	
+	static BufferedReader br;
+	static BufferedWriter bw;
+	static char[][] arr;
+	public static void main(String[] args) throws NumberFormatException, IOException
+	{
+		br =new BufferedReader(new InputStreamReader(System.in));
+		bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int n =Integer.parseInt(br.readLine());
+		arr =new char[65][65];	//1~64
+		
+		for(int i =1; i <=n; i++)
+		{
+			String temp =br.readLine();
+			for(int j =0; j <n; j++)
+			{
+				arr[i][j+1] =temp.charAt(j);
+			}
+		}
+		check(1, n, 1, n);		//전체범위
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	public static void check(int r1, int r2, int c1, int c2) throws IOException	//row범위, column범위
+	{						//정해진 범위의 값들이 모두 같다면 출력하고 아니면 재귀호출.
+		char first =arr[r1][c1];
+		boolean check =true;
+		for(int i =r1; i <=r2; i++)
+		{
+			for(int j =c1; j <=c2; j++)
+			{
+				if(first !=arr[i][j])
+				{
+					check =false;
+					break;
+				}
+			}
+			if(!check)		//이미 틀린게 있으면 찾는걸 멈춤.
+				break;
+		}
+		if(check)			//모두 같은경우
+		{
+			bw.write(first);
+		}else				//다른경우.
+		{
+			
+			if(r2-r1 ==1 || c2-c1 ==1)
+			{
+				bw.write("(");
+				bw.write(arr[r1][c1]);
+				bw.write(arr[r1][c2]);
+				bw.write(arr[r2][c1]);
+				bw.write(arr[r2][c2]);
+				bw.write(")");
+				return;
+			}
+			bw.write("(");
+			check(r1, (r1+r2)/2, c1, (c1+c2)/2);	//왼쪽 위
+			check(r1, (r1+r2)/2, (c1+c2)/2+1, c2);	//오른쪽 위
+			check((r1+r2)/2+1, r2, c1, (c1+c2)/2);	//왼쪽 아래
+			check((r1+r2)/2+1, r2, (c1+c2)/2+1, c2);	//오른쪽 아래
+			bw.write(")");
+		}
+	}
+}

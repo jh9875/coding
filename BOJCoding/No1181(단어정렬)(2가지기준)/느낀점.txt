@@ -1,0 +1,22 @@
+comparator를 배운후 바로 이문제에 써먹어봤다.
+무사히 통과했다
+근데 다른사람결과를 봤는데 내 코드보다 훨씬더 적은시간이 들었다.
+그래서 어떤사람껄 봤는데
+ArrayList의 Collections.sort를 이용했다.
+코드를 보면 아래와같이
+Collections.sort(al, new Comparator<String>()
+		{
+			@Override
+			public int compare(String s1, String s2)
+			{
+				if(s1.length() ==s2.length())			//두 단어의 길이가 같으면 문자비교
+					return s1.compareTo(s2);
+				else									//길이가 다르면 길이비교
+					return s1.length() -s2.length();
+			}
+			
+		});
+이런형식인데 거의 똑같다.
+배열이냐 어레이리스트냐 그차이다.
+근데 ArrayList를 Collections.sort한게 조금더 빨랐다.
+그리고 중복제거 하는데 어떤사람은 TreeSet을 이용해서 중복제거 했다.

@@ -1,0 +1,15 @@
+import java.util.Scanner;
+
+public class Main
+{	
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		int r =input.nextInt();
+		double ans1 =r*r*Math.PI;
+		double ans2 =2*r*r;
+		System.out.println(String.format("%.6f", ans1));
+		System.out.println(String.format("%.6f", ans2));
+	}
+	
+}

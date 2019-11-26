@@ -1,0 +1,47 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	static int N, M;
+	static BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st;
+		
+		st =new StringTokenizer(br.readLine());
+		N =Integer.parseInt(st.nextToken());
+		M =Integer.parseInt(st.nextToken());
+		
+		backtracking();
+		
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+	public static void backtracking() throws Exception
+	{
+		for(int i =1; i <N+1; i++)
+			backtracking(1, i +" ");
+	}
+	
+	public static void backtracking(int count, String s) throws Exception
+	{
+		if(count ==M)
+		{
+			bw.write(s +"\n");
+			
+			return;
+		}
+		
+		for(int i =1; i <N+1; i++)
+			backtracking(count+1, s +i +" ");
+	}
+}

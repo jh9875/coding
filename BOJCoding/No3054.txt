@@ -1,0 +1,104 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+public class Main
+{	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		String input;
+		int len =0;
+		
+		input =br.readLine();
+		len =input.length();
+		
+		//line1
+		bw.write("..");
+		for(int i =1; i <len+1; i++)
+		{
+			if(i %3 ==0)
+				bw.write("*");
+			else
+				bw.write("#");
+			if(i !=len)
+				bw.write("...");
+			else
+				bw.write("..");
+		}
+		bw.write("\n");
+		
+		//line2.
+		for(int i =1; i <len+1; i++)
+		{
+			if(i%3 ==0)
+				bw.write(".*.*");
+			else
+				bw.write(".#.#");
+		}
+		bw.write(".\n");
+		
+		//line3
+		bw.write("#");
+		for(int i =1; i <len+1; i++)
+		{
+			if(i%3 ==0)
+			{
+				bw.write("." +input.charAt(i-1));
+				bw.write(".*");
+			}else
+			{
+				if(i !=len)
+				{
+					if((i+1)%3 ==0)
+					{
+						bw.write("." +input.charAt(i-1));
+						bw.write(".*");
+					}else
+					{
+						bw.write("." +input.charAt(i-1));
+						bw.write(".#");
+					}
+				}else
+				{
+					bw.write("." +input.charAt(i-1));
+					bw.write(".#");
+				}
+				
+			}
+		}
+		bw.write("\n");
+				
+		//line4.
+		for(int i =1; i <len+1; i++)
+		{
+			if(i%3 ==0)
+				bw.write(".*.*");
+			else
+				bw.write(".#.#");
+		}
+		bw.write(".\n");		
+
+		//line5
+		bw.write("..");
+		for(int i =1; i <len+1; i++)
+		{
+			if(i %3 ==0)
+				bw.write("*");
+			else
+				bw.write("#");
+			if(i !=len)
+				bw.write("...");
+			else
+				bw.write("..");
+		}
+		bw.write("\n");		
+		
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+}

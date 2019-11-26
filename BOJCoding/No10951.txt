@@ -1,0 +1,19 @@
+import java.util.Scanner;
+
+public class Main
+{
+	public static void main(String[] args)
+	{	
+		Scanner input =new Scanner(System.in);
+		while(input.hasNext())
+		{
+			int n1 =input.nextInt();
+			int n2 =input.nextInt();
+			System.out.println(n1+n2);
+		}
+	}
+	
+	
+		
+	
+}

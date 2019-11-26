@@ -1,0 +1,67 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.PriorityQueue;
+
+public class Main
+{
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		String input1 =br.readLine();
+		String op =br.readLine();
+		String input2 =br.readLine();
+		StringBuilder sb =new StringBuilder();
+		int len1 =input1.length();
+		int len2 =input2.length();
+		
+		if(op.equals("*"))
+		{
+			if(len1 >len2)
+			{
+				sb.append(input1);
+				input2 =input2.substring(1, len2);
+				sb.append(input2);
+			}else
+			{
+				sb.append(input2);
+				input1 =input1.substring(1, len1);
+				sb.append(input1);
+			}
+		}else	//op.equals("+")
+		{
+			if(len1 >len2)
+			{
+				char[] temp =input1.toCharArray();
+				for(int i =0; i <len1; i++)
+				{
+					if(i ==len1-len2)
+						sb.append(1);
+					else
+						sb.append(temp[i]);
+				}
+			}else if(len1 <len2)
+			{
+				char[] temp =input2.toCharArray();
+				for(int i =0; i <len2; i++)
+				{
+					if(i ==len2-len1)
+						sb.append(1);
+					else
+						sb.append(temp[i]);
+				}
+			}else		//len1 ==len2
+			{
+				input1 =input1.substring(1, len1);
+				sb.append(2).append(input1);
+			}
+		}
+		bw.write(sb.toString() +"\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+}

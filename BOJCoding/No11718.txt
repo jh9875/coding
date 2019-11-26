@@ -1,0 +1,23 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Main
+{
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		
+		ArrayList<String> al =new ArrayList<String>();
+		
+		while(input.hasNextLine())
+		{
+			String s =input.nextLine();
+			al.add(s);
+		}
+		
+		for(int i =0; i <al.size(); i++)
+			System.out.println(al.get(i));
+		
+		input.close();
+	}
+}

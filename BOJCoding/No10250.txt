@@ -1,0 +1,45 @@
+import java.util.Scanner;
+
+public class Main
+{
+	public static void main(String[] args)
+	{
+		Scanner input  =new Scanner(System.in);
+		int t =input.nextInt();
+		
+		for(int i =0; i <t; i++)
+		{
+			int h =input.nextInt();
+			int w =input.nextInt();
+			int n =input.nextInt();
+			System.out.println(assignRoom(h, w, n));
+		}
+	}
+	public static int assignRoom(int h, int w, int n)
+	{
+		StringBuilder sb =new StringBuilder();
+		int number;
+		int layer;
+		if(n %h ==0)
+		{
+			number =n /h;
+		}else
+		{
+			number =n /h +1;
+		}
+		if(n %h ==0)
+		{
+			layer =h;
+		}else
+		{
+			layer =n %h;
+		}
+		 
+		if(number <10)
+			sb.append(layer).append(0).append(number);
+		else
+			sb.append(layer).append(number);
+		
+		return Integer.parseInt(sb.toString());
+	}
+}

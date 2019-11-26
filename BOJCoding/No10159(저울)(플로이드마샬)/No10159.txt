@@ -1,0 +1,64 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Main
+{	
+	static int N, M;
+	static boolean[][] arr;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		String[] input;
+		
+		N =Integer.parseInt(br.readLine());
+		M =Integer.parseInt(br.readLine());
+		arr =new boolean[N+1][N+1];
+		
+		for(int i =0; i <M; i++)
+		{
+			input =br.readLine().split(" ");
+			int n1 =Integer.parseInt(input[0]);
+			int n2 =Integer.parseInt(input[1]);
+			arr[n1][n2] =true;
+		}
+		
+		fw(arr);
+		
+		for(int i =1; i <N+1; i++)
+		{
+			int ans =-1;
+			for(int j =1; j <N+1; j++)
+			{
+				if(!arr[i][j] &&!arr[j][i])
+					ans++;
+			}
+			bw.write(ans +"\n");
+		}
+		
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+	public static void fw(boolean[][] arr)
+	{
+		for(int k =1; k <N+1; k++)
+		{
+			for(int i =1; i <N+1; i++)
+			{
+				for(int j =1; j <N+1; j++)
+				{
+					if(arr[i][k] && arr[k][j])
+						arr[i][j] =true;
+				}
+			}
+		}
+			
+	}
+}

@@ -1,0 +1,82 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.StringTokenizer;
+
+public class Main
+{	
+	static int max =Integer.MIN_VALUE;
+	static int min =Integer.MAX_VALUE;
+	static int k;
+	static String[] inequalities;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		k =Integer.parseInt(br.readLine());
+		inequalities =br.readLine().split(" ");
+		
+		for(int i =0; i <10; i++)
+		{
+			int[] number =new int[k+1];
+			boolean[] visited =new boolean[10];		//0~9
+			
+			number[0] =i;
+			visited[i] =true;
+			search(number, 0, visited);
+		}
+		bw.write(max + "\n" + min + "\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	static void search(int[] number, int index, boolean[] visited)
+	{
+		if(index >=k)
+		{
+			
+			return;
+		}
+		
+		for(int i =0; i <10; i++)
+		{
+			if(inequalities[index].equals(">"))
+			{
+				System.out.println("index: " +index);
+				System.out.println("inequality: " +inequalities[index]);
+				System.out.print("¼ö: ");
+				for(int j =0; j <k+1; j++)
+					System.out.print(number[j]);
+				System.out.println();
+				System.out.println("==========================");
+				
+				
+				if(!visited[i] && number[index] >i)
+				{
+					visited[i] =true;
+					number[index+1] =i;
+					search(number, index+1, visited);
+				}
+			}else if(inequalities[index].equals("<"))
+			{
+				System.out.println("index: " +index);
+				System.out.println("inequality: " +inequalities[index]);
+				System.out.print("¼ö: ");
+				for(int j =0; j <k+1; j++)
+					System.out.print(number[j]);
+				System.out.println();
+				System.out.println("==========================");
+				
+				
+				if(!visited[i] && number[index+1] <i)
+				{
+					visited[i] =true;
+					number[index+1] =i;
+					search(number, index+1, visited);
+				}
+			}
+		}
+	}
+}

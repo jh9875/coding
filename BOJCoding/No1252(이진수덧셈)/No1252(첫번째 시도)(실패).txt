@@ -1,0 +1,117 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+public class Main
+{
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		String[] input;
+		
+		input =br.readLine().split(" ");
+		bw.write(addBinary(input[0], input[1]) +"\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	public static String addBinary(String b1, String b2)
+	{
+		StringBuilder sb =new StringBuilder();
+		b1 =new StringBuilder(b1).reverse().toString();		//°Å²Ù·Î
+		b2 =new StringBuilder(b2).reverse().toString();
+		int len1 =b1.length();
+		int len2 =b2.length();
+		int carrying =0;
+		
+		if(len1 <len2)
+		{
+			for(int i =0; i <len1; i++)
+			{
+				int n1 =b1.charAt(i) -'0';
+				int n2 =b2.charAt(i) -'0';
+				int sum =n1+n2+carrying;
+				carrying =0;
+				
+				if(sum ==0)
+					sb.append(0);
+				else if(sum ==1)
+					sb.append(1);
+				else if(sum ==2)
+				{
+					carrying =1;
+					sb.append(0);
+				}else if(sum ==3)
+				{
+					carrying =1;
+					sb.append(1);
+				}
+			}
+			for(int i =len1; i <len2; i++)
+			{
+				int n =b2.charAt(i) -'0';
+				int sum =n +carrying;
+				carrying =0;
+				
+				if(sum ==0)
+					sb.append(0);
+				else if(sum ==1)
+					sb.append(1);
+				else if(sum ==2)
+				{
+					sb.append(1);
+					carrying =1;
+				}
+			}
+			if(carrying ==1)
+				sb.append(carrying);
+			
+		}else		//len1 >len2
+		{
+			for(int i =0; i <len2; i++)
+			{
+				int n1 =b1.charAt(i) -'0';
+				int n2 =b2.charAt(i) -'0';
+				int sum =n1+n2+carrying;
+				carrying =0;
+				
+				if(sum ==0)
+					sb.append(0);
+				else if(sum ==1)
+					sb.append(1);
+				else if(sum ==2)
+				{
+					carrying =1;
+					sb.append(0);
+				}else if(sum ==3)
+				{
+					carrying =1;
+					sb.append(1);
+				}
+			}
+			for(int i =len2; i <len1; i++)
+			{
+				int n =b1.charAt(i) -'0';
+				int sum =n +carrying;
+				carrying =0;
+				
+				if(sum ==0)
+					sb.append(0);
+				else if(sum ==1)
+					sb.append(1);
+				else if(sum ==2)
+				{
+					sb.append(1);
+					carrying =1;
+				}
+			}
+			if(carrying ==1)
+				sb.append(carrying);
+		}
+		
+		return sb.reverse().toString();
+	}
+}

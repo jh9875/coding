@@ -1,0 +1,53 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+public class Main
+{
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		String input =br.readLine();
+		int len =input.length();
+		int hc =0, uc =0;
+		char c;
+		
+		for(int i =0; i <len; i++)
+		{
+			c =input.charAt(i);
+			
+			if(c ==':')
+			{
+				if(i+2 <len)
+				{
+					if(input.charAt(i+1) =='-' && input.charAt(i+2) ==')')
+					{
+						hc++;
+						i +=2;
+					}
+						
+					else if(input.charAt(i+1) =='-' && input.charAt(i+2) =='(')
+					{
+						uc++;
+						i +=2;
+					}
+				}
+			}
+		}
+		if(hc >uc)
+			bw.write("happy\n");
+		else if(hc <uc)
+			bw.write("sad\n");
+		else if(hc ==0 && uc ==0)
+			bw.write("none\n");
+		else
+			bw.write("unsure\n");
+		
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+}

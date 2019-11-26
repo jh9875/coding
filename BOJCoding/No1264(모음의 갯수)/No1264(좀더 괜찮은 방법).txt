@@ -1,0 +1,39 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+public class Main
+{
+	public static void main(String[] args) throws IOException
+	{
+		char[] small = {'a', 'e', 'i', 'o', 'u'};
+		char[] big = {'A', 'E', 'I', 'O', 'U'};
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		String s ="";
+		while(!s.equals("#"))
+		{
+			s =br.readLine();
+			if(!s.equals("#"))
+			{
+				int count =0;
+				for(int i =0; i <s.length(); i++)
+				{
+					char ch =s.charAt(i);
+					for(int j =0; j <5; j++)
+					{
+						if(ch ==small[j] || ch ==big[j])
+							count++;
+					}
+				}
+				bw.write(count + "\n");
+			}
+		}
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+}

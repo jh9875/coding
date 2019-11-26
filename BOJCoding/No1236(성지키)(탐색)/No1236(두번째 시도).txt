@@ -1,0 +1,50 @@
+import java.util.Scanner;
+
+public class Main
+{	
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		int n =input.nextInt();
+		int m =input.nextInt();
+		char[][] arr =new char[n][m];
+		
+		for(int i =0; i <n; i++)
+		{
+			String temp =input.next();
+			for(int j =0; j <m; j++)
+				arr[i][j] =temp.charAt(j);
+		}
+		if(n >=m)
+		{
+			int count =0;
+			for(int i =0; i <n; i++)
+			{
+				boolean check =false;
+				for(int j =0; j <m; j++)
+				{
+					if(arr[i][j] =='X')
+						check =true;
+				}
+				if(!check)
+					count++;
+			}
+			System.out.println(count);
+		}else
+		{
+			int count =0;
+			for(int i =0; i <m; i++)
+			{
+				boolean check =false;
+				for(int j =0; j <n; j++)
+				{
+					if(arr[j][i] =='X')
+						check =true;
+				}
+				if(!check)
+					count++;
+			}
+			System.out.println(count);
+		}
+	}
+}

@@ -1,0 +1,143 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Main
+{			//No1260 BFS, DFS 입접리스트
+	public static class Link
+	{
+		public int vertex;
+		ArrayList<Integer> path=new ArrayList<Integer>();
+
+		Link(int vertex, int edge)
+		{
+			this.vertex =vertex;
+			path.add(edge);
+		}
+		public void add(int n)
+		{
+			path.add(n);
+		}
+	}
+	
+	public static void main(String[] args) throws NumberFormatException, IOException
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		String[] inputs =br.readLine().split(" ");
+		int n =Integer.parseInt(inputs[0]);
+		int m =Integer.parseInt(inputs[1]);
+		int start =Integer.parseInt(inputs[2]);
+		
+		ArrayList<Link> graph =new ArrayList<>();
+		for(int i =0; i <m; i++)
+		{
+			String[] temp =br.readLine().split(" ");
+			int v1 =Integer.parseInt(temp[0]);
+			int v2 =Integer.parseInt(temp[1]);
+			boolean check1 =true;
+			for(int j =0; j <graph.size(); j++)	//정점이 이미 있는경우
+			{
+				if(graph.get(j).vertex ==v1)
+				{
+					check1 =false;
+					graph.get(j).add(v2);
+					break;
+				}
+			}
+			if(check1)							//처음나온 정점일경우 추가.
+			{
+				graph.add(new Link(v1, v2));
+			}
+			//반대경우.-------------------------------
+			boolean check2 =true;
+			for(int j =0; j <graph.size(); j++)	//정점이 이미 있는경우
+			{
+				if(graph.get(j).vertex ==v2)
+				{
+					check2 =false;
+					graph.get(j).add(v1);
+					break;
+				}
+			}
+			if(check2)							//처음나온 정점일경우 추가.
+			{
+				graph.add(new Link(v2, v1));
+			}
+		}
+		bfs(graph);
+		dfs(graph);
+	}
+	public static void bfs(ArrayList<Link> graph)
+	{
+		Queue<Integer> queue =new LinkedList<>();
+		Queue<Integer> tempQueue =new LinkedList<>();
+		queue.add(graph.get(0).vertex);
+		tempQueue.add(graph.get(0).vertex);
+		while(!tempQueue.isEmpty())
+		{
+			if(queue.size() ==graph.size())
+				break;
+			int n =tempQueue.poll();
+			boolean check =false;
+			for(int i =0; i <graph.size(); i++)
+			{
+				int temp =graph.get(i).vertex;
+				if(temp ==n)
+				{
+					for(int j =0; j <graph.get(i).path.get(j); j++)
+					{
+						if(!queue.contains(graph.get(i).path.get(j)))
+						{
+							queue.add(graph.get(i).path.get(j));
+							tempQueue.add(graph.get(i).path.get(j));
+							check =true;
+							break;
+						}
+							
+					}
+				}
+				if(check)
+					break;
+			}
+			
+		}
+		while(!queue.isEmpty())
+		{
+			System.out.print(queue.poll() + " ");
+		}
+		System.out.println();
+	}
+	
+	public static void dfs(ArrayList<Link> graph)
+	{
+		Queue<Integer> queue =new LinkedList<Integer>();
+		queue.add(graph.get(0).vertex);
+		boolean check =false;
+		for(int i =0; i <graph.size(); i++)
+		{
+			for(int j =0; j <graph.get(i).path.size(); j++)
+			{
+				int n =graph.get(i).path.get(j);
+				if(!queue.contains(n))
+					queue.add(n);
+				if(queue.size() ==graph.size())
+				{
+					check =true;
+					break;
+				}
+					
+			}
+			if(check)
+				break;
+		}
+		while(!queue.isEmpty())
+			System.out.print(queue.poll() + " ");
+		System.out.println();
+	}
+}

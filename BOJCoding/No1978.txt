@@ -1,0 +1,83 @@
+import java.util.Scanner;
+
+public class Main
+{
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		int n =input.nextInt();
+		int count =0;
+		
+		for(int i =0; i <n; i++)
+		{
+			int num =input.nextInt();
+			if(primeNumber(num))
+				count++;
+		}
+		System.out.println(count);
+			
+	}
+	
+	static boolean primeNumber(int n)
+	{
+		boolean check =true;
+		if(n ==1)
+			return false;
+		
+		for(int i =2; i <n; i++)
+		{
+			if(n %i ==0)
+				check =false;
+		}
+		
+		return check;
+	}
+	
+}
+/////////////////////////////////////////////////////////////////빠른입출력 버전
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	public static void main(String[] args) throws IOException
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int n =Integer.parseInt(br.readLine());
+		int count =0;
+		
+		String numbers =br.readLine();
+		String[] arr =numbers.split(" ");
+		for(int i =0; i <arr.length; i++)
+		{
+			if(primeNumber(Integer.parseInt(arr[i])))
+				count++;
+		}
+		
+		bw.write(String.valueOf(count) + "\n");
+		br.close();
+		bw.close();
+	}
+	
+	static boolean primeNumber(int n)
+	{
+		boolean check =true;
+		if(n ==1)
+			return false;
+		
+		for(int i =2; i <n; i++)
+		{
+			if(n %i ==0)
+				check =false;
+		}
+		
+		return check;
+	}
+	
+}
+

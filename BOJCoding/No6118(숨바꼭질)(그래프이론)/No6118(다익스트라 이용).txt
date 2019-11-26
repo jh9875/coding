@@ -1,0 +1,132 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+public class Main
+{
+	static class Ans
+	{
+		int index;
+		int distance;
+		int number;
+	}
+	
+	static class Graph
+	{
+		static int N;
+		static boolean[][] map;
+		static int[] distance;
+		
+		Graph(int N)
+		{
+			this.N =N;
+			this.map =new boolean[N+1][N+1];
+		}
+		
+		public void input(int v1, int v2)
+		{
+			map[v1][v2] =true;
+			map[v2][v1] =true;
+		}
+		
+		public Ans dijkstra()
+		{
+			Ans ans =new Ans();
+			int[] distance =new int[N+1];
+			boolean[] visited =new boolean[N+1];
+
+			for(int i =1; i <N+1; i++)
+				distance[i] =Integer.MAX_VALUE;
+			
+			//사적점은 1
+			distance[1] =0;
+			visited[1] =true;
+			
+			for(int i =1; i <N+1; i++)
+			{
+				if(map[1][i])			//1이랑 연결되어 있는것들.
+				{
+					distance[i] =1;
+				}
+			}
+			
+			for(int a =0; a <N-1; a++)
+			{
+				int min =Integer.MAX_VALUE;
+				int minIndex =-1;
+				
+				//인접노드중 가장 가까운곳 찾기.
+				for(int i =1; i <N+1; i++)
+				{
+					if(distance[i] !=Integer.MAX_VALUE && !visited[i])
+					{
+						if(distance[i] <min)
+						{
+							min =distance[i];
+							minIndex =i;
+						}
+					}
+				}
+				if(minIndex ==-1)
+					break;
+				
+				visited[minIndex] =true;
+				
+				for(int i =1; i <N+1; i++)
+				{
+					if(map[minIndex][i] && !visited[i])		//제일 가까운 노드랑 인접해있는 노드들 최신화
+					{
+						distance[i] =Math.min(distance[i], distance[minIndex]+1);
+					}
+				}
+			}
+			
+			int max =0;
+			int index =0;
+			int count =0;
+			for(int i =1; i <N+1; i++)
+			{
+				if(max <distance[i] && distance[i] !=Integer.MAX_VALUE)
+				{
+					max =distance[i];
+					index =i;
+				}
+			}
+			for(int i =1; i <N+1; i++)
+				if(distance[i] ==max)
+					count++;
+
+			ans.distance =max;
+			ans.index =index;
+			ans.number =count;
+			return ans;
+		}
+	}
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int N, M;
+		String[] input;
+		Graph  g;
+		
+		input =br.readLine().split(" ");
+		N =Integer.parseInt(input[0]);
+		M =Integer.parseInt(input[1]);
+		
+		g =new Graph(N);
+		
+		for(int i =0; i <M; i++)
+		{
+			input =br.readLine().split(" ");
+			g.input(Integer.parseInt(input[0]), Integer.parseInt(input[1]));
+		}
+		
+		Ans a =g.dijkstra();
+		bw.write(a.index + " " +a.distance +" " +a.number +"\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+}

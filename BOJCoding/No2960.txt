@@ -1,0 +1,49 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	public static void main(String[] args) throws NumberFormatException, IOException
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		String s= br.readLine();
+		StringTokenizer st =new StringTokenizer(s);
+		int N =Integer.parseInt(st.nextToken());
+		int K =Integer.parseInt(st.nextToken());
+		boolean[] arr =new boolean[N+1];
+		for(int i =2; i <=N; i++)
+		{
+			boolean check =true;
+			for(int j =2; j <i; j++)
+				if(i %j ==0)
+					check =false;
+			
+			arr[i] =check;
+		}
+		
+		boolean[] arr2 =new boolean[N+1];
+		int i =2;
+		while(K >0)
+		{
+			for(int j =1; j*i <=N; j++)	//j´Â i¿¡ °öÇÒ ¼ö
+			{
+				if(!arr2[i*j])
+				{
+					arr2[i*j] =true;
+					K--;
+					if(K ==0)
+					{
+						System.out.println(i*j);
+						break;
+					}
+				}
+			}
+			i++;
+		}
+	}
+	
+}

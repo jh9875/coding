@@ -1,0 +1,107 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.Arrays;
+
+public class Main
+{	
+	private static class Nation implements Comparable<Nation>
+	{
+		int number;
+		int gold;
+		int silver;
+		int bronze;
+		private Nation()
+		{
+			this.number =0;
+			this.gold =0;
+			this.silver =0;
+			this.bronze =0;
+		}
+		private Nation(int number, int gold, int silver, int bronze)
+		{
+			this.number =number;
+			this.gold =gold;
+			this.silver =silver;
+			this.bronze =bronze;
+		}
+		@Override
+		public int compareTo(Nation nation)
+		{
+			if(this.gold ==nation.gold)
+			{
+				return Integer.compare(nation.silver, this.silver);
+			}else if(nation.silver ==this.silver)
+			{
+				return Integer.compare(nation.bronze, this.bronze);
+			}else
+				return Integer.compare(nation.gold, this.gold);
+		}
+		
+		
+	}
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int N, K;
+		int n, g, s, b;
+		Nation[] nations;
+		String[] input;
+		
+		input =br.readLine().split(" ");
+		N =Integer.parseInt(input[0]);
+		K =Integer.parseInt(input[1]);
+		nations =new Nation[N];
+		
+		for(int i =0; i <N; i++)
+		{
+			input =br.readLine().split(" ");
+			
+			n =Integer.parseInt(input[0]);
+			g =Integer.parseInt(input[1]);
+			s =Integer.parseInt(input[2]);
+			b =Integer.parseInt(input[3]);
+			nations[i] =new Nation(n, g, s, b);
+		}
+		Arrays.sort(nations);
+		System.out.println("Á¤·ÄÈÄ");
+		
+		for(int i =0; i <N; i++)
+		{
+			System.out.println(nations[i].number);
+		}
+		System.out.println("");
+		
+		
+		int ranking =1;
+		int count =1;
+		if(nations[0].number !=K)
+		{
+			for(int i =1; i <N; i++)
+			{
+				if(nations[i-1].gold ==nations[i].gold
+						&& nations[i-1].silver ==nations[i].silver
+						&& nations[i-1].bronze ==nations[i].bronze)
+				{
+					count++;
+				}else
+				{
+					ranking +=count;
+					count =1;
+				}
+				
+				if(nations[i].number ==K)
+					break;
+			}
+		}
+		
+		bw.write(ranking + "\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+	
+}

@@ -1,0 +1,52 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.Arrays;
+import java.util.HashSet;
+
+public class Main
+{	
+	static int N;
+	static int best =0;
+	static int[] T;
+	static int[] P;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		N =Integer.parseInt(br.readLine());
+		T =new int[N+1];
+		P =new int[N+1];
+		String[] input;
+		
+		for(int i =0; i <N; i++)
+		{
+			input =br.readLine().split(" ");
+			T[i+1] =Integer.parseInt(input[0]);
+			P[i+1] =Integer.parseInt(input[1]);
+		}
+		
+		for(int i =1; i <=N; i++)
+		{
+			if(i+T[i] <=N+1)
+				search(i+T[i], P[i]);
+		}
+		bw.write(best + "\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	public static void search(int level, int sum)
+	{
+		if(sum >best)
+			best =sum;
+		
+		for(int i =level; i <=N; i++)
+		{
+			if(i+T[i] <=N+1)
+				search(i+T[i], sum +P[i]);
+		}
+	}
+}

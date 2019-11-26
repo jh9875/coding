@@ -1,0 +1,39 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+
+public class Main
+{	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int N =Integer.parseInt(br.readLine());
+		int sum =0;
+		int best =0;
+		int[] arr =new int[N];
+		
+		for(int i =0; i <N; i++)
+			arr[i] =Integer.parseInt(br.readLine());
+		Arrays.sort(arr);
+		
+		for(int i =N-1; i >=0; i--)			//search 횟수.
+		{
+			int j;
+			sum =0;
+			for(j =N-1; j >=i; j--)			//i번째 까지 제일 작은숫자를 더해줌.
+				sum +=arr[i];
+			
+			if(best <sum)
+				best =sum;
+		}
+		bw.write(best + "\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+}

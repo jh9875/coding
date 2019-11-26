@@ -1,0 +1,159 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	static class Snake
+	{
+		Point head;
+		Point tail;
+		int[][] body;
+		int cnt;
+		int dir;
+		
+		Snake()				//시작위치1, 방향 오른쪽.
+		{
+			this.head =new Point(1,1);
+			this.tail =new Point(1,1);
+			body =new int[N+1][N+1];
+			body[1][1] =1;
+			this.cnt =1;
+			this.dir =0;
+		}
+	}
+	static class TurnInfo
+	{
+		int t;
+		char c;
+		
+		TurnInfo(int t, char c)
+		{
+			this.t =t;
+			this.c =c;
+		}
+	}
+	static class Point
+	{
+		int r;
+		int c;
+		
+		Point(int r, int c)
+		{
+			this.r =r;
+			this.c =c;
+		}
+	}
+	static int N;
+	static int[] dirR = {0, 1, 0, -1};			//동,남,서,북
+	static int[] dirC = {1, 0, -1, 0};
+	static char[][] map;
+	static Queue<TurnInfo> queue =new LinkedList<>();
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		int K, L;
+		
+		N =Integer.parseInt(br.readLine());				//map
+		map =new char[N+1][N+1];
+		for(int i =1; i <=N; i++)
+			Arrays.fill(map[i], ' ');
+		
+		K =Integer.parseInt(br.readLine());				//apple
+		for(int i =0; i <K; i++)
+		{
+			st =new StringTokenizer(br.readLine());
+			map[Integer.parseInt(st.nextToken())][Integer.parseInt(st.nextToken())] ='A';
+		}
+		
+		L =Integer.parseInt(br.readLine());				//turnInfo
+		for(int i =0; i <L; i++)
+		{
+			st= new StringTokenizer(br.readLine());
+			queue.offer(new TurnInfo(Integer.parseInt(st.nextToken()), st.nextToken().charAt(0)));
+		}
+		
+		bw.write(move() +"\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+	public static int move()
+	{
+		Snake s =new Snake();
+		TurnInfo nextTurn =queue.poll();
+		int T =0;
+		int nextR =0;
+		int nextC =0;
+		
+		while(true)
+		{
+			T++;
+			nextR =s.head.r +dirR[s.dir];
+			nextC =s.head.c +dirC[s.dir];
+			
+			if(nextR <1 || N <nextR || nextC <1 || N <nextC)		//범위를 벚어나는 경우.
+				break;
+			if(s.body[nextR][nextC] !=0)							//몸통과 부딫히는 경우.
+				break;
+			
+			s.body[nextR][nextC] =s.cnt+1;
+			s.cnt++;
+			s.head =new Point(nextR, nextC);			//다음칸 이동.
+			
+			if(map[nextR][nextC] !='A')			//다음 이동칸이 사과가 아니라면.
+			{
+				
+				
+				int tailR =s.tail.r;
+				int tailC =s.tail.c;
+				int v =s.body[tailR][tailC];
+				s.body[tailR][tailC] =0;
+				
+				for(int i =0; i <4; i++)
+				{
+					int nextTailR =tailR +dirR[i];
+					int nextTailC =tailC +dirC[i];
+					
+					if(0 <nextTailR && nextTailR <N+1 && 0 <nextTailC && nextTailC <N+1)
+					{
+						if(s.body[nextTailR][nextTailC] ==v+1)
+						{
+							s.tail =new Point(nextTailR, nextTailC);
+							break;
+						}
+					}
+					
+				}
+			}else
+				map[nextR][nextC] =' ';
+			
+			if(T ==nextTurn.t)
+			{
+				if(nextTurn.c =='D')			//right
+				{
+					s.dir =(s.dir+1) %4;
+				}else if(nextTurn.c =='L')		//left
+				{
+					s.dir =(s.dir+3) %4;
+				}
+				
+				if(!queue.isEmpty())
+					nextTurn =queue.poll();
+			}
+		}
+		
+		return T;
+	}
+	
+}

@@ -1,0 +1,59 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Main
+{
+	public static void main(String[] args) throws NumberFormatException, IOException
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		StringBuilder sb = new StringBuilder();
+        int n = Integer.parseInt(br.readLine().trim());
+        int[] arr =new int[n];
+		
+		
+        for(int i=0;i<n;i++)
+            arr[i] = Integer.parseInt(br.readLine().trim());
+		
+		sort(arr, 0, arr.length -1);
+		print(arr);
+	}
+	
+	static void sort(int[] arr, int l, int r)
+	{
+		int left =l;
+		int right =r;
+		int pivot =arr[(l +r) /2];
+		
+		while(left <=right)
+		{
+			while(arr[left] <pivot)			//pivot보다 크거나 같은값을 찾을때까지 오른쪽으로 이동
+				left++;
+			while(pivot <arr[right])		//pivot보다 작은값을 찾을때까지 왼쪽으로 이동
+				right--;
+			
+			if(left <=right)				//서로 각자의 값을 찾을시 바꿈??
+			{
+				swap(left, right, arr);		//바꾸고 난 후
+				left++;
+				right--;
+			}
+		}
+		//여기까지 실행하고나면 pivot을 기준으로 왼쪽엔 작은값들, 오른쪽엔 큰값들이 있음.
+		if(l <right)						//처음 왼쪽값이 이동한 오른쪽값보다 왼쪽에 있으면
+			sort(arr, l, right);			//처음 왼쪽과 이동한 오른쪽 사이의 값을 다시 정렬(재귀)
+		if(r >left)							//처음 오른쪽값이 이동한 왼쪽값보다 오른쪽에 있으면
+			sort(arr, left, r);				//처음 오른쪽과 이동한 왼쪽사이의 값을 다시 정렬(재귀)
+	}
+	static void swap(int i, int j, int[] arr)
+	{
+		int temp =arr[i];
+		arr[i] =arr[j];
+		arr[j] =temp;
+	}
+	static void print(int[] arr)
+	{
+		for(int i =0; i <arr.length; i++)
+			System.out.println(arr[i]);
+	}
+}

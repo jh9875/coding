@@ -1,0 +1,46 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.Arrays;
+
+public class Main
+{	
+
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int N =Integer.parseInt(br.readLine());
+		int[] arr =new int[N+1];
+		int[] dp =new int[N+1];
+		String[] input;
+		input =br.readLine().split(" ");
+		
+		for(int i =1; i <=N; i++)
+		{
+			arr[i] =Integer.parseInt(input[i-1]);
+			dp[i] =arr[i];
+		}
+			
+		
+		for(int i =N; i>0; i--)
+		{
+			int best =0;
+			for(int j =i+1; j <N+1; j++)
+			{
+				if(arr[i] <arr[j])		//증가하는부분일때
+				{
+					if(best <dp[j])
+						best =dp[j];
+				}
+			}
+			dp[i] +=best;
+		}
+		Arrays.sort(dp);
+		bw.write(dp[N] + "\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+}

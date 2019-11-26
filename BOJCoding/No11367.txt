@@ -1,0 +1,45 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+public class Main
+{
+	public static void main(String[] args) throws NumberFormatException, IOException
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int n =Integer.parseInt(br.readLine());
+		String []s;
+		for(int i =0; i <n; i++)
+		{
+			s =br.readLine().split(" ");
+			bw.write(s[0] + " ");
+			int number =Integer.parseInt(s[1]);
+			if(97 <=number && number <=100)
+				bw.write("A+");
+			else if(90 <=number && number <=96)
+				bw.write("A");
+			else if(87 <=number && number <=89)
+				bw.write("B+");
+			else if(80 <=number && number <=86)
+				bw.write("B");
+			else if(77 <=number && number <=79)
+				bw.write("C+");
+			else if(70 <=number && number <=76)
+				bw.write("C");
+			else if(67 <=number && number <=69)
+				bw.write("D+");
+			else if(60 <=number && number <=66)
+				bw.write("D");
+			else if(0 <=number && number <=59)
+				bw.write("F");
+			bw.write("\n");
+		}
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+}

@@ -1,0 +1,65 @@
+import java.util.Scanner;
+
+public class Main
+{
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		int k =input.nextInt();
+		int a =1;
+		int b =0;
+		while(k >0)
+		{
+			int temp =a+b;
+			a =b;
+			b =temp;
+			k--;
+		}
+		System.out.println(a + " " + b);
+		
+	}
+}
+
+//-----------------------------------------------
+
+import java.util.Scanner;
+
+public class Main
+{
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		int k =input.nextInt();
+		count(k);
+	}
+	public static void count(int k)
+	{
+		String s ="a";
+		StringBuilder sb =new StringBuilder();
+		while(k >0)
+		{
+			for(int i =0; i <s.length(); i++)
+			{
+				char ch =s.charAt(i);
+				if(ch =='a')
+					sb.append("b");
+				if(ch =='b')
+					sb.append("ba");
+			}
+			s =sb.toString();
+			sb.setLength(0);
+			k--;
+		}
+		int countA =0;
+		int countB =0;
+		for(int i =0; i <s.length(); i++)
+		{
+			char ch =s.charAt(i);
+			if(ch =='a')
+				countA++;
+			else if(ch =='b')
+				countB++;
+		}
+		System.out.println(countA + " " + countB);
+	}
+}

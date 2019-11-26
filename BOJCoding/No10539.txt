@@ -1,0 +1,36 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+public class Main
+{
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int N =0;
+		int[] A, B;
+		String[] input =null;
+		N =Integer.parseInt(br.readLine());
+		A =new int[N+1];
+		B =new int[N+1];
+		
+		input =br.readLine().split(" ");
+		for(int i =1; i <N+1; i++)
+			B[i] =Integer.parseInt(input[i-1]);
+		for(int i =1; i <N+1; i++)
+			A[i] =B[i]*i;
+			
+		for(int i =2; i <N+1; i++)
+			B[i] =A[i]-A[i-1];
+			
+		for(int i =1; i <N+1; i++)
+			bw.write(B[i] + " ");
+		bw.write("\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+}

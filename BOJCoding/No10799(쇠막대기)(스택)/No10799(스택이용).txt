@@ -1,0 +1,44 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.Stack;
+
+public class Main
+{
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		String input;
+		int len =0;
+		int sum =0;
+		char c =' ';
+		Stack<Character> st =new Stack<>();
+		
+		input =br.readLine();
+		len =input.length();
+		
+		for(int i =0; i <len; i++)
+		{
+			c =input.charAt(i);
+			
+			if(c =='(')
+				st.push('(');
+			else if(c ==')')
+			{
+				st.pop();
+				if(input.charAt(i-1) =='(')		//레이저인 경우
+					sum +=st.size();
+				else							//파이프의 끝인경우.
+					sum +=1;
+			}
+				
+		}
+		
+		bw.write(sum +"\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+}

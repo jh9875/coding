@@ -1,0 +1,56 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.StringTokenizer;
+
+public class Main
+{	
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		int N =0;
+		int[] arr;
+		int[] num;
+		
+		N =Integer.parseInt(br.readLine());
+		arr =new int[N];
+		num =new int[N];
+		
+		st =new StringTokenizer(br.readLine());
+		
+		for(int i =0; i <N; i++)
+		{
+			arr[i] =i+1;
+			num[i] =Integer.parseInt(st.nextToken());
+		}
+		for(int i =0; i <N; i++)
+		{
+			int t =i;
+			int n =num[i];
+			
+			for(int j =0; j <n; j++)
+			{
+				swap(t, arr);
+				t--;
+			}
+		}
+		
+		for(int i =0; i <N; i++)
+			bw.write(arr[i] +" ");
+		bw.write("\n");
+		
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	public static void swap(int cur, int[] arr)
+	{
+		int temp =arr[cur];
+		arr[cur] =arr[cur-1];
+		arr[cur-1] =temp;
+	}
+}

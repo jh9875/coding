@@ -1,0 +1,46 @@
+import java.util.Scanner;
+
+public class Main
+{
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		int[] arr =new int[10];
+		for(int i =0; i <arr.length; i++)
+			arr[i] =input.nextInt() %42;
+		for(int i =0; i <arr.length; i++)
+		{
+			for(int j =0; j <arr.length; j++)
+			{
+				if(i ==j)
+					continue;
+				if(arr[i] ==arr[j])
+					arr[j] =-1;
+			}
+		}
+		int count =0;
+		for(int i =0; i <arr.length; i++)
+			if(arr[i] !=-1)
+				count++;
+		System.out.println(count);
+		
+	}
+}
+
+// 다른사람이 한 더 효율적인 코드
+import java.util.*;
+public class Main {
+    public static void main(String[] args){
+        Scanner input = new Scanner(System.in);
+        int[] arr = new int[42];
+        for(int i=0;i<10;i++){
+            int n = input.nextInt();
+            arr[n%42]++;
+        }
+        int cnt = 0;
+        for(int i=0;i<42;i++){
+            if(arr[i]!=0) cnt++;
+        }
+        System.out.println(cnt);
+    }
+}

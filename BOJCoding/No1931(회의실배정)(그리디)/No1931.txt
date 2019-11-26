@@ -1,0 +1,65 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.Arrays;
+import java.util.StringTokenizer;
+
+public class Main
+{	
+	static class MeetingTime implements Comparable<MeetingTime>
+	{
+		int start;
+		int end;
+		public MeetingTime(int start, int end)
+		{
+			this.start =start;
+			this.end =end;
+		}
+		@Override
+		public int compareTo(MeetingTime mt)
+		{
+			if(this.end ==mt.end)
+				return Integer.compare(this.start, mt.start);
+			else
+				return Integer.compare(this.end, mt.end);
+		}
+	}
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int N, s, e;
+		MeetingTime[] meetings;
+		String[] input;
+		N =Integer.parseInt(br.readLine());
+		meetings =new MeetingTime[N];
+		
+		for(int i =0; i <N; i++)
+		{
+			input =br.readLine().split(" ");
+			s =Integer.parseInt(input[0]);
+			e =Integer.parseInt(input[1]);
+			MeetingTime mt =new MeetingTime(s, e);
+			meetings[i] =mt;
+		}
+		Arrays.sort(meetings);
+
+		int count =1;
+		int lastEnd =meetings[0].end;
+		for(int i =1; i <N; i++)
+		{
+			if(lastEnd <=meetings[i].start)
+			{
+				count++;
+				lastEnd =meetings[i].end;
+			}
+		}
+		
+		bw.write(count + "\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+}

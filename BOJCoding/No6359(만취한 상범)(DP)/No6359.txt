@@ -1,0 +1,50 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+public class Main
+{	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int[][] arr =new int[101][101];	//0이면 닫힌거, 1이면 열린거
+		int[] arr2 =new int[101];
+		for(int i =1; i <=100; i++)		//i는 라운드수를 의미
+		{
+			for(int j =1; j <=100; j++)	//j는 각 라운드 마다 방법호를 의미
+			{
+				for(int k =1; k <=100; k++)
+				{
+					if(j %k ==0)
+					{
+						if(arr[i][j] ==0)
+							arr[i][j] =1;
+						else
+							arr[i][j] =0;
+					}
+				}
+				
+			}
+		}
+		
+		for(int i =5; i <=100; i++)
+			for(int j =1; j <=i; j++)
+				if(arr[i][j] ==1)
+					arr2[i]++;
+		
+		int t =Integer.parseInt(br.readLine());
+		int n =0;
+		while(t-- >0)
+		{
+			n =Integer.parseInt(br.readLine());
+			bw.write(arr2[n] + "\n");
+		}
+		bw.flush();
+		bw.close();
+		br.close();
+		
+	}
+	
+}

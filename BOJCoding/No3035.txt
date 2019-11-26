@@ -1,0 +1,32 @@
+import java.util.Scanner;
+
+public class Main
+{
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		int r =input.nextInt();
+		int c =input.nextInt();
+		int zr =input.nextInt();
+		int zc =input.nextInt();
+
+		String[][] arr =new String[r][c];
+		for(int i =0; i <r; i++)
+		{
+			String s =input.next();
+			for(int j =0; j <s.length(); j++)
+				arr[i][j] =String.valueOf(s.charAt(j));
+		}
+			
+		for(int i =0; i <r; i++)
+		{
+			for(int k =0; k <zr; k++)
+			{
+				for(int j =0; j <c; j++)
+					for(int l =0; l <zc; l++)
+						System.out.print(arr[i][j]);
+				System.out.println();
+			}
+		}
+	}
+}

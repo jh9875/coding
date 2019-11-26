@@ -1,0 +1,60 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.Arrays;
+import java.util.HashSet;
+
+public class Main
+{	
+	static int len =0;
+	static int best =0;
+	static char[] arr;
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		String s =br.readLine();
+		arr =s.toCharArray();
+		len =s.length();
+		
+		for(int i =0; i <len; i++)
+		{
+			search(1, new int[len], new boolean [len], i);
+		}
+		if(best ==0)
+			bw.write(-1 + "\n");
+		else
+			bw.write(best + "\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	public static void search(int level, int[] order, boolean[] visited, int next)
+	{
+		order[level -1] =next;
+		visited[next] =true;
+		
+		if(level ==len)
+		{
+			StringBuilder sb =new StringBuilder();
+			for(int i =0; i <len; i++)
+			{
+				sb.append(arr[order[i]]);
+			}
+			int n =Integer.parseInt(sb.toString());
+			if(n%30 ==0)
+			{
+				if(best <n)
+					best =n;
+			}
+			return;
+		}
+		
+		for(int i =0; i <len; i++)
+		{
+			if(!visited[i])
+				search(level+1, order, visited, i);
+		}
+	}
+}

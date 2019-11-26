@@ -1,0 +1,168 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.StringTokenizer;
+
+public class Main
+{	
+	static int N, L;
+	static int[][] map;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		
+		st =new StringTokenizer(br.readLine());
+		N =Integer.parseInt(st.nextToken());
+		L =Integer.parseInt(st.nextToken());
+		map =new int[N][N];
+		
+		for(int i =0; i <N; i++)
+		{
+			st =new StringTokenizer(br.readLine());
+			for(int j =0; j <N; j++)
+				map[i][j] =Integer.parseInt(st.nextToken());
+		}
+		
+		bw.write(checkMap() +"\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	public static int checkMap()
+	{
+		int count =0;
+		
+		for(int i =0; i <N; i++)
+		{
+			System.out.println("---row check---");
+			if(rowCheck(i))
+				count++;
+			System.out.println("count: " +count);
+			System.out.println("==========================");
+				
+			
+			System.out.println("---col check---");
+			if(colCheck(i))
+				count++;
+			System.out.println("count: " +count);
+			System.out.println("==========================");
+		}
+		
+		return count;
+	}
+	public static boolean rowCheck(int row)
+	{
+		System.out.println("row: " +row);
+		boolean[] visited =new boolean[N];
+		for(int i =0; i <N-1; i++)
+		{
+			System.out.println("cur: " +map[row][i]);
+			if(map[row][i] !=map[row][i+1])		//현재랑 다음 높이가 다른경우
+			{
+				if(Math.abs(map[row][i] -map[row][i+1]) ==1)
+				{
+					System.out.println("높이차이가 1임.");
+					if(map[row][i] >map[row][i+1])		//내려가는 경우
+					{
+						if(i+L >=N)
+							return false;
+						for(int j =i+1; j <i+1+L; j++)
+						{
+							if(map[row][i] -map[row][j] !=1)
+								return false;
+							if(visited[j])
+								return false;
+							visited[j] =true;
+						}
+						//경사로 설치 가능하면.
+						i +=L-1;
+						continue;
+					}else								//올라가는 경우
+					{
+						if(i-L <0)
+							return false;
+						
+						for(int j =i-1; j <i-L; j--)
+						{
+							if(map[row][j] -map[row][i] !=0)
+								return false;
+							if(visited[j])
+								return false;
+							visited[j] =true;
+						}
+						
+						continue;
+					}
+				}
+				else				//높이 차리가 1이 아니라면 false							
+					return false;
+			}
+			
+		}
+		return true;
+	}
+	public static boolean colCheck(int col)
+	{
+		System.out.println("col: " +col);
+		boolean[] visited =new boolean[N];
+		for(int i =0; i <N-1; i++)
+		{
+			System.out.println("cur: " +map[i][col]);
+			if(map[i][col] !=map[i+1][col])		//현재랑 다음 높이가 다른경우
+			{
+				if(Math.abs(map[i][col] -map[i+1][col]) ==1)
+				{
+					System.out.println("높이차이가 1임.");
+					if(map[i][col] >map[i+1][col])		//내려가는 경우
+					{
+						if(i+L >=N)						//설치해야 하는데 길이를 초과하는 경우
+							return false;
+						for(int j =i+1; j <i+1+L; j++)
+						{
+							if(map[i][col] -map[j][col] !=1)
+								return false;
+							if(visited[j])				//이미 설치했는데 다시 설치해야하는 경우.
+								return false;
+							visited[j] =true;
+							System.out.println("visited check!");
+							for(int a =0; a <N; a++)
+								System.out.print(visited[a] +" ");
+							System.out.println();
+						}
+						//경사로 설치 가능하면.
+						i +=L-1;
+						continue;
+					}else								//올라가는 경우
+					{
+						if(i-L <0)
+							return false;
+						
+						for(int j =i; j <i-L; j--)
+						{
+							if(map[j][col] -map[i][col] !=0)
+								return false;
+							if(visited[j])		
+								return false;
+							visited[j] =true;
+							System.out.println("visited check!");
+							for(int a =0; a <N; a++)
+								System.out.print(visited[a] +" ");
+							System.out.println();
+						}
+						
+						continue;
+					}
+				}
+				else				//높이 차리가 1이 아니라면 false							
+					return false;
+			}
+			
+		}
+		return true;
+	}
+	
+}

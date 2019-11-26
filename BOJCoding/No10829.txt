@@ -1,0 +1,38 @@
+import java.math.BigInteger;
+import java.util.Scanner;
+import java.util.Stack;
+
+public class Main
+{
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+
+		String s =input.next();
+		BigInteger big =new BigInteger(s);
+		System.out.println(binaryNumber(big));
+	}
+	
+	public static String binaryNumber(BigInteger big)
+	{
+		Stack<BigInteger> stack =new Stack<BigInteger>();
+		StringBuilder sb =new StringBuilder();
+		String zero ="0";
+		BigInteger bigZero =new BigInteger(zero);
+		String two ="2";
+		BigInteger bigTwo =new BigInteger(two);
+		
+		
+		while(big.compareTo(bigZero) ==1)
+		{
+			stack.push(big.mod(bigTwo));
+			big =big.divide(bigTwo);
+		}
+		while(stack.size() >0)
+		{
+			BigInteger num =stack.pop();
+			sb.append(num);
+		}
+		return sb.toString();
+	}
+}

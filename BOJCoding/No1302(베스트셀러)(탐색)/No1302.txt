@@ -1,0 +1,53 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Scanner;
+
+public class Main
+{	
+	public static class Book
+	{
+		String name;
+		int num;
+		public Book(String name)
+		{
+			this.name =name;
+			this.num =1;
+		}
+	}
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		ArrayList<Book> books =new ArrayList<Book>();
+		int N =input.nextInt();
+		while(N-- >0)
+		{
+			String s =input.next();
+			boolean check =false;
+			for(int i =0; i <books.size(); i++)
+			{
+				if(s.equals(books.get(i).name))
+				{
+					books.get(i).num++;
+					check =true;
+				}
+			}
+			if(!check)
+				books.add(new Book(s));
+			
+		}
+		Collections.sort(books, new Comparator<Book>()
+		{
+			@Override
+			public int compare(Book book1, Book book2)
+			{
+				if(book1.num ==book2.num)
+					return book1.name.compareTo(book2.name);
+				else
+					return Integer.compare(book2.num, book1.num);
+			}
+		});
+		System.out.println(books.get(0).name);
+	}
+	
+}

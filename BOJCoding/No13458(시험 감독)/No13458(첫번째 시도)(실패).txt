@@ -1,0 +1,54 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	static int N;
+	static int B, C;
+	static int[] A;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		
+		N =Integer.parseInt(br.readLine());
+		A =new int[N];
+		
+		st =new StringTokenizer(br.readLine());
+		for(int i =0; i <N; i++)
+			A[i] =Integer.parseInt(st.nextToken());
+		
+		st =new StringTokenizer(br.readLine());
+		B =Integer.parseInt(st.nextToken());
+		C =Integer.parseInt(st.nextToken());
+		
+		bw.write(func() +"\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+	public static int func()
+	{
+		int ans =0;
+		
+		for(int i =0; i <N; i++)
+		{
+			A[i] -=B;
+			ans++;
+			if(A[i] >0)			//총 감독관1명으로 부족할 때
+			{
+				if(A[i] %C ==0)
+					ans +=A[i] /C;
+				else
+					ans +=A[i] /C +1;
+			}
+		}
+		return ans;
+	}
+}

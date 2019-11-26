@@ -1,0 +1,44 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.Arrays;
+import java.util.HashSet;
+
+public class Main
+{	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int N =Integer.parseInt(br.readLine());
+		int F =Integer.parseInt(br.readLine());
+		N /=100;
+		boolean check =false;
+		
+		for(int i =0; i <10; i++)
+		{
+			for(int j =0; j <10; j++)
+			{
+				StringBuilder sb =new StringBuilder();
+				sb.append(N).append(i).append(j);
+				int n =Integer.parseInt(sb.toString());
+				
+				if(n%F ==0)
+				{
+					sb.setLength(0);
+					sb.append(i).append(j);
+					bw.write(sb.toString() + "\n");
+					check =true;
+					break;
+				}
+			}
+			if(check)
+				break;
+		}
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+}

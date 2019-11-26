@@ -1,0 +1,85 @@
+import java.io.IOException;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Scanner;
+
+public class Main
+{
+	static int[][] graph;
+	static int n;
+	static int m;
+	static int v;
+	public static void main(String[] args) throws IOException
+	{
+		Scanner input =new Scanner(System.in);
+		n =input.nextInt();
+		m =input.nextInt();
+		v =input.nextInt();
+		graph =new int[m][2];	//two vertex
+		for(int i =0; i <m; i++)
+		{
+			graph[i][0] =input.nextInt();
+			graph[i][1] =input.nextInt();
+		}
+		dfs();
+		bfs();
+	}
+	public static void dfs()
+	{
+		Queue<Integer> queue =new LinkedList<Integer>();
+		HashSet<Integer> set =new HashSet<Integer>();
+		queue.offer(v);
+		set.add(v);
+		for(int i =0; i <graph.length; i++)
+			dfs(i, queue, set);
+		while(!queue.isEmpty())
+			System.out.print(queue.poll() + " ");
+		System.out.println();
+	}
+	public static void dfs(int start, Queue<Integer> queue, HashSet<Integer> set)
+	{
+		for(int i =0; i <graph.length; i++)
+		{
+			if(start ==i)
+			{
+				if(!set.contains(graph[i][1]))
+				{
+					set.add(graph[i][1]);
+					queue.add(graph[i][1]);
+					dfs(graph[i][1], queue, set);
+				}
+			}
+		}
+	}
+	public static void bfs()
+	{
+		Queue<Integer> queue1 =new LinkedList<Integer>();
+		Queue<Integer> queue2 =new LinkedList<Integer>();
+		HashSet<Integer> set =new HashSet<Integer>();
+		queue1.offer(v);
+		queue2.offer(v);
+		set.add(v);
+		while(!queue1.isEmpty())
+		{
+			int n =queue1.poll();
+			for(int i =0; i <graph.length; i++)
+			{
+				if(n ==graph[i][0])
+				{
+					int num =graph[i][1];
+					if(!set.contains(num))
+					{
+						set.add(num);
+						queue2.offer(num);
+						queue1.offer(num);
+					}
+				}
+			}
+		}
+		while(!queue2.isEmpty())
+			System.out.print(queue2.poll() + " ");
+		System.out.println();
+	}
+	
+}

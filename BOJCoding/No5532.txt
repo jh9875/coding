@@ -1,0 +1,32 @@
+import java.util.Scanner;
+
+public class Main
+{
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		
+		int l =input.nextInt();
+		int a =input.nextInt();
+		int b =input.nextInt();
+		int c =input.nextInt();
+		int d =input.nextInt();
+		
+		int count1 =1;
+		int count2 =1;
+		while(a -c >0)
+		{
+			a -=c;
+			count1++;
+		}
+		while(b -d >0)
+		{
+			b -=d;
+			count2++;
+		}
+		if(count1 >count2)
+			System.out.println(l -count1);
+		else
+			System.out.println(l -count2);
+	}
+}

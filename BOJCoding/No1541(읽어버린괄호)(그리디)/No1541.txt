@@ -1,0 +1,39 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.StringTokenizer;
+
+public class Main
+{	
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		String input;
+		String[] exp;
+		int sum1 =0, sum2 =0;
+		int len =0;
+		
+		input =br.readLine();
+		exp =input.split("-");
+		len =exp.length;
+		
+		st =new StringTokenizer(exp[0], "+");
+		while(st.hasMoreTokens())
+			sum1 +=Integer.parseInt(st.nextToken());
+		
+		for(int i =1; i <len; i++)
+		{
+			st =new StringTokenizer(exp[i], "+");
+			while(st.hasMoreTokens())
+				sum2 +=Integer.parseInt(st.nextToken());
+		}
+		bw.write((sum1-sum2) + "\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+}

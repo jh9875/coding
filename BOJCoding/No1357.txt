@@ -1,0 +1,26 @@
+import java.util.Scanner;
+
+public class Main
+{
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		int x =input.nextInt();
+		int y =input.nextInt();
+		int revX =rev(x);
+		int revY =rev(y);
+		System.out.println(rev(revX +revY));
+	}
+	public static int rev(int n)
+	{
+		String s =String.valueOf(n);
+		int sum =0;
+		for(int i =s.length() -1; i >=0; i--)
+		{
+			char ch =s.charAt(i);
+			sum +=(int) ((s.charAt(i) -'0') *Math.pow(10, i));
+		}
+		return sum;
+	}
+	
+}

@@ -1,0 +1,50 @@
+import java.util.Scanner;
+import java.util.Stack;
+
+public class Main
+{
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		int r =input.nextInt();
+		int c =input.nextInt();
+		int a =input.nextInt();
+		int b =input.nextInt();
+		
+		for(int i =0; i <r; i++)
+		{
+			for(int m =0; m <a; m++)
+			{
+				for(int j =0; j <c; j++)
+				{
+					for(int n =0; n <b; n++)
+					{
+						if(i %2 ==0)
+						{
+							if(j %2 ==0)
+							{
+								System.out.print("X");
+							}else
+							{
+								System.out.print(".");
+							}
+						}else
+						{
+							if(j %2 ==0)
+							{
+								System.out.print(".");
+							}else
+							{
+								System.out.print("X");
+							}
+						}
+					}
+					
+				}
+				System.out.println();
+			}
+		}
+		
+	}
+	
+}

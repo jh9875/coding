@@ -1,0 +1,51 @@
+import java.util.Scanner;
+
+public class Main
+{
+	static int[] alphabets =new int[26];
+	
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		String s =input.next();
+		countAlphabet(s);
+		findMax();
+		input.close();
+	}
+	
+	public static void countAlphabet(String s)
+	{
+		for(int i =0; i <s.length(); i++)
+		{
+			char ch =s.charAt(i);
+			if(97 <=ch && ch <=122)
+				alphabets[ch-97]++;
+			else if(65 <=ch && ch <=90)
+				alphabets[ch-65]++;
+		}
+			
+	}
+	public static void findMax()
+	{
+		int max =alphabets[0];
+		int index =0;
+		boolean check =false;
+		for(int i =1; i <alphabets.length; i++)
+		{
+			if(max <alphabets[i])
+			{
+				max =alphabets[i];
+				index =i;
+				check =false;
+			}
+			else if(max ==alphabets[i])
+				check =true;
+		}
+		
+		if(check)
+			System.out.println("?");
+		else
+			System.out.println((char)(index+65));
+	}
+	
+}

@@ -1,0 +1,40 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		int T, s, n;
+		int sum;
+		
+		T =Integer.parseInt(br.readLine());
+		
+		while(T-- >0)
+		{
+			sum =0;
+			s =Integer.parseInt(br.readLine());
+			n =Integer.parseInt(br.readLine());
+			
+			sum +=s;
+			while(n-- >0)
+			{
+				st =new StringTokenizer(br.readLine());
+				int q =Integer.parseInt(st.nextToken());
+				int p =Integer.parseInt(st.nextToken());
+				sum +=q*p;
+			}
+			bw.write(sum +"\n");
+		}
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+}

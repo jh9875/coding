@@ -1,0 +1,95 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.StringTokenizer;
+
+public class Main
+{	
+	static int max =Integer.MIN_VALUE;
+	static int min =Integer.MAX_VALUE;
+	static int N;
+	static int[] arr;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int[] op =new int[4];		//+,-,*,/
+		StringTokenizer st;
+		
+		N =Integer.parseInt(br.readLine());
+		arr =new int[N];
+		
+		st =new StringTokenizer(br.readLine());
+		for(int i =0; i <N; i++)
+			arr[i] =Integer.parseInt(st.nextToken());
+		
+		st =new StringTokenizer(br.readLine());
+		for(int i =0; i <4; i++)
+			op[i] =Integer.parseInt(st.nextToken());
+		
+		for(int i =0; i <4; i++)
+		{
+			int[] copy =new int[4];
+			System.arraycopy(op, 0, copy, 0, 4);
+			
+			if(copy[i] !=0)
+			{
+				System.out.println("i: " +i);
+				search(arr[0], 1, i, copy);
+			}
+		}
+		
+		bw.write(max +"\n" +min +"\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+	public static void search(int sum, int index, int opIndex, int[] copy)
+	{
+		System.out.println("sum: " +sum);
+		System.out.println("index: " +index);
+		System.out.println("opIndex: " +opIndex);
+		System.out.println("===========================");
+		
+		int[] opCopy =new int[4];
+		System.arraycopy(copy, 0, opCopy, 0, 4);
+		if(opIndex ==0)
+		{
+			opCopy[opIndex]--;
+			sum +=arr[index];
+		}
+		else if(opIndex ==1)
+		{
+			opCopy[opIndex]--;
+			sum -=arr[index];
+		}else if(opIndex ==2)
+		{
+			opCopy[opIndex]--;
+			sum *=arr[index];
+		}else if(opIndex ==3)
+		{
+			opCopy[opIndex]--;
+			sum /=arr[index];
+		}
+		
+		int temp =0;
+		for(int i =0; i <4; i++)
+		{
+			temp +=opCopy[i];
+			if(opCopy[i] !=0)
+				search(sum, index+1, i, opCopy);
+		}
+		if(temp ==0)
+		{
+			if(sum >max)
+				max =sum;
+			if(sum <min)
+				min =sum;
+			
+			return;	
+		}
+	}
+}

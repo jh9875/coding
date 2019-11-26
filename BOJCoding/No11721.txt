@@ -1,0 +1,24 @@
+import java.util.Scanner;
+
+public class Main
+{
+
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		
+		String sentence =input.nextLine();
+		
+		System.out.print(sentence.charAt(0));
+		for(int i =1; i <sentence.length(); i++)
+		{
+			if((i+1) %10 !=0)
+				System.out.print(sentence.charAt(i));
+			else
+				System.out.println(sentence.charAt(i));
+		}
+		
+		input.close();
+	}
+
+}

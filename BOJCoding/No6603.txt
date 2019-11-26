@@ -1,0 +1,56 @@
+import java.util.Scanner;
+import java.util.Stack;
+
+public class Main
+{
+	static Stack<Integer> stack =new Stack<Integer>();
+	
+	public static void main(String[] args)
+	{	
+		Scanner input =new Scanner(System.in);
+		int num =0;
+		do
+		{
+			num =input.nextInt();
+			if(num !=0)
+			{
+				int[] arr =new int[num];
+				for(int i =0; i <num; i++)
+				{
+					int n =input.nextInt();
+					arr[i] =n;
+				}
+				combination(arr.length, 6, 0, arr);
+				System.out.println();
+			}
+		}while(num !=0);
+	}	
+	public static void combination(int n, int r, int index, int[] arr)
+	{
+		if(r ==0)
+		{
+			printStack();
+			return;
+		}else if(n ==r)
+		{
+			for(int i =0; i <n; i++)
+				stack.add(arr[index +i]);
+			printStack();
+			for(int i =0; i <n; i++)
+				stack.pop();
+		}else
+		{
+			stack.add(arr[index]);
+			combination(n-1, r-1, index+1, arr);
+			stack.pop();
+			combination(n-1, r, index+1, arr);
+		}
+	}
+	public static void printStack()
+	{
+		for(int i =0; i <stack.size(); i++)
+			System.out.print(stack.get(i) + " ");
+		System.out.println();
+	}
+	
+}

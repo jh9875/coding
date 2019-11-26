@@ -1,0 +1,24 @@
+import java.util.Scanner;
+
+public class Main
+{
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		long n1 =input.nextLong();
+		long n2 =input.nextLong();
+		
+		long num1 =n1;
+		long num2 =n2;
+		
+		while(num1 !=num2)
+		{
+			if(num1 <num2)
+				num1 +=n1;
+			else
+				num2 +=n2;
+		}
+		System.out.println(num1);
+	}
+	
+}

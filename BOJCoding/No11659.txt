@@ -1,0 +1,42 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	public static void main(String[] args) throws IOException
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		String s =br.readLine();
+		StringTokenizer st =new StringTokenizer(s);
+		int n =Integer.parseInt(st.nextToken());
+		int m =Integer.parseInt(st.nextToken());
+		int[] arr =new int[n];
+		int[] memo =new int[n];		//index 0부터 n-1까지의 합을 메모해둘 배열
+		s =br.readLine();
+		st =new StringTokenizer(s);
+		for(int i =0; i <arr.length; i++)
+			arr[i] =Integer.parseInt(st.nextToken());
+		memo[0] =arr[0];
+		for(int i =1; i <arr.length; i++)
+			memo[i] +=memo[i -1] +arr[i];
+		
+		for(int i =0; i <m; i++)
+		{
+			s =br.readLine();
+			st =new StringTokenizer(s);
+			int n1 =Integer.parseInt(st.nextToken());
+			int n2 =Integer.parseInt(st.nextToken());
+			bw.write((memo[n2-1]-memo[n1 -1] +arr[n1-1]) +"\n");
+			
+		}
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+}

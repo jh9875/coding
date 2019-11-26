@@ -1,0 +1,48 @@
+처음 이문제를 접했을때 막막했다.
+정렬 기준이 1개가 아니라 2개라서..
+그러다 그냥 단순하게 x기준으로 정렬한다음
+그 정렬한 배열에서 현재순서와 다음순서를 비교해가며 같은부분까지만(x좌표가)
+y를 재정렬 하는 방식으로 했더니 됐다.(퀵정렬로해서 간신히 된듯하다..)
+그리고 결과를 봤더니 내가 만든코드만 시간이 엄청나게 오래걸린것이다.
+그래서 구글링해서봤더니 다른사람들은 comparator를 이용했었다.
+전에 자료구조 시간에 비스무리한것을 배운적은 있었다.
+근데 comparator는 처음인듯하다.
+
+일단 comparable, comparator는 객체를 정렬할때 사용하는것이다.
+comparable 사용법을 보면
+클래스명 옆에 implements Comparable<클래스명>
+이렇게쓰고 
+@Override
+		public int compareTo(클래스명 객체변수)
+		{
+			
+			return 객체비교;
+		}
+이런식으로 compareTo를 구현해준다. 리턴값이 정수형인데 이는
+두 객체를 비교후 같으면 0, 왼쪽이크면 양수, 오른쪽이크면 음수를 리턴한다.
+이것을 구현해놓는 이유는 비교기준을 정하기 위해서이다.
+이 문제와 같이 point클래스가 있으면 멤버가 x, y두가지 이기 때문에 어떤 기준으로
+정렬할지 정해지지 않았다.
+정렬 기준은 입맛에맞게 compareTo에 구현해놓으면 된다.
+사용 예를 들어보면 만약 이 객체배열을 만들자고 하자.
+만약 Point클래스라면 Point[] arr =new Point[N];
+이런식으로 배열을 선언하고
+Arrays.sort(arr);을 하면 compareTo에 구현한 기준으로 정렬해준다.
+반면에 comparator는 인스턴스? 즉석에서 바로 써먹는거같다.
+Arrays.sort(arr, new Comparator<int[]>()
+		{
+			@Override
+			public int compare(int[] arr1, int[] arr2)
+			{
+				if(arr1[0] ==arr2[0])
+					return Integer.compare(arr1[1], arr2[1]);
+				else
+					return Integer.compare(arr1[0], arr2[0]);
+			}
+		});
+이 코드를 보면 Arrays.sort();이 안에 배열이랑 Comparator객체를 선언해주고
+Compare를 구현해준다.
+comparaTo보다 좀더 자유도가 높은편인것같다.
+위 코드를 해석해면 x값이 같으면 y값을 기준으로 비교하고 x값이 다르면 x값을 기준으로 정렬한다.
+는 의미의 코드이다.
+처음엔 적응이 안됬지만 지금은 이해가 간다.

@@ -1,0 +1,103 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Main
+{	
+	static class Point
+	{
+		int x;
+		int y;
+		Point(int x, int y)
+		{
+			this.x =x;
+			this.y =y;
+		}
+	}
+	static ArrayList<Integer> al =new ArrayList<>();	//아파트 단지들의 수를 담을 리스트.
+	static boolean[][] visited;
+	static int[][] map;
+	static int numberOfComplex =0;						//전체 아파트 단지 수.
+	static int N =0;;
+	static int complexCount =101;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		String input =null;
+		N =Integer.parseInt(br.readLine());
+		map =new int[N][N];
+		visited =new boolean[N][N];
+		for(int i =0; i <N; i++)
+		{
+			input =br.readLine();
+			for(int j =0; j <N; j++)
+				map[i][j] =input.charAt(j) -'0';
+		}
+		
+		for(int i =0; i <N; i++)
+		{
+			for(int j =0; j <N; j++)
+			{
+				if(map[i][j] ==1)
+				{
+					bfs(i, j);
+					complexCount++;
+				}
+			}
+		}
+		Collections.sort(al);
+		bw.write(numberOfComplex + "\n");
+		
+		for(int i =0; i <al.size(); i++)
+			bw.write(al.get(i) + "\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	public static void bfs(int x, int y)
+	{
+		numberOfComplex++;			//전체 단지수 한개 증가.
+		int[] dr = {1, 0, -1, 0};
+		int[] dc = {0, 1, 0, -1};
+		int count =0;
+		int curX =x;
+		int curY =y;
+		Queue<Point> queue =new LinkedList<Point>();
+		Point p =new Point(x, y);
+		queue.add(p);
+		visited[p.x][p.y] =true;
+		map[p.x][p.y] =complexCount;
+		count++;
+		
+		while(!queue.isEmpty())
+		{
+			p =queue.poll();
+			curX =p.x;
+			curY =p.y;
+			
+			for(int i =0; i <4; i++)
+			{
+				if((0 <=curX +dr[i] && curX +dr[i] <N) && 
+						(0 <=curY +dc[i] && curY +dc[i] <N))
+				{
+					if(!visited[curX +dr[i]][curY +dc[i]] &&
+							map[curX +dr[i]][curY +dc[i]] ==1)
+					{
+						queue.add(new Point(curX +dr[i], curY +dc[i]));
+						visited[curX +dr[i]][curY +dc[i]] =true;
+						map[curX +dr[i]][curY +dc[i]] =complexCount;
+						count++;
+					}
+				}
+			}
+		}
+		al.add(count);			//한 단지내의 정사각형 수
+	}
+}

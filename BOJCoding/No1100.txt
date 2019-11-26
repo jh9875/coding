@@ -1,0 +1,46 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+public class Main
+{
+	public static void main(String[] args) throws IOException, NumberFormatException
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int count =0;
+		for(int i =0; i <8; i++)
+		{
+			String s =br.readLine();
+			if(i %2 ==0) 	//È¦¼öÄ­
+			{
+				for(int j =0; j <s.length(); j++)
+				{
+					if(j %2 !=0)
+						continue;
+					else
+						if(s.charAt(j) =='F')
+							count++;
+				}
+			}else			//Â¦¼öÄ­
+			{
+				for(int j =0; j <s.length(); j++)
+				{
+					if(j %2 ==0)
+						continue;
+					else
+						if(s.charAt(j) =='F')
+							count++;
+				}
+			}
+		}
+		bw.write(String.valueOf(count) +"\n");
+		bw.flush();
+		bw.close();
+		br.close();
+			
+	}
+	
+}

@@ -1,0 +1,118 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.PriorityQueue;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	static class Vertex implements Comparable<Vertex>
+	{
+		int dest;
+		int weight;
+		
+		public Vertex(int dest, int weight)
+		{
+			this.dest =dest;
+			this.weight =weight;
+		}
+		@Override
+		public int compareTo(Vertex n)
+		{
+			return this.weight -n.weight;
+		}
+	}
+	public static class Graph
+	{
+		int n;
+		int[] dist;
+		boolean[] visited;
+		ArrayList<ArrayList<Vertex>> al;
+		
+		public Graph(int n)
+		{
+			this.n =n;
+			dist =new int[n+1];
+			visited =new boolean[n+1];
+			al =new ArrayList<ArrayList<Vertex>>();		//ArrayList들의 ArrayList 초기화
+			
+			for(int i =1; i <n+1; i++)
+				dist[i] =Integer.MAX_VALUE;
+			for(int i =0; i <n+1; i++)				//al에 있는 모든 rayList들을 초기화 해주기 위해?
+				al.add(new ArrayList<Vertex>());
+		}
+		public void input(int u, int v, int w)
+		{
+			al.get(u).add(new Vertex(v, w));
+		}
+		
+		public String dijkstra(int k)
+		{
+			StringBuilder sb =new StringBuilder();
+			PriorityQueue<Vertex> pq =new PriorityQueue();
+			
+			dist[k] =0;
+			
+			pq.add(new Vertex(k, 0));		//처음엔 아무것도 없는 상태 이므로 없는거에서 시작노드로 가는것??
+			
+			while(!pq.isEmpty())
+			{
+				int cur =pq.poll().dest;
+				
+				if(visited[cur])		//이미 방문했으면 넘어감.
+					continue;
+				visited[cur] =true;
+				
+				for(Vertex v : al.get(cur))	//리스트 al에서 cur번째 (Vertex를 담은)리스트를 차례대로 v에 담음
+				{
+					if(dist[v.dest] >dist[cur] +v.weight)
+					{
+						dist[v.dest] =dist[cur] +v.weight;
+						pq.add(new Vertex(v.dest, dist[v.dest]));
+					}
+				}
+			}
+			for(int i =1; i <n+1; i++)
+			{
+				if(dist[i] ==Integer.MAX_VALUE)
+					sb.append("INF\n");
+				else
+					sb.append(dist[i] +"\n");
+			}
+			
+			return sb.toString();
+		}
+	}
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		Graph g;
+		int V, E, K;
+		int u, v, w;
+		st =new StringTokenizer(br.readLine());
+		V =Integer.parseInt(st.nextToken());
+		E =Integer.parseInt(st.nextToken());
+		K =Integer.parseInt(br.readLine());
+
+		g =new Graph(V);
+		
+		for(int i =0; i <E; i++)
+		{
+			st =new StringTokenizer(br.readLine());
+			u =Integer.parseInt(st.nextToken());
+			v =Integer.parseInt(st.nextToken());
+			w =Integer.parseInt(st.nextToken());
+			
+			g.input(u, v, w);
+		}
+		bw.write(g.dijkstra(K));
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+}

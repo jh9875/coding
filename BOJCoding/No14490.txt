@@ -1,0 +1,46 @@
+import java.util.Scanner;
+import java.util.Stack;
+
+public class Main
+{
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		String s =input.next();
+		String[] arr =s.split(":");
+		int n1 =Integer.parseInt(arr[0]);
+		int n2 =Integer.parseInt(arr[1]);
+		int div =gcd(n1, n2);
+		System.out.println((n1/div) + ":" + (n2/div));
+		
+	}
+	public static int gcd(int n1, int n2)
+	{
+		Stack<Integer> st1 =new Stack<Integer>();
+		Stack<Integer> st2 =new Stack<Integer>();
+		for(int i =1; i <=n1; i++)
+			if(n1 %i ==0)
+				st1.push(i);
+		for(int i =1; i <=n2; i++)
+			if(n2 %i ==0)
+				st2.push(i);
+		int num1 =0;
+		int num2 =0;
+		if(st1.size() !=0)
+			num1 =st1.pop();
+		else
+			num1 =1;
+		if(st2.size() !=0)
+			num2 =st2.pop();
+		else
+			num2 =1;
+		while(num1 !=num2)
+		{
+			if(num1 >num2)
+				num1 =st1.pop();
+			else if(num1 <num2)
+				num2 =st2.pop();
+		}
+		return num1;
+	}
+}

@@ -1,0 +1,21 @@
+import java.util.Scanner;
+
+public class Main
+{
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		int n1 =input.nextInt();
+		int n2 =input.nextInt();
+		int n3 =input.nextInt();
+		int diff1 =n2 -n1 -1;
+		int diff2 =n3 -n2 -1;
+		
+		int count =0;
+		if(diff2 >diff1)
+			System.out.println(diff2);
+		else
+			System.out.println(diff1);
+	}
+	
+}

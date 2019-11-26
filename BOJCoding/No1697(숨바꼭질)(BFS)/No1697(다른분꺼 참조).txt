@@ -1,0 +1,50 @@
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Scanner;
+
+public class Main
+{	
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		int n =input.nextInt();
+		int k =input.nextInt();
+		System.out.println(bfs(n, k));
+		
+	}
+	public static int bfs(int n, int k)
+	{
+		Queue<Integer> queue =new LinkedList<Integer>();
+		int[] visit =new int[100001];
+		
+		queue.offer(n);
+		visit[n] =1;
+		
+		while(!queue.isEmpty())
+		{
+			n =queue.poll();
+			if(n ==k)
+				break;
+			
+			if(n-1 >=0 && visit[n-1] ==0)
+			{
+				queue.offer(n-1);
+				visit[n-1] =visit[n] +1;
+			}
+			if(n+1 <=100000 && visit[n+1] ==0)
+			{
+				queue.offer(n+1);
+				visit[n+1] =visit[n] +1;
+			}
+			if(n*2 <=100000 && visit[n*2] ==0)
+			{
+				queue.offer(n*2);
+				visit[n*2] =visit[n] +1;
+			}
+			
+		}
+		
+		return visit[k]-1;
+	}
+	
+}

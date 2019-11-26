@@ -1,0 +1,39 @@
+import java.io.IOException;
+import java.util.Scanner;
+
+public class Main
+{	
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		String[] inputs;
+		int t =input.nextInt();
+		while(t-- >0)
+		{
+			int n1 =input.nextInt();
+			int n2 =input.nextInt();
+			
+			System.out.println(lcm(n2, n1));
+		}
+	}
+	public static int gcd(int n1, int n2)	//최대공약수
+	{
+		if(n1 <n2)
+		{
+			int temp =n1;
+			n1 =n2;
+			n2 =temp;
+		}
+		while(n2 !=0)
+		{
+			int temp =n1 %n2;
+			n1 =n2;
+			n2 =temp;
+		}
+		return n1;
+	}
+	public static int lcm(int n1, int n2)	//최소공배수
+	{
+		return n1*n2 /gcd(n1, n2);
+	}
+}

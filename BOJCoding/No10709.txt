@@ -1,0 +1,45 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+public class Main
+{	
+	public static void main(String[] args) throws IOException
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		String[] inputs;
+		inputs =br.readLine().split(" ");
+		int h =Integer.parseInt(inputs[0]);
+		int w =Integer.parseInt(inputs[1]);
+		for(int i =0; i <h; i++)
+		{
+			String line =br.readLine();
+			int count;
+			char first =line.charAt(0);
+			if(first =='c')
+				count =0;
+			else
+				count =-1;
+			bw.write(count + " ");
+			for(int j =1; j <w; j++)
+			{
+				char temp =line.charAt(j);
+				if(temp =='c')
+					count =0;
+				else
+				{
+					if(count !=-1)
+						count++;
+				}
+				bw.write(count + " ");
+			}
+			bw.write("\n");
+		}
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+}

@@ -1,0 +1,22 @@
+
+import java.util.Scanner;
+
+public class Main
+{
+	
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		int n1 =0;
+		int n2 =0;
+		do
+		{
+			n1 =input.nextInt();
+			n2 =input.nextInt();
+			if(n1 !=0 && n2 !=0)
+				System.out.println(n1+n2);
+		}while(n1 !=0 && n2 !=0);
+		
+	}
+	
+}

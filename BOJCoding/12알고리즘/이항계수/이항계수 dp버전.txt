@@ -1,0 +1,31 @@
+import java.util.Scanner;
+
+public class Main
+{
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		int[][] dp =new int[1001][1001];
+		dp[1][0] =1;
+		dp[1][1] =1;
+		for(int i =2; i <dp.length; i++)
+		{
+			for(int j =0; j <=i; j++)
+			{
+				if(j ==0 || i ==j)
+				{
+					dp[i][j] =1;
+				}else
+				{
+					dp[i][j] =dp[i -1][j -1] + dp[i -1][j];
+				}
+				
+			}
+		}
+		int n =input.nextInt();
+		int r =input.nextInt();
+		System.out.println(dp[n][r]);
+		
+	}
+	
+}

@@ -1,0 +1,113 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.PriorityQueue;
+
+public class Main
+{	
+	static class Edge implements Comparable<Edge>
+	{
+		int dest;
+		int cost;
+		
+		Edge(int d, int c)
+		{
+			this.dest =d;
+			this.cost =c;
+		}
+
+		@Override
+		public int compareTo(Edge e)
+		{
+			return this.cost -e.cost;
+		}
+	}
+	static class Graph
+	{
+		int N;
+		ArrayList<Edge>[] list;
+		
+		Graph(int N)
+		{
+			this.N =N;
+			list =new ArrayList[N+1];
+			
+			for(int i =0; i <N+1; i++)
+				list[i] =new ArrayList<>();
+		}
+		public void inputData(int f, int t, int c)
+		{
+			list[f].add(new Edge(t, c));
+		}
+		
+		public int minumunCost(int s, int e)
+		{
+			int size =0;
+			int[] distance =new int[N+1];
+			boolean[] visited =new boolean[N+1];
+			PriorityQueue<Edge> pq =new PriorityQueue<>();
+			
+			for(int i =1; i <N+1; i++)
+				distance[i] =Integer.MAX_VALUE;
+			
+			pq.offer(new Edge(s, 0));
+			distance[s] =0;
+			visited[s] =true;
+			
+			while(!pq.isEmpty())
+			{
+				Edge edge =pq.poll();
+				
+				size =list[edge.dest].size();
+				visited[edge.dest] =true;
+				
+				for(int i =0; i <size; i++)
+				{
+					int dest =list[edge.dest].get(i).dest;
+					int cost =list[edge.dest].get(i).cost;
+					
+					if(!visited[dest])
+					{
+						distance[dest] =Math.min(distance[dest], distance[edge.dest] +cost);
+						pq.offer(new Edge(dest, distance[dest]));	
+					}
+					
+				}
+			}
+			
+			return distance[e];
+		}
+	}
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int N, M;
+		int S, E;
+		String[] input;
+		Graph g;
+		
+		N =Integer.parseInt(br.readLine());
+		M =Integer.parseInt(br.readLine());
+		g =new Graph(N);
+		
+		for(int i =0; i <M; i++)
+		{
+			input =br.readLine().split(" ");
+			int f =Integer.parseInt(input[0]);
+			int t =Integer.parseInt(input[1]);
+			int c =Integer.parseInt(input[2]);
+			g.inputData(f, t, c);
+		}
+		input =br.readLine().split(" ");
+		S =Integer.parseInt(input[0]);
+		E =Integer.parseInt(input[1]);
+		
+		bw.write(g.minumunCost(S, E) +"\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+}

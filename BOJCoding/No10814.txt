@@ -1,0 +1,46 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	public static void main(String[] args) throws NumberFormatException, IOException
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int n =Integer.parseInt(br.readLine());
+		int[][] ageAndSeq =new int[n][2];
+		String[] name =new String[n];
+		StringTokenizer st;
+		for(int i =0; i <ageAndSeq.length; i++)
+		{
+			String s =br.readLine();
+			st =new StringTokenizer(s);
+			ageAndSeq[i][0] =Integer.parseInt(st.nextToken());
+			name[i] =st.nextToken();
+			ageAndSeq[i][1] =i;
+		}
+		Arrays.sort(ageAndSeq, new Comparator<int[]>()
+		{
+			@Override
+			public int compare(int[] a1, int[] a2)
+			{	
+				if(a1[0] ==a2[0])							//나이가 같다면 가입순
+					return Integer.compare(a1[1], a2[1]);
+				else										//나이가 다르면 나이순
+					return Integer.compare(a1[0], a2[0]);
+			}
+		});
+		for(int i =0; i <ageAndSeq.length; i++)
+			bw.write(ageAndSeq[i][0] + " " + name[ageAndSeq[i][1]] + "\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+}

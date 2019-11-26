@@ -1,0 +1,44 @@
+import java.util.Scanner;
+
+public class Main
+{
+	public static void main(String[] args)
+	{
+		Scanner input =new Scanner(System.in);
+		int[] arr =new int[9];
+		int sum =0;
+		for(int i =0; i <arr.length; i++)
+		{
+			arr[i] =input.nextInt();
+			sum +=arr[i];
+		}
+		int a =0, b =0;
+		
+		boolean check =true;
+		for(int i =0; i <arr.length; i++)
+		{
+			for(int j =i+1; j <arr.length; j++)
+			{
+				if(sum -arr[i] -arr[j] ==100)
+				{
+					check =false;
+					a =i;
+					b =j;
+				}
+					
+			}
+			if(!check)
+				break;
+		}
+		for(int i =0; i <arr.length; i++)
+		{
+			if(i ==a || i ==b)
+				continue;
+			else
+				System.out.println(arr[i]);
+		}
+			
+		
+	}
+	
+}
