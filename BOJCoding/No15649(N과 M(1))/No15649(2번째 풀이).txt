@@ -1,0 +1,57 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.Iterator;
+import java.util.Stack;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	static BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+	static int N, M;
+	static int[] arr;
+	static boolean[] check;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st;
+		
+		
+		st =new StringTokenizer(br.readLine());
+		N =Integer.parseInt(st.nextToken());
+		M =Integer.parseInt(st.nextToken());
+		arr =new int[N+1];
+		check =new boolean[N+1];
+		
+		pick(1);
+		
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+	public static void pick(int cursor) throws IOException
+	{
+		if(cursor ==M+1)
+		{
+			for(int i =1; i <M+1; i++)
+				bw.write(arr[i] +" ");
+			bw.write("\n");
+			return;
+		}
+		
+		for(int i =1; i <N+1; i++)
+		{
+			if(!check[i])
+			{
+				check[i] =true;
+				arr[cursor] =i;
+				pick(cursor+1);
+				check[i] =false;
+			}
+		}
+	}
+}
