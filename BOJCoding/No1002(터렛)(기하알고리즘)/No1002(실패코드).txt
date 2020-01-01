@@ -1,0 +1,52 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		int T;
+		int x1, x2, y1, y2, r1, r2;
+		
+		T =Integer.parseInt(br.readLine());
+		
+		while(T-- >0)
+		{
+			st =new StringTokenizer(br.readLine());
+			x1 =Integer.parseInt(st.nextToken());
+			y1 =Integer.parseInt(st.nextToken());
+			r1 =Integer.parseInt(st.nextToken());
+			x2 =Integer.parseInt(st.nextToken());
+			y2 =Integer.parseInt(st.nextToken());
+			r2 =Integer.parseInt(st.nextToken());
+			
+			if(x1 ==x2 && y1 ==y2)		//좌표 일치
+			{
+				if(r1 ==r2)				//길이 일치
+					bw.write(-1 +"\n");
+				else					//길이 불일치
+					bw.write(0 +"\n");
+			}else						//좌표 불일치
+			{
+				int distance = (int)Math.sqrt(Math.pow(x1-x2, 2) + Math.pow(y1-y2, 2));
+				if(distance ==r1+r2)
+					bw.write(1 +"\n");
+				else if((int)Math.sqrt(Math.pow(x1-x2, 2) + Math.pow(y1-y2, 2)) >r1+r2)
+					bw.write(0 +"\n");
+				else
+					bw.write(2 +"\n");
+			}
+		}
+		
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+}
