@@ -1,0 +1,70 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	static int[] h;
+	static int n;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		
+		while(true)
+		{
+			st =new StringTokenizer(br.readLine());
+			n =Integer.parseInt(st.nextToken());
+			h =new int[n];
+			
+			if(n ==0)
+				break;
+			for(int i =0; i <n; i++)
+				h[i] =Integer.parseInt(st.nextToken());
+			bw.write(divideAndConquer(0, n-1) +"\n");
+		}
+		bw.flush();
+		bw.close();
+		br.close();
+		h =null;
+	}
+	
+	public static long divideAndConquer(int left, int right)
+	{
+		long ret =0;
+		
+		//기저사례
+		if(left ==right)
+			return h[left];
+		
+		int mid =(left+right)/2;
+		
+		//왼쪽과 오른쪽 중 큰 쪽.
+		ret =Math.max(divideAndConquer(left, mid), divideAndConquer(mid+1, right));
+		
+		int lo =mid;
+		int hi =mid+1;
+		long height =Math.min(h[lo], h[hi]);
+		
+		ret =Math.max(ret, height*2);		//중간 2개를 포함하기 때문.
+		
+		while(left <lo || hi <right)
+		{
+			if(hi <right && (lo ==left || h[lo-1] <h[hi+1]))
+			{
+				hi++;
+				height =Math.min(height, h[hi]);
+			}else
+			{
+				lo--;
+				height =Math.min(height, h[lo]);
+			}
+			ret =Math.max(ret, height*(hi-lo+1));
+		}
+		return ret;
+	}
+}
