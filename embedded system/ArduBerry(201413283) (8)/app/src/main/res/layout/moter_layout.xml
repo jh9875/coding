@@ -1,0 +1,93 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/bg" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_title"
+        android:gravity="center_vertical" >
+
+        <TextView
+            android:id="@+id/KNUText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="KNU Moter" />
+
+        <Button
+            android:id="@+id/btBTN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/selector_bt_btn"
+            android:onClick="clickFunc"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+    <!-- Sensor Monitor & Contorl -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="504dp"
+        android:layout_margin="20dp"
+        android:background="@drawable/bg_text"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+            <Button
+                android:id="@+id/plusButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="clickFunc"
+                android:text="+" />
+
+            <Button
+                android:id="@+id/minusButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="clickFunc"
+                android:text="-" />
+
+            <Button
+                android:id="@+id/stopButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="clickFunc"
+                android:text="S" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="89dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/text"
+                android:layout_width="33dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="회전수: " />
+
+            <TextView
+                android:id="@+id/output"
+                android:layout_width="wrap_content"
+                android:layout_height="33dp"
+                android:layout_weight="1"
+                android:text="1" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+</LinearLayout>

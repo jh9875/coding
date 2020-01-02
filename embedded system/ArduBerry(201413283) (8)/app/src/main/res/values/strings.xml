@@ -1,0 +1,47 @@
+<resources>
+
+    <string name="app_name">WIRELESS COMMUNICATION</string>
+
+    <!-- WIFIControlActivity -->
+    <string name="txt_wifi_title">"WiFi IP : "</string>
+    <string name="txt_ip">"IP"</string>
+    <string name="txt_port">"Port"</string>
+    <string name="wifi_dialog_title">Input IP and Port</string>
+    <string name="wifi_dialog_connect">"Connect"</string>
+    <string name="load_image">"loading ......;"</string>
+
+    <!-- Bluetooth -->
+    <string name="send">Send</string>
+    <string name="not_connected">You are not connected to a device</string>
+    <string name="bt_not_enabled_leaving">Bluetooth was not enabled. Leaving application.</string>
+    <string name="title_connecting">connecting...</string>
+    <string name="title_connected">connected</string>
+    <string name="title_connected_to">connected: </string>
+    <string name="title_not_connected">not connected</string>
+    <string name="unable_connected">Unable to connect device</string>
+    <string name="lost_connected">Device connection was lost</string>
+
+
+    <string name="permission_granted">"Permission Allow"</string>
+    <string name="permission_denied">"Denied Permission"</string>
+
+    <!-- DeviceListActivity -->
+    <string name="scanning">scanning for devices...</string>
+    <string name="select_device">select a device to connect</string>
+    <string name="none_paired">No devices have been paired</string>
+    <string name="none_found">No devices found</string>
+    <string name="title_paired_devices">Paired Devices</string>
+    <string name="title_other_devices">Other Available Devices</string>
+    <string name="button_scan">Scan for devices</string>
+
+
+    <string name="no_image">No_Image</string>
+    <string name="red_led">R</string>
+    <string name="green_led">G</string>
+    <string name="yellow_led">Y</string>
+    <string name="white_led">W</string>
+    <string name="go_bt">GO BT</string>
+    <string name="go_wifi">GO WiFi</string>
+    <string name="version">v.2019_06_10</string>
+
+</resources>

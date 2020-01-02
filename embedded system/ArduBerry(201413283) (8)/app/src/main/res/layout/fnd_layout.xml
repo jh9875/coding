@@ -1,0 +1,84 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/bg" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_title"
+        android:gravity="center_vertical" >
+        <!--
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/app_name"/>  -->
+
+        <Button
+            android:id="@+id/btBTN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/selector_bt_btn"
+            android:onClick="clickFunc"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="KNU 스톱워치" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="214dp"
+        android:gravity="center_vertical">
+
+        <EditText
+            android:id="@+id/inputText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="number" />
+
+        <TextView
+            android:id="@+id/outputText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="0" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="214dp"
+        android:gravity="center_vertical">
+
+        <Button
+            android:id="@+id/startButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="clickFunc"
+            android:text="start" />
+
+        <Button
+            android:id="@+id/stopButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="clickFunc"
+            android:text="stop" />
+
+    </LinearLayout>
+
+</LinearLayout>

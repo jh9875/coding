@@ -1,0 +1,46 @@
+<resources>
+
+    <string name="app_name">라즈베리파이\n무선통신</string>
+
+    <!-- WIFIControlActivity -->
+    <string name="txt_wifi_title">"[ 서버 WIFI iP ] "</string>
+    <string name="txt_ip">"IP"</string>
+    <string name="txt_port">"포  트"</string>
+    <string name="wifi_dialog_title">서버 IP를 입력하세요.</string>
+    <string name="wifi_dialog_connect">"연결"</string>
+    <string name="load_image">"이미지 로딩 중 ......;"</string>
+
+    <!-- Bluetooth -->
+    <string name="send">전송</string>
+    <string name="not_connected">You are not connected to a device</string>
+    <string name="bt_not_enabled_leaving">블루투스 사용 불가</string>
+    <string name="title_connecting">연결 중 ...</string>
+    <string name="title_connected">연결</string>
+    <string name="title_connected_to">연결: </string>
+    <string name="title_not_connected">연결 해제</string>
+    <string name="unable_connected">연결 불가</string>
+    <string name="lost_connected">연결 끊김</string>
+
+    <string name="permission_granted">"권한 허용"</string>
+    <string name="permission_denied">"권한 허용 불가로 앱 종료"</string>
+
+    <!-- DeviceListActivity -->
+    <string name="scanning">기기 검색 중 ...</string>
+    <string name="select_device">연결 기기 선택</string>
+    <string name="none_paired">등록된 기기 없음</string>
+    <string name="none_found">발견된 기기 없음</string>
+    <string name="title_paired_devices">등록된 기기</string>
+    <string name="title_other_devices">연결 가능한 기기</string>
+    <string name="button_scan">기기 검색</string>
+
+
+    <string name="no_image">수신 이미지 없음</string>
+    <string name="red_led">R</string>
+    <string name="green_led">G</string>
+    <string name="yellow_led">Y</string>
+    <string name="white_led">W</string>
+    <string name="go_bt">블루투스 통신</string>
+    <string name="go_wifi">와이파이 통신</string>
+    <string name="version">v.2019_06_10</string>
+
+</resources>
