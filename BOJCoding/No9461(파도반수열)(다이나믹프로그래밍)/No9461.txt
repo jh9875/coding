@@ -1,0 +1,32 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+public class Main
+{
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int T, N;
+		long[] arr =new long[101];
+		
+		arr[1] =arr[2] =arr[3] =1;
+		arr[4] =arr[5] =2;
+		for(int i =6; i <101; i++)
+			arr[i] =arr[i-1] +arr[i-5];
+		
+		T =Integer.parseInt(br.readLine());
+		
+		while(T-- >0)
+		{
+			N =Integer.parseInt(br.readLine());
+			bw.write(arr[N] +"\n");
+		}	
+		bw.flush();
+		bw.close();
+		br.close();
+		arr =null;
+	}
+}

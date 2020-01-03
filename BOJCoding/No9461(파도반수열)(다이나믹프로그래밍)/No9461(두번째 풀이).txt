@@ -1,0 +1,42 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.Arrays;
+
+public class Main
+{
+	static long[] dp =new long[101];
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int T, N;
+		
+		dp[1] =dp[2] =dp[3] =1;
+		dp[4] =dp[5] =2;
+		
+		for(int i =6; i <101; i++)
+			solve(i);
+		
+		T =Integer.parseInt(br.readLine());
+		
+		while(T-- >0)
+		{
+			N =Integer.parseInt(br.readLine());
+			bw.write(dp[N] +"\n");
+		}
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+	public static long solve(int index)
+	{
+		if(dp[index] !=0)
+			return dp[index];
+		else
+			return dp[index] =solve(index-1) +solve(index-5);
+	}
+}

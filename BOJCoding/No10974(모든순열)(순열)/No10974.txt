@@ -1,0 +1,50 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	static BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+	static int[] arr;
+	static boolean[] check;
+	static int n;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		
+		n =Integer.parseInt(br.readLine());
+		arr =new int[n+1];
+		check =new boolean[n+1];
+		
+		solve(1);
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+	public static void solve(int cursor) throws IOException
+	{
+		if(cursor >n)
+		{
+			for(int i =1; i <=n; i++)
+				bw.write(arr[i] +" ");
+			bw.write("\n");
+			return;
+		}
+		
+		for(int i =1; i <=n; i++)
+		{
+			if(!check[i])
+			{
+				check[i] =true;
+				arr[cursor] =i;
+				solve(cursor+1);
+				check[i] =false;
+			}
+		}
+	}
+}
