@@ -1,0 +1,62 @@
+-- HB_HA.VHD
+
+ENTITY HB_HA IS
+	PORT(
+		A, B : IN  BIT;
+		S, C : OUT BIT
+	);
+END HB_HA;
+
+ARCHITECTURE HB OF HB_HA IS
+BEGIN
+	PROCESS(A, B)
+	BEGIN
+		IF A = B THEN
+			S <= '0';
+		ELSE
+			S <= '1';
+		END IF;
+	END PROCESS;
+
+	PROCESS(A, B)
+	BEGIN
+		IF A = '0' AND B = '1' THEN
+			C <= '1';
+		ELSE
+			C <= '0';
+		END IF;
+	END PROCESS;
+END HB;
+
+--TB_HB_HA.VHD
+
+LIBRARY IEEE;
+USE IEEE.STD_LOGIC_1164.ALL;
+USE IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+ENTITY TB_HB_HA IS
+END TB_HB_HA;
+
+ARCHITECTURE HB OF TB_HB_HA IS
+	COMPONENT HB_HA
+		PORT(
+			A, B : IN  BIT;
+			S, C : OUT BIT
+		);
+	END COMPONENT;
+
+	SIGNAL A, B : BIT := '0';
+	SIGNAL S, C : BIT := '0';
+
+BEGIN
+	A <= '0', '1' AFTER 200 PS;
+	B <= '0', '1' AFTER 100 PS, '1' AFTER 200 PS, '1' AFTER 300 PS;
+	U_HB_HA : HB_HA
+		PORT MAP(
+			A => A,
+			B => B,
+			S => S,
+			C => C
+		);
+END HB;
+

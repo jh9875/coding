@@ -1,0 +1,225 @@
+#pragma warning(disable:4996)
+
+#include <stdio.h>
+
+#include <Windows.h>
+
+ 
+
+typedef struct node
+
+{
+
+	int value;
+
+	node* next;
+
+}node;
+
+ 
+
+void insertToList(int data, node* list)
+
+{
+
+	node* curPos =list;
+
+	node* newNode =(node*)malloc(sizeof(node));
+
+	newNode->value =data;
+
+	newNode->next =NULL;
+
+	while(curPos->next !=NULL)
+
+		curPos =curPos->next;
+
+	curPos->next =newNode;
+
+}
+
+ 
+
+void printList(node* list)
+
+{
+
+	int i =0;
+
+	node* curPos =list->next;
+
+	while(curPos !=NULL)
+
+	{
+
+		printf("%d번째 수:%d\n",i+1, curPos->value);
+
+		curPos =curPos->next;
+
+		i++;
+
+	}
+
+}
+
+node* twice(node* list)
+
+{
+
+	node* head =(node*)malloc(sizeof(node));	//2의 배수들만 모은 리스트
+
+	head->next =NULL;
+
+	node* cur =list->next;						//원본 리스트를 스캔할
+
+ 
+
+	while(cur !=NULL)
+
+	{
+
+		if(cur->value%2 ==0)
+
+		{
+
+			node* cur2 =head;					//새로 생성될 리스트의 마지막을 찾을 변수
+
+			node* newNode =(node*)malloc(sizeof(node));
+
+			newNode->value =cur->value;
+
+			newNode->next =NULL;
+
+ 
+
+			while(cur2->next !=NULL)
+
+				cur2 =cur2->next;
+
+			cur2->next =newNode;
+
+		}
+
+		cur =cur->next;
+
+	}
+
+	return head;
+
+}
+
+void removeTwice(node* list, node* B)
+
+{
+
+	node* cur1 =list->next;
+
+	node* prev =list;
+
+	
+
+	while(cur1 !=NULL)
+
+	{
+
+		node* cur2 =B->next;
+
+		while(cur2 !=NULL)
+
+		{
+
+			if(cur1->value ==cur2->value)
+
+			{
+
+				if(cur1->next !=NULL)	//중간노드인 경우.
+
+				{
+
+					prev->next =cur1->next;
+
+					cur1 =prev->next;
+
+				}else//마지막 노드인경우.
+
+				{
+
+					prev->next =NULL;
+
+				}
+
+					
+
+			}
+
+			cur2 =cur2->next;
+
+		}
+
+		cur1 =cur1->next;
+
+		prev =prev->next;
+
+	}
+
+}
+
+ 
+
+void main()
+
+{
+
+	node* myList =(node*)malloc(sizeof(node));
+
+	myList->next =NULL;
+
+	int value;
+
+	int i;
+
+ 
+
+	for(i =0; i <10; i++)
+
+	{
+
+		printf("\n수를 입력하세요.");
+
+		scanf("%d", &value);
+
+		insertToList(value, myList);
+
+	}
+
+ 
+
+	printf("원본 myList\n");
+
+	printList(myList);
+
+ 
+
+	node* B =(node*)malloc(sizeof(node));		//2의배수 숫자들
+
+	B =twice(myList);
+
+	printf("짝수만 골라낸 리스트\n");
+
+	printList(B);
+
+ 
+
+	removeTwice(myList, B);	//원본에서 짝수제거
+
+ 
+
+	printf("작수 제거한 후 myList\n");
+
+	printList(myList);
+
+	system("pause");
+
+	return;
+
+}

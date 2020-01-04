@@ -1,0 +1,38 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <Windows.h>
+
+void getMaxMin(float* list, int N, float* max, float* min)
+{
+	int i;
+	*max = *list;
+	*min = *list;
+	for (i = 1; i < N; i++)
+	{
+		if(*max < *(list + i))
+			*max = *(list + i);
+		if (*min > *(list + i))
+			*min = *(list + i);
+	}
+}
+
+void main()
+{
+	int i, N;
+	float *a, max, min;
+	printf("how many elements will you input? ");
+	scanf("%d", &N);
+	a = (float*)malloc(sizeof(float)*N);			//바뀐부분 =>(float*) 형변환
+	for (i = 0; i < N; i++)
+	{
+		printf("Input [%d] th float value:", i + 1);
+		scanf("%f", &a[i]);
+	}
+	getMaxMin(a, N, &max, &min);
+	printf("Max : %f, Min : %f\n", max, min);
+	free(a);
+	system("pause");
+	return;
+
+}

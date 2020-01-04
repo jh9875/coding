@@ -1,0 +1,53 @@
+-- DECORDER.VHD
+
+LIBRARY IEEE;
+USE IEEE.STD_LOGIC_1164.ALL;
+
+ENTITY DECORDER IS
+PORT(
+    BCD : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
+    a, b, c, d, e, f, g : OUT STD_LOGIC;
+	SEG_COM : OUT STD_LOGIC_VECTOR(3 DOWNTO 0)
+);
+END DECORDER;
+
+ARCHITECTURE HB OF DECORDER IS
+
+    SIGNAL DECODE : STD_LOGIC_VECTOR(6 DOWNTO 0);
+
+BEGIN
+
+SEG_COM <= "0111";
+
+PROCESS(BCD)
+BEGIN
+    CASE BCD IS
+        WHEN "0000" => DECODE <= "1111110"; -- 0
+        WHEN "0001" => DECODE <= "0110000"; -- 1
+        WHEN "0010" => DECODE <= "1101101"; -- 2
+        WHEN "0011" => DECODE <= "1111001"; -- 3
+        WHEN "0100" => DECODE <= "0110011"; -- 4
+        WHEN "0101" => DECODE <= "1011011"; -- 5
+        WHEN "0110" => DECODE <= "1011111"; -- 6
+        WHEN "0111" => DECODE <= "1110000"; -- 7
+        WHEN "1000" => DECODE <= "1111111"; -- 8
+        WHEN "1001" => DECODE <= "1111011"; -- 9
+		WHEN "1010" => DECODE <= "1110111"; -- A
+		WHEN "1011" => DECODE <= "0011111"; -- B
+		WHEN "1100" => DECODE <= "1001110"; -- C
+		WHEN "1101" => DECODE <= "0111101"; -- D
+		WHEN "1110" => DECODE <= "1001111"; -- E
+		WHEN "1111" => DECODE <= "1000111"; -- F		  
+        WHEN OTHERS => NULL;
+    END CASE;
+END PROCESS;
+
+a <= DECODE(6);
+b <= DECODE(5);
+c <= DECODE(4);
+d <= DECODE(3);
+e <= DECODE(2);
+f <= DECODE(1);
+g <= DECODE(0);
+
+END HB;

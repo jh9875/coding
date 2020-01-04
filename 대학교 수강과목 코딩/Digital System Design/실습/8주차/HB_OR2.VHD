@@ -1,0 +1,39 @@
+-- HB_OR2.VHD
+
+LIBRARY IEEE;
+USE IEEE.STD_LOGIC_1164.ALL;
+USE IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+ENTITY HB_OR2 IS
+	PORT(
+		A, B, C : IN BIT;
+		X : OUT BIT
+	);
+END HB_OR2;
+
+ARCHITECTURE HB OF HB_OR2 IS
+  
+BEGIN
+  PROCESS(A,B,C)
+  BEGIN
+    IF A = '0' AND B = '0' AND C = '0' THEN
+			X <= '1';
+		ELSIF A = '1' AND B = '1' AND C = '0' THEN
+			X <= '1';
+		ELSIF A = '1' AND B = '0' AND C = '1' THEN
+			X <= '1';
+		ELSIF A = '0' AND B = '1' AND C = '1' THEN
+			X <= '1';
+		ELSE
+			X <= '0';
+		END IF;
+  END PROCESS;
+END HB;
+
+
+
+
+
+
+
+

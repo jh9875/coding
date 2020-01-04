@@ -1,0 +1,14 @@
+﻿cl : 명령줄 warning D9035: 'Gm' 옵션은 더 이상 사용되지 않으므로 이후 릴리스에서 제거될 예정입니다.
+  DIPFWDoc.cpp
+c:\users\jaeho\onedrive\바탕 화면\hoon\대학교 수강과목\3학년 2학기 수강과목\디지털영상처리\실습 자료\dipfw\dipfwdoc.cpp(385): warning C4244: '=': 'double'에서 'BYTE'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\jaeho\onedrive\바탕 화면\hoon\대학교 수강과목\3학년 2학기 수강과목\디지털영상처리\실습 자료\dipfw\dipfwdoc.cpp(748): warning C4244: '=': 'double'에서 'BYTE'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\jaeho\onedrive\바탕 화면\hoon\대학교 수강과목\3학년 2학기 수강과목\디지털영상처리\실습 자료\dipfw\dipfwdoc.cpp(869): warning C4244: '=': 'double'에서 'BYTE'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\jaeho\onedrive\바탕 화면\hoon\대학교 수강과목\3학년 2학기 수강과목\디지털영상처리\실습 자료\dipfw\dipfwdoc.cpp(1022): warning C4244: '=': 'double'에서 'BYTE'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\jaeho\onedrive\바탕 화면\hoon\대학교 수강과목\3학년 2학기 수강과목\디지털영상처리\실습 자료\dipfw\dipfwdoc.cpp(1087): warning C4244: '=': 'double'에서 'BYTE'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  코드를 생성하고 있습니다...
+  건너뛰고 있습니다... (관련된 변경 내용 없음)
+  DIPFWView.cpp
+  DIPFW.cpp
+  ChildFrm.cpp
+ChildFrm.obj : warning LNK4075: '/EDITANDCONTINUE'이(가) '/SAFESEH' 사양으로 인해 무시됩니다.
+  DIPFW.vcxproj -> C:\Users\jaeho\OneDrive\바탕 화면\hoon\대학교 수강과목\3학년 2학기 수강과목\디지털영상처리\실습 자료\Debug\DIPFW.exe

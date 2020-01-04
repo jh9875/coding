@@ -1,0 +1,40 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <windows.h>
+
+
+int myStrCmp(char *x, char *y)
+{
+	int i = 0;
+	while (*(x + i) != '\0' && *(y + i) != '\0')
+	{
+		printf("x+i: %c\n", *(x + i));
+		printf("y+i: %c\n", *(y + i));
+		if (*(x + i) - *(y + i) != 0)
+			break;
+		i++;
+	}
+	return *(x + i) - *(y + i);
+}
+
+int main()
+{
+	char X[100];
+	char Y[100];
+
+	printf("Input the first string: ");
+	gets_s(X);
+	printf("Input the second string: ");
+	gets_s(Y);
+
+	int ret = myStrCmp(X, Y);
+	if (ret < 0)
+		printf("%s appears before %s", X, Y);
+	else if (ret > 0)
+		printf("%s appears after %s", X, Y);
+	else
+		printf("%s,", "X is equal to Y");
+	printf("\n");
+	system("pause");
+	return 0;
+}

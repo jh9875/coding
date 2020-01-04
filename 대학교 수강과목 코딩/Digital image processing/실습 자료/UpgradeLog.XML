@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="DIPFW">
+</Property><Property Name="Solution File" Value="F:\Compile\DIPFW\DIPFW.sln">
+</Property><Property Name="User Options File" Value="F:\Compile\DIPFW\DIPFW.suo">
+</Property><Property Name="Date" Value="2012년 3월 19일 월요일">
+</Property><Property Name="Time" Value="오후 14:32">
+</Property></Properties><Event ErrorLevel="0" Project="" Source="DIPFW.sln" Description="File successfully backed up as F:\Compile\DIPFW\DIPFW.sln.old">
+</Event><Event ErrorLevel="0" Project="" Source="DIPFW.suo" Description="File successfully backed up as F:\Compile\DIPFW\DIPFW.suo.old">
+</Event><Event ErrorLevel="0" Project="DIPFW" Source="DIPFW\DIPFW.vcproj" Description="Converting project file 'F:\Compile\DIPFW\DIPFW\DIPFW.vcproj'.">
+</Event><Event ErrorLevel="1" Project="DIPFW" Source="DIPFW\DIPFW.vcproj" Description="VCWebServiceProxyGeneratorTool is no longer supported. The tool has been removed from your project settings.">
+</Event><Event ErrorLevel="0" Project="DIPFW" Source="DIPFW\DIPFW.vcproj" Description="Done converting to new project file 'F:\Compile\DIPFW\DIPFW\DIPFW.vcxproj'.">
+</Event><Event ErrorLevel="3" Project="DIPFW" Source="DIPFW\DIPFW.vcproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="" Source="DIPFW.sln" Description="Solution converted successfully">
+</Event><Event ErrorLevel="3" Project="" Source="DIPFW.sln" Description="Converted">
+</Event></UpgradeLog>

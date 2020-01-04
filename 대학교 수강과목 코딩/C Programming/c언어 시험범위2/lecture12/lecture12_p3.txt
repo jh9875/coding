@@ -1,0 +1,85 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <Windows.h>
+
+int* addMatrix(int* a, int* b, int N)
+{
+	int i;
+	int *result = (int*)malloc(sizeof(int)*N);
+
+	for (i = 0; i < N; i++)
+		*(result + i) = *(a + i) + *(b + i);
+	
+	return result;
+}
+
+void main()
+{
+	int *matA, *matB, *matC, n;
+	int i, j;
+	j = 0;
+
+	printf("What is the demension of input matrices : ");
+	scanf("%d", &n);
+
+	matA = (int*)malloc(sizeof(int)*n*n);			//바뀐부분 =>(int*) 형변환
+	matB = (int*)malloc(sizeof(int)*n*n);
+
+	printf("Input the matrix A.\n");
+	//complete the code
+	//ver1
+	/*
+
+	for (i = 0; i < n * n; i++)
+	{
+		printf("A[%d][%d]: ", i+1, j+1);
+		scanf("%d", (matA + i));
+	}
+	*/
+	//ver2
+	for (i = 0; i < n; i++)
+	{
+		for (j = 0; j < n; j++)
+		{
+			printf("A[%d][%d]: ", i + 1, j + 1);
+			scanf("%d", (matA + n * i + j));
+		}
+	}
+
+	printf("Input the matrix B.\n");
+	//complete the code
+	//ver1
+	/*
+	
+	for (i = 0; i < n * n; i++)
+	{
+		printf("B[%d][%d]: ", i + 1, j + 1);
+		scanf("%d", (matB + i));
+	}
+	*/
+	//ver2
+	for (i = 0; i < n; i++)
+	{
+		for (j = 0; j < n; j++)
+		{
+			printf("B[%d][%d]: ", i + 1, j + 1);
+			scanf("%d", (matB + n * i + j));
+		}
+	}
+	matC = addMatrix(matA, matB, n*n);
+	printf("The result matrix is: \n");
+	//complete the code
+	for (i = 0; i < n; i++)
+	{
+		for (j = 0; j < n; j++)
+		{
+			printf("%d ", *(matC + n*i +j));
+		}
+		printf("\n");
+	}
+	printf("\n");
+
+	system("pause");
+	return;
+}

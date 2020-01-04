@@ -1,0 +1,29 @@
+-- HB_HS.VHD
+
+ENTITY HB_HS IS
+	PORT(
+		A, B : IN  BIT;
+		D, B0 : OUT BIT
+	);
+END HB_HS;
+
+ARCHITECTURE HB OF HB_HS IS
+BEGIN
+	PROCESS(A, B)
+	BEGIN
+		IF A = B THEN
+			D <= '0';
+		ELSE
+			D <= '1';
+		END IF;
+	END PROCESS;
+
+	PROCESS(A, B)
+	BEGIN
+		IF A = '0' AND B = '1' THEN
+			B0 <= '1';
+		ELSE
+			B0 <= '0';
+		END IF;
+	END PROCESS;
+END HB;

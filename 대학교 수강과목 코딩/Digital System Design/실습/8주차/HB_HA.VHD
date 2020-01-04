@@ -1,0 +1,31 @@
+-- HB_HA.VHD
+
+ENTITY HB_HA IS
+	PORT(
+		A, B : IN  BIT;
+		S, C : OUT BIT
+	);
+END HB_HA;
+
+ARCHITECTURE HB OF HB_HA IS
+BEGIN
+	PROCESS(A, B)
+	BEGIN
+		IF A = B THEN
+			S <= '0';
+		ELSE
+			S <= '1';
+		END IF;
+	END PROCESS;
+
+	PROCESS(A, B)
+	BEGIN
+		IF A = '0' AND B = '1' THEN
+			C <= '1';
+		ELSE
+			C <= '0';
+		END IF;
+	END PROCESS;
+END HB;
+
+

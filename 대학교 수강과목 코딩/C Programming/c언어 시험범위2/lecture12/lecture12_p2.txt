@@ -1,0 +1,41 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <string.h>
+#include <Windows.h>
+#define MAX_LENGTH 100
+
+
+void getLCP(char* x, char* y, char* res)
+{
+	int i =0;
+	int len = 0;
+	if (strlen(x) < strlen(y))
+		len = strlen(x);
+	else
+		len = strlen(y);
+
+	for (i = 0; i < len; i++)
+	{
+		if (*(x + i) == *(y + i))
+			*(res + i) = *(x + i);
+		else
+			*(res + i) = '\0';
+	}
+	
+}
+
+void main()
+{
+	char X[MAX_LENGTH];
+	char Y[MAX_LENGTH];
+	char LCP[MAX_LENGTH];
+
+	printf("Input two strings: ");
+	scanf("%s %s", X, Y);
+
+	getLCP(X, Y, LCP);
+	printf("The longest common prefix is %s\n", LCP);
+	
+	system("pause");
+	return;
+}
