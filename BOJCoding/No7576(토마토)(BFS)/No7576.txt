@@ -1,0 +1,224 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	static class Point
+	{
+		int y;
+		int x;
+		int day;
+		
+		Point(int y, int x, int day)
+		{
+			this.y =y;
+			this.x =x;
+			this.day =day;
+		}
+	}
+	
+	static int[] dirY = {-1, 0, 1, 0};
+	static int[] dirX = {0, 1, 0, -1};
+	static int[][] box;
+	static int M, N;
+	static int ans =0;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		
+		st =new StringTokenizer(br.readLine());
+		M =Integer.parseInt(st.nextToken());
+		N =Integer.parseInt(st.nextToken());
+		box =new int[N][M];
+		
+		for(int i =0; i <N; i++)
+		{
+			st =new StringTokenizer(br.readLine());
+			for(int j =0; j <M; j++)
+				box[i][j] =Integer.parseInt(st.nextToken());
+		}
+		
+		if(!checkZero())			//다 익었는지 확인
+			bw.write(0 +"\n");
+		else
+		{
+			bfs();
+			if(checkZero())
+				bw.write(-1 +"\n");
+			else
+				bw.write(ans +"\n");
+		}
+		
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+	public static void bfs()
+	{
+		int curY =0;
+		int curX =0;
+		int nextY =0;
+		int nextX =0;
+		int curDay =0;
+		Queue<Point> queue =new LinkedList<>();
+		
+		for(int i =0; i <N; i++)					//익은 토마토들.
+			for(int j =0; j <M; j++)
+				if(box[i][j] ==1)
+					queue.offer(new Point(i, j, 0));
+		
+		while(!queue.isEmpty())
+		{
+			curY =queue.peek().y;
+			curX =queue.peek().x;
+			curDay =queue.peek().day;
+			queue.poll();
+			
+			if(curDay >ans)
+				ans =curDay;
+			
+			for(int i =0; i <4; i++)
+			{
+				nextY =curY +dirY[i];
+				nextX =curX +dirX[i];
+				if(-1 <nextY && nextY <N && -1 <nextX && nextX <M
+						&& box[nextY][nextX] ==0)
+				{
+					queue.offer(new Point(nextY, nextX, curDay+1));
+					box[nextY][nextX] =1;
+				}
+			}
+		}
+		
+	}
+	
+	public static boolean checkZero()
+	{
+		for(int i =0; i <N; i++)
+			for(int j =0; j <M; j++)
+				if(box[i][j] ==0)
+					return true;
+		return false;
+	}
+}
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	static class Point
+	{
+		int y;
+		int x;
+		int day;
+		
+		Point(int y, int x, int day)
+		{
+			this.y =y;
+			this.x =x;
+			this.day =day;
+		}
+	}
+	
+	static int[] dirY = {-1, 0, 1, 0};
+	static int[] dirX = {0, 1, 0, -1};
+	static int[][] box;
+	static int M, N;
+	static int ans =0;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		
+		st =new StringTokenizer(br.readLine());
+		M =Integer.parseInt(st.nextToken());
+		N =Integer.parseInt(st.nextToken());
+		box =new int[N][M];
+		
+		for(int i =0; i <N; i++)
+		{
+			st =new StringTokenizer(br.readLine());
+			for(int j =0; j <M; j++)
+				box[i][j] =Integer.parseInt(st.nextToken());
+		}
+		
+		if(!checkZero())			//다 익었는지 확인
+			bw.write(0 +"\n");
+		else
+		{
+			bfs();
+			if(checkZero())
+				bw.write(-1 +"\n");
+			else
+				bw.write(ans +"\n");
+		}
+		
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+	public static void bfs()
+	{
+		int curY =0;
+		int curX =0;
+		int nextY =0;
+		int nextX =0;
+		int curDay =0;
+		Queue<Point> queue =new LinkedList<>();
+		
+		for(int i =0; i <N; i++)					//익은 토마토들.
+			for(int j =0; j <M; j++)
+				if(box[i][j] ==1)
+					queue.offer(new Point(i, j, 0));
+		
+		while(!queue.isEmpty())
+		{
+			curY =queue.peek().y;
+			curX =queue.peek().x;
+			curDay =queue.peek().day;
+			queue.poll();
+			
+			if(curDay >ans)
+				ans =curDay;
+			
+			for(int i =0; i <4; i++)
+			{
+				nextY =curY +dirY[i];
+				nextX =curX +dirX[i];
+				if(-1 <nextY && nextY <N && -1 <nextX && nextX <M
+						&& box[nextY][nextX] ==0)
+				{
+					queue.offer(new Point(nextY, nextX, curDay+1));
+					box[nextY][nextX] =1;
+				}
+			}
+		}
+		
+	}
+	
+	public static boolean checkZero()
+	{
+		for(int i =0; i <N; i++)
+			for(int j =0; j <M; j++)
+				if(box[i][j] ==0)
+					return true;
+		return false;
+	}
+}

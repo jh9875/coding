@@ -1,0 +1,38 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+public class Main
+{
+	static int N;
+	static final int MOD =10007;
+	static int[] dp;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		
+		dp =new int[1001];
+		dp[1] =1;
+		solve(1000);
+		
+		N =Integer.parseInt(br.readLine());
+		bw.write(dp[N] +"\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+	public static int solve(int width)
+	{
+		if(width <=1)		//±âÀú»ç·Ê
+			return 1;
+		
+		if(dp[width] !=0)
+			return dp[width];
+		
+		return dp[width] =(solve(width-1) +solve(width-2))%MOD;
+	}
+}
