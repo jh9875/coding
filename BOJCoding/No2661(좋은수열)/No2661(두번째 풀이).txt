@@ -1,0 +1,59 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+public class Main
+{
+	static int N;
+	static String answer ="";
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+
+		N =Integer.parseInt(br.readLine());
+		
+		makeGoodSequence("");
+		
+		bw.write(answer +"\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+	public static void makeGoodSequence(String seq)
+	{
+		if(seq.length() ==N)
+		{
+			answer =seq;
+			return;
+		}
+		
+		for(int i =1; i <4; i++)
+		{
+			if(!answer.equals(""))
+				return;
+			if(isGoodSequence(seq+i))
+				makeGoodSequence(seq+i);
+		}
+		
+	}
+	
+	public static boolean isGoodSequence(String seq)
+	{
+		int len =seq.length();
+		
+		for(int i =1; i <=len/2; i++)
+		{
+			String s1 =seq.substring(len-i-i,len-i);
+			String s2 =seq.substring(len-i,len);
+			
+			if(s1.equals(s2))
+				return false;
+		}
+		
+		return true;
+	}
+}
