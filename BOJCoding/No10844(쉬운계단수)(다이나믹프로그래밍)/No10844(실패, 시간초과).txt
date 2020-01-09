@@ -1,0 +1,34 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+public class Main
+{
+	static int N;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int ans =0;
+		
+		N =Integer.parseInt(br.readLine());
+		
+		for(int i =1; i <10; i++)
+			ans +=solve(i, 1);
+		
+		bw.write(ans +"\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+	public static int solve(int num, int index)
+	{
+		if(index ==N || num ==0 || num ==9)
+			return 1;
+		
+		return solve(num-1, index+1) +solve(num+1, index+1);
+	}
+}
