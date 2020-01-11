@@ -1,0 +1,103 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	static int N, M;
+	static String[] board;
+	static String line1 ="WBWBWBWB";
+	static String line2 ="BWBWBWBW";
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		
+		st =new StringTokenizer(br.readLine());
+		N =Integer.parseInt(st.nextToken());
+		M =Integer.parseInt(st.nextToken());
+		board =new String[N];
+		
+		for(int i =0; i <N; i++)
+			board[i] =br.readLine();
+		
+		bw.write(split() +"\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+	public static int split()
+	{
+		int minValue =Integer.MAX_VALUE;
+		int n;
+		
+		for(int i =0; i+8 <=N; i++)
+		{
+			for(int j =0; j+8 <=M; j++)
+			{
+				String[] part =new String[8];
+				
+				for(int k =0; k <8; k++)
+					part[k] =new String(board[i+k].substring(j, j+8));
+				
+				n =getMinChangeValue(part);
+				if(n <minValue)
+					minValue =n;
+			}
+		}
+			
+		return minValue;
+	}
+	
+	public static int getMinChangeValue(String[] part)
+	{
+		int ret =0;
+		int cnt =0;
+		
+		//8*8기준 제일 왼쪽위가 흰색일때 다른부분.
+		for(int i =0; i <8; i++)
+		{
+			if(i %2 ==0)
+			{
+				for(int j =0; j <8; j++)
+					if(part[i].charAt(j) != line1.charAt(j))
+						cnt++;
+			}else
+			{
+				for(int j =0; j <8; j++)
+				{
+					if(part[i].charAt(j) != line2.charAt(j))
+						cnt++;
+				}
+			}
+		}
+		ret =cnt;
+		cnt =0;
+		
+		
+		//8*8기준 제일 왼쪽위가 검은색일때
+		for(int i =0; i <8; i++)
+		{
+			if(i %2 ==0)
+			{
+				for(int j =0; j <8; j++)
+					if(part[i].charAt(j) != line2.charAt(j))
+						cnt++;
+			}else
+			{
+				for(int j =0; j <8; j++)
+					if(part[i].charAt(j) != line1.charAt(j))
+						cnt++;
+			}
+		}
+		if(ret >cnt)
+			ret =cnt;
+		
+		return ret;
+	}
+}
