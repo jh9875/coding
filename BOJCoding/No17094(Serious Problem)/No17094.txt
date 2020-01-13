@@ -1,0 +1,36 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+public class Main
+{
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		String s;
+		int len =0;
+		int cnt1 =0, cnt2 =0;
+		
+		len =Integer.parseInt(br.readLine());
+		s =br.readLine();
+		
+		for(int i =0; i <len; i++)
+		{
+			if(s.charAt(i) =='2')
+				cnt1++;
+			else
+				cnt2++;
+		}
+		if(cnt1 >cnt2)
+			bw.write("2\n");
+		else if(cnt1 <cnt2)
+			bw.write("e\n");
+		else
+			bw.write("yee\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+}

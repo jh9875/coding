@@ -1,0 +1,120 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	static class Point
+	{
+		int y;
+		int x;
+		
+		Point(int y, int x)
+		{
+			this.y =y;
+			this.x =x;
+		}
+	}
+	static int N, M;
+	static int[][] city;
+	static ArrayList<Point> houses =new ArrayList<>();;
+	static ArrayList<Point> chickens =new ArrayList<>();
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		int ans =0;
+		
+		st =new StringTokenizer(br.readLine());
+		N =Integer.parseInt(st.nextToken());
+		M =Integer.parseInt(st.nextToken());
+		city =new int[N+1][N+1];
+		
+		for(int i =0 ; i <N; i++)
+		{
+			st =new StringTokenizer(br.readLine());
+			for(int j =0; j <N; j++)
+			{
+				city[i+1][j+1] =Integer.parseInt(st.nextToken());
+				if(city[i+1][j+1] ==1)
+					houses.add(new Point(i+1, j+1));
+				if(city[i+1][j+1] ==2)
+					chickens.add(new Point(i+1, j+1));
+			}
+		}
+		
+		
+		if(chickens.size() !=M)						//치킨집 갯수가 M보다 많을때
+			ans =removeChicken();
+		else
+			ans =getTotalChickenDistance();
+		
+		bw.write(ans +"\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+	public static int getTotalChickenDistance()				//가장 가까운 치킨거리들의 합.
+	{
+		int ret =0;
+		int len =houses.size();
+		int y =0, x =0;
+		
+		for(int i =0; i <len; i++)
+		{
+			y =houses.get(i).y;
+			x =houses.get(i).x;
+			ret +=getChickenDistance(y, x);
+		}
+		
+		return ret;
+	}
+	
+	public static int getChickenDistance(int y, int x)		//(y,x)를 기준으로 가장 가까운 치킨거리
+	{
+		int ret =Integer.MAX_VALUE;
+		int distance =0;
+		int len =chickens.size();
+		int r =0, c =0;
+		
+		for(int i= 0; i <len; i++)
+		{
+			r =chickens.get(i).y;
+			c =chickens.get(i).x;
+			distance =Math.abs(y-r) +Math.abs(x-c);
+			ret =Math.min(ret, distance);
+		}
+		
+		return ret;
+	}
+	
+	public static int removeChicken()
+	{
+		//기저 사례
+		if(chickens.size() ==M)
+			return getTotalChickenDistance();
+		
+		int ret =Integer.MAX_VALUE;
+		int len =chickens.size();
+		int y =0, x =0;
+		
+		for(int i =0; i <len; i++)
+		{
+			y =chickens.get(i).y;
+			x =chickens.get(i).x;
+			city[y][x] =0;
+			chickens.remove(i);
+			ret =Math.min(ret, removeChicken());
+			city[y][x] =2;
+			chickens.add(new Point(y, x));
+		}
+		
+		return ret;
+	}
+}

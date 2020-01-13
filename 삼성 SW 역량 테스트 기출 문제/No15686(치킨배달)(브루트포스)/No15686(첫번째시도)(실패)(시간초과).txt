@@ -1,0 +1,114 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	static int N, M;
+	static int[][] city;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		int numberOfChicken =0;
+		int ans =0;
+		
+		st =new StringTokenizer(br.readLine());
+		N =Integer.parseInt(st.nextToken());
+		M =Integer.parseInt(st.nextToken());
+		city =new int[N+1][N+1];
+		
+		for(int i =0 ; i <N; i++)
+		{
+			st =new StringTokenizer(br.readLine());
+			for(int j =0; j <N; j++)
+				city[i+1][j+1] =Integer.parseInt(st.nextToken());
+		}
+		
+		numberOfChicken =getNumberOfChicken();
+		
+		if(numberOfChicken !=M)						//치킨집 갯수가 M보다 많을때
+			ans =removeChicken(numberOfChicken -M);
+		else
+			ans =getTotalChickenDistance();
+		
+		bw.write(ans +"\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+	public static int getNumberOfChicken()
+	{
+		int ret =0;
+		
+		for(int i =1; i <=N; i++)
+			for(int j =1; j <=N; j++)
+				if(city[i][j] ==2)
+					ret++;
+		return ret;
+	}
+	
+	public static int getTotalChickenDistance()				//가장 가까운 치킨거리들의 합.
+	{
+		int ret =0;
+		
+		for(int i =1; i <=N; i++)
+		{
+			for(int j =1; j <=N; j++)
+			{
+				if(city[i][j] ==1)
+					ret +=getChickenDistance(i, j);
+			}
+		}
+		
+		return ret;
+	}
+	
+	public static int getChickenDistance(int y, int x)		//(y,x)를 기준으로 가장 가까운 치킨거리
+	{
+		int ret =Integer.MAX_VALUE;
+		int distance =0;
+		
+		for(int i =1; i <=N; i++)
+		{
+			for(int j =1; j <=N; j++)
+			{
+				if(city[i][j] ==2)
+				{
+					distance =Math.abs(y-i) +Math.abs(x-j);
+					ret =Math.min(ret, distance);
+				}
+			}
+		}
+		return ret;
+	}
+	
+	public static int removeChicken(int remainingCount)
+	{
+		//기저 사례
+		if(remainingCount ==0)
+			return getTotalChickenDistance();
+		
+		int ret =Integer.MAX_VALUE;
+		
+		for(int i =1; i <=N; i++)
+		{
+			for(int j =1; j <=N; j++)
+			{
+				if(city[i][j] ==2)
+				{
+					city[i][j] =0;
+					ret =Math.min(ret, removeChicken(remainingCount -1));
+					city[i][j] =2;
+				}
+			}
+		}
+		return ret;
+	}
+	
+}
