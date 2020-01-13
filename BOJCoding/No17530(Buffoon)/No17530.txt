@@ -1,0 +1,39 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+
+public class Main
+{
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int N;
+		int v;
+		int youngCarlos =0;
+		boolean check =true;
+		
+		N =Integer.parseInt(br.readLine());
+		youngCarlos =Integer.parseInt(br.readLine());
+		
+		while(N-- >1)
+		{
+			v =Integer.parseInt(br.readLine());
+			if(v >youngCarlos)
+			{
+				check =false;
+				break;
+			}
+			
+		}
+		if(check)
+			bw.write("S\n");
+		else
+			bw.write("N\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+}
