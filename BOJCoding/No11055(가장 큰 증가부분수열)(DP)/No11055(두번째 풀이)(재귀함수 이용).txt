@@ -1,0 +1,47 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	static int N;
+	static int[] arr;
+	static int[] cache;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		int ans =0;
+		
+		N =Integer.parseInt(br.readLine());
+		arr =new int[N];
+		cache =new int[N];
+		
+		st =new StringTokenizer(br.readLine());
+		for(int i =0; i <N; i++)
+			arr[i] =Integer.parseInt(st.nextToken());
+		for(int i =0; i <N; i++)
+			ans =Math.max(ans, LISMaxValue(i));
+		
+		bw.write(ans +"\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+	public static int LISMaxValue(int startIndex)
+	{
+		if(cache[startIndex] !=0)
+			return cache[startIndex];
+		
+		for(int next =startIndex+1; next <N; next++)
+			if(arr[startIndex] <arr[next])
+				cache[startIndex] =Math.max(cache[startIndex], LISMaxValue(next) +arr[startIndex]);
+		//제일 마지막수인경우 위 조건에 포함안되서 cache에 저장안된 경우가 있으므로
+		return cache[startIndex] ==0?cache[startIndex] =arr[startIndex]:cache[startIndex];
+	}
+}

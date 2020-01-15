@@ -1,0 +1,64 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+public class Main
+{
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int N;
+		int[] arr;
+		
+		N =Integer.parseInt(br.readLine());
+		arr =new int[N];
+		
+		for(int i =0; i <N; i++)
+			arr[i] =Integer.parseInt(br.readLine());
+		
+		mergeSort(arr, 0 ,N-1);
+		for(int i =N-1; i >-1; i--)
+			bw.write(arr[i] +"\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+	public static void mergeSort(int[] arr, int left, int right)
+	{
+		if(left <right)
+		{
+			int middle =(left+right)/2;
+			mergeSort(arr, left, middle);
+			mergeSort(arr, middle+1, right);
+			merge(arr, left, right);
+		}
+	}
+	
+	public static void merge(int[] arr, int left, int right)
+	{
+		int middle =(left+right)/2;
+		int a1 =left;
+		int a2 =middle +1;
+		int index =left;
+		int[] temp =new int[arr.length];
+		
+		while(a1 <=middle && a2 <=right)
+		{
+			if(arr[a1] <arr[a2])
+				temp[index++] =arr[a1++];
+			else
+				temp[index++] =arr[a2++];
+		}
+		
+		while(a1 <=middle)
+			temp[index++] =arr[a1++];
+		while(a2 <=right)
+			temp[index++] =arr[a2++];
+		
+		for(int i =left; i <index; i++)
+			arr[i] =temp[i];
+	}
+}
