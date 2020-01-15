@@ -1,0 +1,42 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+public class Main
+{
+	static final int MOD =10007;
+	static int N;
+	static int[][] cache;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int ans =0;
+		
+		N =Integer.parseInt(br.readLine());
+		cache =new int[N+1][10];
+		
+		for(int i =0; i <10; i++)
+			ans +=ascendingOrder(1, i) %MOD;
+		
+		bw.write(ans %MOD +"\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+	public static int ascendingOrder(int index, int start)
+	{
+		if(index ==N)
+			return 1;
+		if(cache[index][start] !=0)
+			return cache[index][start];
+		
+		for(int num =start; num <10; num++)
+			cache[index][start] +=ascendingOrder(index+1, num)%MOD;
+		
+		return cache[index][start] %MOD;
+	}
+}

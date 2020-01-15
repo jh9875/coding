@@ -1,0 +1,43 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+public class Main
+{
+	static final int MOD =9901;
+	static int N;
+	static int[][] cache;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		N =Integer.parseInt(br.readLine());
+		cache =new int[N+1][3];
+		
+		assignLions(1, 0);
+		
+		bw.write((cache[1][0])%MOD +"\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+	public static int assignLions(int index, int prev)		//prev는 전 줄 배치에 관한 정보
+	{														//0은 없는경우, 1은 왼쪽에, 2는 오른쪽에
+		if(index >N)
+			return 1;
+		if(cache[index][prev] !=0)
+			return cache[index][prev];
+		
+		if(prev ==0)
+			cache[index][prev] +=(assignLions(index+1, 0) +assignLions(index+1, 1) +assignLions(index+1, 2))%MOD;
+		else if(prev ==1)
+			cache[index][prev] +=(assignLions(index+1, 0) +assignLions(index+1, 2))%MOD;
+		else //if(prev ==2)
+			cache[index][prev] +=(assignLions(index+1, 0) +assignLions(index+1, 1))%MOD;
+		
+		return cache[index][prev];
+	}
+}
