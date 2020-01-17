@@ -1,0 +1,46 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+public class Main
+{
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		String input;
+		
+		input =br.readLine();
+		bw.write(getGradePoint(input) +"\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	} 
+	public static double getGradePoint(String input)
+	{
+		double ret =0;
+		if(input.equals("F"))
+			return ret;
+		
+		char c1, c2;
+		c1 =input.charAt(0);
+		c2 =input.charAt(1);
+		
+		if(c1 =='A')
+			ret =4.0;
+		else if(c1 =='B')
+			ret =3.0;
+		else if(c1 =='C')
+			ret =2.0;
+		else if(c1 =='D')
+			ret =1.0;
+		
+		if(c2 =='+')
+			ret +=0.3;
+		else if(c2 =='-')
+			ret -=0.3;
+		
+		return ret;
+	}
+}
