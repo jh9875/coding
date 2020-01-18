@@ -1,0 +1,50 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	static final int MOD =1000000000;
+	static int N, K;
+	static int[][] cache;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		int ans =0;
+		cache =new int[201][201];
+		
+		st =new StringTokenizer(br.readLine());
+		N =Integer.parseInt(st.nextToken());
+		K =Integer.parseInt(st.nextToken());
+		
+		ans =solve(0, 0)%MOD;
+		bw.write(ans +"\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+	public static int solve(int sum, int count)
+	{
+		if(count >K || sum >N)
+			return 0;
+		if(sum ==N && count ==K)
+			return 1;
+		if(cache[sum][count] !=0)
+			return cache[sum][count];
+		
+		long ret =0;
+		
+		for(int i =0; i <=N; i++)
+			ret +=(solve(sum +i, count+1))%MOD;
+		cache[sum][count] =(int) (ret%MOD);
+		
+		return cache[sum][count];
+	}
+	
+}

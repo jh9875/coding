@@ -1,0 +1,44 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+public class Main
+{
+	static int n;
+	static int[] arr;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int ans =0;
+		arr =new int[3];
+		
+		n =Integer.parseInt(br.readLine());
+		ans =solve(0);
+		bw.write(ans +"\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+	public static int solve(int index)
+	{
+		if(index ==3)
+		{
+			if(arr[0] +arr[1] +arr[2] ==n)
+				return 1;
+			else
+				return 0;
+		}
+		int ret =0;
+		
+		for(int i =3; i <n; i+=3)
+		{
+			arr[index] =i;
+			ret +=solve(index +1);
+		}
+		return ret;
+	}
+}
