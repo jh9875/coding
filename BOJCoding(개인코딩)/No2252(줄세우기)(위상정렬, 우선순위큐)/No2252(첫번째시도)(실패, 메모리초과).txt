@@ -1,0 +1,89 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	static int N;
+	static boolean[][] graph;
+	static int[] inDegree;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		int M, n1, n2;
+		
+		st =new StringTokenizer(br.readLine());
+		N =Integer.parseInt(st.nextToken());
+		M =Integer.parseInt(st.nextToken());
+		inDegree =new int[N+1];
+		graph =new boolean[N+1][N+1];
+		
+		
+		while(M-- >0)
+		{
+			st =new StringTokenizer(br.readLine());
+			n1 =Integer.parseInt(st.nextToken());
+			n2 =Integer.parseInt(st.nextToken());
+			inDegree[n2]++;
+			graph[n1][n2] =true;
+		}
+		
+		bw.write(topologicalSort());
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+	public static String topologicalSort()
+	{
+		StringBuilder sb =new StringBuilder();
+		Queue<Integer> queue =new LinkedList<>();
+		int nodeNum =0;
+		
+		nodeNum =minInDegree();
+		queue.offer(nodeNum);
+		
+		while(!queue.isEmpty())
+		{
+			nodeNum =queue.poll();
+			removeNode(nodeNum);
+			sb.append(nodeNum +" ");
+			
+			nodeNum =minInDegree();
+			if(nodeNum !=0)
+				queue.offer(nodeNum);
+		}
+		sb.append("\n");
+		return sb.toString();
+	}
+	
+	public static int minInDegree()
+	{
+		int minValue =Integer.MAX_VALUE;
+		int minIndex =0;
+		
+		for(int i =1; i <=N; i++)
+		{
+			if(minValue >inDegree[i] && inDegree[i] !=-1)
+			{
+				minIndex =i;
+				minValue =inDegree[i];
+			}
+		}
+		inDegree[minIndex]--;
+		return minIndex;
+	}
+	public static void removeNode(int nodeNum)
+	{
+		for(int i =1; i <=N; i++)
+			if(graph[nodeNum][i])
+				inDegree[i]--;
+	}
+}

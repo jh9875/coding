@@ -1,0 +1,92 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	static int N;
+	static ArrayList<Integer>[] graph;
+	static int[] inDegree;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		int M, n1, n2;
+		
+		st =new StringTokenizer(br.readLine());
+		N =Integer.parseInt(st.nextToken());
+		M =Integer.parseInt(st.nextToken());
+		inDegree =new int[N+1];
+		graph =new ArrayList[N+1];
+		for(int i =1; i <=N; i++)
+			graph[i] =new ArrayList<>();
+		
+		while(M-- >0)
+		{
+			st =new StringTokenizer(br.readLine());
+			n1 =Integer.parseInt(st.nextToken());
+			n2 =Integer.parseInt(st.nextToken());
+			inDegree[n2]++;
+			graph[n1].add(n2);
+		}
+		
+		bw.write(topologicalSort());
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+	public static String topologicalSort()
+	{
+		StringBuilder sb =new StringBuilder();
+		Queue<Integer> queue =new LinkedList<>();
+		int nodeNum =0;
+		
+		nodeNum =minInDegree();
+		queue.offer(nodeNum);
+		
+		while(!queue.isEmpty())
+		{
+			nodeNum =queue.poll();
+			removeNode(nodeNum);
+			sb.append(nodeNum +" ");
+			
+			nodeNum =minInDegree();
+			if(nodeNum !=0)
+				queue.offer(nodeNum);
+		}
+		sb.append("\n");
+		return sb.toString();
+	}
+	
+	public static int minInDegree()
+	{
+		int minValue =Integer.MAX_VALUE;
+		int minIndex =0;
+		
+		for(int i =1; i <=N; i++)
+		{
+			if(minValue >inDegree[i] && inDegree[i] !=-1)
+			{
+				minIndex =i;
+				minValue =inDegree[i];
+			}
+		}
+		inDegree[minIndex]--;
+		return minIndex;
+	}
+	public static void removeNode(int nodeNum)
+	{
+		int len =graph[nodeNum].size();
+		
+		for(int i =0; i <len; i++)
+			inDegree[graph[nodeNum].get(i)]--;
+	}
+}

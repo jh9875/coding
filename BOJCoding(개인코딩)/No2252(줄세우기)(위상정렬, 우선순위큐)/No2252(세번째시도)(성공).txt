@@ -1,0 +1,76 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	static int N;
+	static ArrayList<Integer>[] graph;
+	static int[] inDegree;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		int M, n1, n2;
+		
+		st =new StringTokenizer(br.readLine());
+		N =Integer.parseInt(st.nextToken());
+		M =Integer.parseInt(st.nextToken());
+		inDegree =new int[N+1];
+		graph =new ArrayList[N+1];
+		for(int i =1; i <=N; i++)
+			graph[i] =new ArrayList<>();
+		
+		while(M-- >0)
+		{
+			st =new StringTokenizer(br.readLine());
+			n1 =Integer.parseInt(st.nextToken());
+			n2 =Integer.parseInt(st.nextToken());
+			inDegree[n2]++;
+			graph[n1].add(n2);
+		}
+		
+		bw.write(topologicalSort());
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+	public static String topologicalSort()
+	{
+		StringBuilder sb =new StringBuilder();
+		Queue<Integer> queue =new LinkedList<>();
+		int nodeNum =0, len =0, next =0;
+		
+		for(int i =1; i <=N; i++)
+			if(inDegree[i] ==0)
+				queue.offer(i);
+		
+		while(!queue.isEmpty())
+		{
+			nodeNum =queue.poll();
+			len =graph[nodeNum].size();
+			sb.append(nodeNum +" ");
+			
+			for(int i =0; i <len; i++)
+			{
+				next =graph[nodeNum].get(i);
+				inDegree[next]--;
+				if(inDegree[next] ==0)
+					queue.offer(next);
+			}
+			
+		}
+		
+		sb.append("\n");
+		return sb.toString();
+	}
+
+}

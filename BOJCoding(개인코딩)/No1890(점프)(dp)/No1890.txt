@@ -1,0 +1,59 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.Arrays;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	static int N;
+	static int[][] board;
+	static long[][] cache;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		long ans =0;
+		
+		N =Integer.parseInt(br.readLine());
+		board =new int[N][N];
+		cache =new long[N][N];
+		
+		//inputData
+		for(int i =0; i <N; i++)
+		{
+			st =new StringTokenizer(br.readLine());
+			for(int j =0; j <N; j++)
+				board[i][j] =Integer.parseInt(st.nextToken());
+		}
+		for(int i =0; i <N; i++)
+			Arrays.fill(cache[i], -1);
+		
+		ans =searchPath(0, 0);
+		bw.write(ans +"\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+	public static long searchPath(int y, int x)
+	{
+		if(N <=y || N <=x)
+			return 0;
+		if(y ==N-1 && x ==N-1)
+			return 1;
+		if(board[y][x] ==0)
+			return 0;
+		
+		if(cache[y][x] !=-1)
+			return cache[y][x];
+		cache[y][x] =0;
+		
+		cache[y][x] +=searchPath(y+board[y][x], x);
+		cache[y][x] +=searchPath(y, x+board[y][x]);
+		return cache[y][x];
+	}
+}
