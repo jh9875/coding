@@ -1,0 +1,40 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		int ans =0;
+		int[] dice =new int[3];
+		
+		st =new StringTokenizer(br.readLine());
+		for(int i =0; i <3; i++)
+			dice[i] =Integer.parseInt(st.nextToken());
+		
+		if(dice[0] ==dice[1] && dice[1] ==dice[2])
+			ans =10000 +dice[0]*1000;
+		else if(dice[0] ==dice[1])
+			ans =1000 +dice[0]*100;
+		else if(dice[1] ==dice[2])
+			ans =1000 +dice[1]*100;
+		else if(dice[0] ==dice[2])
+			ans =1000 +dice[0]*100;
+		else
+		{
+			ans =Math.max(dice[0], dice[1]);
+			ans =Math.max(ans, dice[2])*100;
+		}
+		bw.write(ans +"\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+}
