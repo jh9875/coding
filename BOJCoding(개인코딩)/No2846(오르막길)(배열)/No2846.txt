@@ -1,0 +1,45 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.Arrays;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	static int N;
+	static int[] arr;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		int ans =0;
+		
+		N =Integer.parseInt(br.readLine());
+		arr =new int[N];
+		
+		st =new StringTokenizer(br.readLine());
+		for(int i =0; i <N; i++)
+			arr[i] =Integer.parseInt(st.nextToken());
+		
+		for(int i =0; i <N; i++)
+			ans =Math.max(ans, solve(arr[i], i+1));
+		bw.write(ans +"\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+	public static int solve(int startValue, int index)
+	{
+		if(index ==N)
+			return 0;
+		if(arr[index-1] >=arr[index])
+			return 0;
+		int ret =arr[index] -startValue;
+		
+		return ret =Math.max(ret, solve(startValue, index+1));
+	}
+}

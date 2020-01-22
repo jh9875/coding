@@ -1,0 +1,21 @@
+일단 내가 만들 함수는 다음과 같다.
+
+public static int solve(int startValue, int index)
+{
+	if(index ==N)
+		return 0;
+	if(arr[index-1] >=arr[index])
+		return 0;
+	int ret =arr[index] -startValue;
+	
+	return ret =Math.max(ret, solve(startValue, index+1));
+}
+
+함수의 파라미터는 시작값이랑 현재 인덱스다.
+
+구해야 하는것이 오르막길에서 처음과 끝의 차이기 때문에 저 둘을 넣었다.
+
+반환값은 int형인데 둘의 차를 반환하기 위해 int형으로 했다.
+
+문제는 오르막길의 가장 큰값을 구해야 하는것이기 때문에 Math.max를 이용해서
+각 경우에서 제일 큰값을 고르게 했다.

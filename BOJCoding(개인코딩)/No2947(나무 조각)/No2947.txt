@@ -1,0 +1,64 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.Arrays;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	static BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+	static int[] arr =new int[5];
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		
+		StringTokenizer st;
+		
+		st =new StringTokenizer(br.readLine());
+		for(int i =0; i <5; i++)
+			arr[i] =Integer.parseInt(st.nextToken());
+		
+		while(true)
+		{
+			for(int i =0; i <4; i++)
+			{
+				if(arr[i] >arr[i+1])
+				{
+					swap(i, i+1);
+					print();
+				}
+			}
+			if(isAscOrder())
+				break;
+		}
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+	static void swap(int idx1, int idx2)
+	{
+		int temp =0;
+		temp =arr[idx1];
+		arr[idx1] =arr[idx2];
+		arr[idx2] =temp;
+	}
+	
+	static void print() throws Exception
+	{
+		for(int i =0; i <5; i++)
+			bw.write(arr[i] +" ");
+		bw.write("\n");
+	}
+	
+	static boolean isAscOrder()
+	{
+		for(int i =0; i <5; i++)
+			if(arr[i] !=i+1)
+				return false;
+		
+		return true;
+	}
+}
