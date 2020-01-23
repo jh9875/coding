@@ -1,0 +1,35 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.Arrays;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int N;
+		String input;
+		
+		N =Integer.parseInt(br.readLine());
+		
+		while(N-- >0)
+		{
+			input =br.readLine();
+			if(input.charAt(0)-0 >90)
+				bw.write(input.charAt(0)-32);
+			else
+				bw.write(input.charAt(0));
+			bw.write(input.substring(1) +"\n");
+		}
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+
+}

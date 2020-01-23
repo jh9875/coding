@@ -1,0 +1,60 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.Arrays;
+
+public class Main
+{
+	static final int NUM =1299710;
+	static boolean[] isPrime;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int T, k;
+		erastothenes();
+		
+		T =Integer.parseInt(br.readLine());
+		
+		while(T-- >0)
+		{
+			k =Integer.parseInt(br.readLine());
+			if(isPrime[k])
+				bw.write(0 +"\n");
+			else
+				bw.write(solve(k) +"\n");
+		}
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+	static int solve(int k)
+	{
+		int ret =0;
+		int n =k-1;
+		
+		while(!isPrime[n--])
+			ret++;
+		n =k+1;
+		while(!isPrime[n++])
+			ret++;
+		
+		return ret+2;
+	}
+	
+	static void erastothenes()
+	{
+		isPrime =new boolean[NUM+1];
+		Arrays.fill(isPrime, true);
+		isPrime[0] =isPrime[1] =false;
+		int sqrtLen =(int) Math.sqrt(NUM);
+		
+		for(int i =2; i <=sqrtLen; i++)
+			if(isPrime[i])
+				for(int j =i*i; j <=NUM; j +=i)
+					isPrime[j] =false;
+	}
+}

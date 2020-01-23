@@ -1,0 +1,57 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.Arrays;
+
+public class Main
+{
+	static final int NUM =1000000;
+	static boolean[] isPrime;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int n, n1, n2;
+		erastothenes();
+		
+		while(true)
+		{
+			boolean check =false;
+			n =Integer.parseInt(br.readLine());
+			if(n ==0)
+				break;
+			for(n1 =3; n1 <n; n1+=2)
+			{
+				if(!isPrime[n1])
+					continue;
+				n2 =n-n1;
+				if(!isPrime[n2])
+					continue;
+				
+				bw.write(n +" = " +n1 + " + " +n2 +"\n");
+				check =true;
+				break;
+			}
+			if(!check)
+				bw.write("Goldbach's conjecture is wrong.\n");
+		}
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+	static void erastothenes()
+	{
+		isPrime =new boolean[NUM+1];
+		Arrays.fill(isPrime, true);
+		isPrime[0] =isPrime[1] =false;
+		int sqrtLen =(int) Math.sqrt(NUM);
+		
+		for(int i =2; i <=sqrtLen; i++)
+			if(isPrime[i])
+				for(int j =i*i; j <=NUM; j +=i)
+					isPrime[j] =false;
+	}
+}

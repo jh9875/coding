@@ -1,0 +1,45 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.Arrays;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	static final int NUM =1000;
+	static boolean[] isPrime;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		int N, ans =0;
+		erastothenes();
+		
+		N =Integer.parseInt(br.readLine());
+		st =new StringTokenizer(br.readLine());
+
+		for(int i =0; i <N; i++)
+			if(isPrime[Integer.parseInt(st.nextToken())])
+				ans++;
+		bw.write(ans +"\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+	static void erastothenes()
+	{
+		isPrime =new boolean[NUM+1];
+		Arrays.fill(isPrime, true);
+		isPrime[0] =isPrime[1] =false;
+		int sqrtLen =(int) Math.sqrt(NUM);
+		
+		for(int i =2; i <=sqrtLen; i++)
+			if(isPrime[i])
+				for(int j =i*i; j <=NUM; j +=i)
+					isPrime[j] =false;
+	}
+}
