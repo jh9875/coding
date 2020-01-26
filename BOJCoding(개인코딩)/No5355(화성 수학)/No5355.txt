@@ -1,0 +1,37 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st;
+		int T;
+		double ans;
+		char ch;
+		
+		T =Integer.parseInt(br.readLine());
+		while(T-- >0)
+		{
+			st =new StringTokenizer(br.readLine());
+			ans =Double.parseDouble(st.nextToken());
+			
+			while(st.hasMoreTokens())
+			{
+				ch =st.nextToken().charAt(0);
+				if(ch =='@')
+					ans *=3;
+				else if(ch =='%')
+					ans +=5;
+				else if(ch =='#')
+					ans -=7;
+			}
+			System.out.printf("%.2f\n", ans);
+		}
+	}
+}

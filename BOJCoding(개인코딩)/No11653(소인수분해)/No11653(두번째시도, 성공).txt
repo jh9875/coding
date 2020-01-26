@@ -1,0 +1,60 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+
+public class Main
+{
+	static final int NUM =10000000;
+	static int[] minFactor;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int N;
+		ArrayList<Integer> al;
+		erastothenes2();
+		
+		N =Integer.parseInt(br.readLine());
+		al =solve(N);
+		
+		for(int n :al)
+			bw.write(n +"\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+	static ArrayList<Integer> solve(int N)
+	{
+		ArrayList<Integer> al =new ArrayList<>();
+		
+		while(N >1)
+		{
+			al.add(minFactor[N]);
+			N /=minFactor[N];
+		}
+		
+		return al;
+	}
+	
+	static void erastothenes2()
+	{
+		minFactor =new int[NUM+1];
+		for(int i =2; i <=NUM; i++)
+			minFactor[i] =i;
+		int sqrtLen =(int) Math.sqrt(NUM);
+		
+		for(int i =2; i <=sqrtLen; i++)
+		{
+			if(minFactor[i] ==i)
+			{
+				for(int j =i*i; j <=NUM; j +=i)
+					if(minFactor[j] ==j)
+						minFactor[j] =i;
+			}
+		}
+	}
+}
