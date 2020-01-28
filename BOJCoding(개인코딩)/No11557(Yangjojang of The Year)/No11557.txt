@@ -1,0 +1,41 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		int T, N, L, maxValue;
+		String S, maxS ="";
+		
+		T =Integer.parseInt(br.readLine());
+		
+		while(T-- >0)
+		{
+			maxValue =0;
+			N =Integer.parseInt(br.readLine());
+			for(int i =0; i <N; i++)
+			{
+				st =new StringTokenizer(br.readLine());
+				S =st.nextToken();
+				L =Integer.parseInt(st.nextToken());
+				
+				if(maxValue <L)
+				{
+					maxValue =L;
+					maxS =S;
+				}
+			}
+			bw.write(maxS +"\n");
+		}
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+}

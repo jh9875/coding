@@ -1,0 +1,60 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.Arrays;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	static final int maxValue =10000;
+	static int N, K;
+	static int[] coin;
+	static int[][] cache;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		int ans =0;
+		
+		st =new StringTokenizer(br.readLine());
+		N =Integer.parseInt(st.nextToken());
+		K =Integer.parseInt(st.nextToken());
+		coin =new int[N+1];
+		cache =new int[N+1][K+1];
+		
+		for(int i =1; i <=N; i++)
+		{
+			coin[i] =Integer.parseInt(br.readLine());
+			Arrays.fill(cache[i], -1);
+		}
+		
+		ans =minCoins(1, 0);
+		if(ans <maxValue)
+			bw.write(ans +"\n");
+		else
+			bw.write(-1 +"\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+	static int minCoins(int index, int sum)
+	{
+		if(index >N || sum >K)
+			return maxValue;
+		if(sum ==K)
+			return 0;
+		if(cache[index][sum] !=-1)
+			return cache[index][sum];
+		cache[index][sum] =maxValue;
+		
+		for(int i =index; i <=N; i++)
+			cache[index][sum] =Math.min(cache[index][sum],
+					minCoins(i, sum +coin[i]) +1);
+		
+		return cache[index][sum];
+	}
+}

@@ -1,0 +1,28 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		int c, k, p, ans =0;
+		
+		st =new StringTokenizer(br.readLine());
+		c =Integer.parseInt(st.nextToken());
+		k =Integer.parseInt(st.nextToken());
+		p =Integer.parseInt(st.nextToken());
+		
+		for(int i =1; i <=c; i++)
+			ans +=k*i +p*i*i;
+		bw.write(ans +"\n");
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+}

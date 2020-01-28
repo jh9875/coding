@@ -1,0 +1,60 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+public class Main
+{
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int N, quotient, remainder;
+		String ans ="";
+		
+		N =Integer.parseInt(br.readLine());
+		
+		quotient =N/14;
+		remainder =N%14;
+		
+		if(remainder ==1 || remainder ==13)
+			ans ="baby\n";
+		else if(remainder ==2 ||remainder ==0)
+			ans ="sukhwan\n";
+		else if(remainder ==5)
+			ans ="very\n";
+		else if(remainder ==6)
+			ans ="cute\n";
+		else if(remainder ==9)
+			ans ="in\n";
+		else if(remainder ==10)
+			ans ="bed\n";
+		else if(remainder ==3 || remainder ==7 ||remainder ==11)
+		{
+			if(quotient <3)
+			{
+				ans ="tururu";
+				for(int i =0; i <quotient; i++)
+					ans +="ru";
+				ans +="\n";
+			}
+			else
+				ans ="tu+ru*" +(quotient+2) +"\n";
+		}else if(remainder ==4 || remainder ==8 ||remainder ==12)
+		{
+			if(quotient <4)
+			{
+				ans ="turu";
+				for(int i =0; i <quotient; i++)
+					ans +="ru";
+				ans +="\n";
+			}
+			else
+				ans ="tu+ru*" +(quotient+1) +"\n";
+		}
+		bw.write(ans);
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+}

@@ -1,0 +1,44 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+public class Main
+{
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int N;
+		
+		N =Integer.parseInt(br.readLine());
+		
+		if(N %2 ==0)
+			bw.write("I LOVE CBNU\n");
+		else
+		{
+			for(int i =0; i <N; i++)
+				bw.write("*");
+			bw.write("\n");
+			
+			int len =N/2 +1;
+			for(int i =1; i <=len; i++)
+			{
+				for(int j =0; j <len -i; j++)
+					bw.write(" ");
+				bw.write("*");
+				
+				for(int j =0; j <2*(i-1) -1; j++)
+					bw.write(" ");
+				
+				if(i !=1)
+					bw.write("*");
+				bw.write("\n");
+			}
+			
+		}
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+}
