@@ -1,0 +1,109 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.Arrays;
+import java.util.PriorityQueue;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	static class Pos implements Comparable<Pos>
+	{
+		int y;
+		int x;
+		int cost;
+		Pos(int y, int x, int cost)
+		{
+			this.y =y;
+			this.x =x;
+			this.cost =cost;
+		}
+		@Override
+		public int compareTo(Pos p)
+		{
+			return this.cost -p.cost;
+		}
+	}
+	static int N;
+	static int[][] map;
+	static int[] dirY = {1, 0, -1, 0};
+	static int[] dirX = {0, 1, 0, -1};
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		int ans =0, index =1;
+		
+		while(true)
+		{
+			N =Integer.parseInt(br.readLine());
+			if(N ==0)
+				break;
+			map =new int[N][N];
+			for(int i =0; i <N; i++)
+			{
+				st =new StringTokenizer(br.readLine());
+				for(int j =0; j <N; j++)
+					map[i][j] =Integer.parseInt(st.nextToken());
+			}
+			
+			ans =dijkstra();
+			bw.write("Problem " +index++ +": " + ans +"\n");
+		}
+		st =null;
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+	static int dijkstra()
+	{
+		int[][] dist =new int[N][N];
+		PriorityQueue<Pos> pq =new PriorityQueue<>();
+		for(int i =0; i <N; i++)
+			Arrays.fill(dist[i], Integer.MAX_VALUE);
+		
+		pq.add(new Pos(0, 0, map[0][0]));
+		dist[0][0] =map[0][0];
+		
+		while(!pq.isEmpty())
+		{
+			int y =pq.peek().y;
+			int x =pq.peek().x;
+			int cost =pq.peek().cost;
+			pq.poll();
+			
+			if(dist[y][x] <cost)
+				continue;
+			
+			for(int i =0; i <4; i++)
+			{
+				int nextY =y +dirY[i];
+				int nextX =x +dirX[i];
+				
+				if(inRange(nextY, nextX))
+				{
+					int nextDist =cost +map[nextY][nextX];
+					
+					if(dist[nextY][nextX] >nextDist)
+					{
+						dist[nextY][nextX] =nextDist;
+						pq.add(new Pos(nextY, nextX, nextDist));
+					}
+				}
+			}
+		}
+		
+		return dist[N-1][N-1];
+	}
+	
+	static boolean inRange(int y, int x)
+	{
+		if(y <0 || N <=y || x <0 || N <=x)
+			return false;
+		return true;
+	}
+}

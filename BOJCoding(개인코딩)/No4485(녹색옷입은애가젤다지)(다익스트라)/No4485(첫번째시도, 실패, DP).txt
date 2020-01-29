@@ -1,0 +1,72 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.Arrays;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	static int[] dirY = {1, 0, -1, 0};
+	static int[] dirX = {0, 1, 0, -1};
+	static int[][] map;
+	static int[][] cache;
+	static int N;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		int ans, index =1;
+		
+		while(true)
+		{
+			N =Integer.parseInt(br.readLine());
+			if(N ==0)
+				break;
+			map =new int[N][N];
+			cache =new int[N][N];
+			for(int i =0; i <N; i++)
+			{
+				Arrays.fill(cache[i], -1);
+				st =new StringTokenizer(br.readLine());
+				for(int j =0; j <N; j++)
+					map[i][j] =Integer.parseInt(st.nextToken());
+			}
+			ans =move(0, 0);
+			bw.write("Problem " +index++ +": " +ans +"\n");
+		}
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	
+	static int move(int y, int x)
+	{
+		if(y ==N-1 && x ==N-1)
+			return map[y][x];
+		if(cache[y][x] !=-1)
+			return cache[y][x];
+		cache[y][x] =100;
+		int nextY, nextX;
+		
+		for(int i =0; i <4; i++)
+		{
+			nextY =y +dirY[i];
+			nextX =x +dirX[i];
+			
+			if(inRange(nextY, nextX))
+				cache[y][x] =Math.min(cache[y][x], move(nextY, nextX)+map[y][x]);
+		}
+		
+		return cache[y][x];
+	}
+	
+	static boolean inRange(int y, int x)
+	{
+		if(y <0 || N <=y || x <0 || N <=x)
+			return false;
+		return true;
+	}
+}

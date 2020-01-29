@@ -1,0 +1,36 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		int r, w, l, index =1;
+		
+		while(true)
+		{
+			st =new StringTokenizer(br.readLine());
+			r =Integer.parseInt(st.nextToken());
+			r *=2;
+			if(r ==0)
+				break;
+			w =Integer.parseInt(st.nextToken());
+			l =Integer.parseInt(st.nextToken());
+			
+			if(w*w +l*l <=r*r)
+				bw.write("Pizza " + index++ +" fits on the table.\n");
+			else
+				bw.write("Pizza " + index++ +" does not fit on the table.\n");
+		}
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+}
