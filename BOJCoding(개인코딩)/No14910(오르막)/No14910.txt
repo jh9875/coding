@@ -1,0 +1,46 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.Arrays;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		String input;
+		
+		input =br.readLine();
+		if(solve(input))
+			bw.write("Good\n");
+		else
+			bw.write("Bad\n");
+		bw.flush();
+	}
+	
+	static boolean solve(String s)
+	{
+		StringTokenizer st;
+		boolean ret =true;
+		int prev, n;
+		
+		st =new StringTokenizer(s);
+		prev =Integer.parseInt(st.nextToken());
+		while(st.hasMoreTokens())
+		{
+			n =Integer.parseInt(st.nextToken());
+			if(prev >n)
+			{
+				ret =false;
+				break;
+			}
+			prev =n;
+		}
+		
+		return ret;
+	}
+}
