@@ -1,0 +1,39 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+public class Main
+{
+	static String s1, s2;
+	static int len1, len2;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int ans =0;
+		
+		s1 =br.readLine();
+		s2 =br.readLine();
+		len1 =s1.length();
+		len2 =s2.length();
+		
+		ans =solve(0, 0);
+		bw.write(ans +"\n");
+		bw.flush();
+	}
+	
+	static int solve(int index1, int index2)
+	{
+		if(index1 ==len1 || index2 ==len2)
+			return 0;
+		int ret =0;
+		if(s1.charAt(index1) ==s2.charAt(index2))
+			ret =solve(index1+1, index2+1) +1;
+		else
+			ret =Math.max(solve(index1+1, index2), solve(index1, index2+1));
+
+		return ret;
+	}
+}

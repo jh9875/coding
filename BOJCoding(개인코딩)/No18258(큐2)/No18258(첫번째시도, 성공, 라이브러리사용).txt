@@ -1,0 +1,62 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.Deque;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		Deque<Integer> deque =new LinkedList<>();
+		String cmd;
+		int N, data;
+		
+		N =Integer.parseInt(br.readLine());
+		
+		while(N-- >0)
+		{
+			st =new StringTokenizer(br.readLine());
+			cmd =st.nextToken();
+			if(cmd.equals("push"))
+			{
+				data =Integer.parseInt(st.nextToken());
+				deque.add(data);
+			}else if(cmd.equals("pop"))
+			{
+				if(deque.isEmpty())
+					bw.write(-1 +"\n");
+				else
+					bw.write(deque.pollFirst() +"\n");
+			}else if(cmd.equals("size"))
+			{
+				bw.write(deque.size() +"\n");
+			}else if(cmd.equals("empty"))
+			{
+				if(deque.isEmpty())
+					bw.write(1 +"\n");
+				else
+					bw.write(0 +"\n");
+			}else if(cmd.equals("front"))
+			{
+				if(deque.isEmpty())
+					bw.write(-1 +"\n");
+				else
+					bw.write(deque.getFirst() +"\n");
+			}else if(cmd.equals("back"))
+			{
+				if(deque.isEmpty())
+					bw.write(-1 +"\n");
+				else
+					bw.write(deque.getLast() +"\n");
+			}
+		}
+		bw.flush();
+	}
+}

@@ -1,0 +1,129 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	private static class Queue
+	{
+		private int max;
+		private int front;
+		private int back;
+		private int size;
+		private int[] data;
+		private Queue()
+		{
+			max =10000;
+			front =0;
+			back =0;
+			size =0;
+			data =new int[max];
+		}
+		void push(int n)
+		{
+			data[(back++)%max] =n;
+			size++;
+		}
+		int pop()
+		{
+			int ret;
+			if(size ==0)
+				ret =-1;
+			else
+			{
+				ret =data[(front++)%max];
+				size--;
+			}
+			return ret;
+		}
+		int size()
+		{
+			return size;
+		}
+		int empty()
+		{
+			if(size ==0)
+				return 1;
+			else
+				return 0;
+		}
+		int front()
+		{
+			int ret =0;
+			if(size ==0)
+				ret =-1;
+			else
+				ret =data[(front)%max];
+			return ret;
+		}
+		int back()
+		{
+			int ret =0;
+			if(size ==0)
+				ret =-1;
+			else
+				ret =data[(back-1)%max];
+			return ret;
+		}
+		boolean isFull()
+		{
+			if(size ==max)
+				return true;
+			else
+				return false;
+		}
+		void resize()
+		{
+			int[] temp =new int[max*10];
+			
+			for(int i =0; i <size; i++)
+				temp[i] =data[(front++)%max];
+			data =temp;
+			max *=10;
+			front =0;
+			back =size;
+		}
+	}
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		String cmd;
+		int N, data;
+		Queue q =new Queue();
+		
+		N =Integer.parseInt(br.readLine());
+		
+		while(N-- >0)
+		{
+			st =new StringTokenizer(br.readLine());
+			cmd =st.nextToken();
+			if(cmd.equals("push"))
+			{
+				data =Integer.parseInt(st.nextToken());
+				if(q.isFull())
+					q.resize();
+				q.push(data);
+			}else if(cmd.equals("pop"))
+			{
+				bw.write(q.pop() +"\n");
+			}else if(cmd.equals("size"))
+			{
+				bw.write(q.size() +"\n");
+			}else if(cmd.equals("empty"))
+			{
+				bw.write(q.empty() +"\n");
+			}else if(cmd.equals("front"))
+			{
+				bw.write(q.front() +"\n");
+			}else if(cmd.equals("back"))
+			{
+				bw.write(q.back() +"\n");
+			}
+		}
+		bw.flush();
+	}
+}
