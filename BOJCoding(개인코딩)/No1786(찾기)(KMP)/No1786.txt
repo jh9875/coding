@@ -1,0 +1,66 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+
+public class Main
+{
+	static ArrayList<Integer> list =new ArrayList<>();
+	static String T, P;
+	static int n, m;
+	static int[] pi;
+	static char[] t, p;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		T =br.readLine(); P =br.readLine();
+		n =T.length(); m =P.length();
+		t =T.toCharArray(); p =P.toCharArray();
+		pi =new int[m];
+		
+		getPi();
+		kmp();
+		
+		bw.write(list.size() +"\n");
+		for(int n : list)
+			bw.write((n+1) +" ");
+		bw.write("\n");
+		bw.flush();
+	}
+	
+	static void getPi()
+	{
+		int j =0;
+		
+		for(int i =1; i <m; i++)
+		{
+			while(j >0 && p[i] !=p[j])
+				j =pi[j-1];
+			if(p[i] ==p[j])
+				pi[i] =++j;
+		}
+	}
+	
+	static void kmp()
+	{
+		int j =0;
+		
+		for(int i =0; i <n; i++)
+		{
+			while(j >0 && t[i] !=p[j])
+				j =pi[j-1];
+			if(t[i] ==p[j])
+			{
+				if(j ==m-1)
+				{
+					list.add(i-m+1);
+					j =pi[j];
+				}else
+					j++;
+			}
+		}
+	}
+}
