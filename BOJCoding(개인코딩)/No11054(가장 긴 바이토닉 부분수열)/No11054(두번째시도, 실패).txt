@@ -1,0 +1,85 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.Arrays;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	static int N;
+	static int[] arr;
+	static int[] cache;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		int ans =0;
+		
+		N =Integer.parseInt(br.readLine());
+		arr =new int[N];
+		cache =new int[N];
+		
+		st =new StringTokenizer(br.readLine());
+		for(int i =0; i <N; i++)
+			arr[i] =Integer.parseInt(st.nextToken());
+		ans =solve();
+		
+		bw.write(ans +"\n");
+		bw.flush();
+	}
+	
+	static int solve()
+	{
+		int ret =1;
+		
+		for(int divide =0; divide <N; divide++)
+		{
+			int sum1 =0;
+			int sum2 =0;
+			Arrays.fill(cache, -1);
+			sum1 =solve1(divide);
+			sum2 =solve2(divide);
+			ret =Math.max(ret, sum1+sum2+1);
+//			ret =Math.max(ret, solve1(divide)+solve2(divide)+1);
+			System.out.println("divide: " +divide);
+			System.out.println("sum1: " +sum1);
+			System.out.println("sum2: " +sum2);
+			System.out.println("ret: " +ret);
+			print();
+			System.out.println("============");
+		}
+		return ret;
+	}
+	static int solve1(int index)
+	{
+		if(cache[index] !=-1)
+			return cache[index];
+		cache[index] =0;
+		
+		for(int next =index-1; next >=0; next--)
+			if(arr[index] >arr[next])
+				cache[index] =Math.max(cache[index], solve1(next) +1);
+		return cache[index];
+	}
+	static int solve2(int index)
+	{
+		if(cache[index] !=-1)
+			return cache[index];
+		cache[index] =0;
+		
+		for(int next =index+1; next <N; next++)
+			if(arr[index] >arr[next])
+				cache[index] =Math.max(cache[index], solve2(next) +1);
+		return cache[index];
+	}
+	
+	static void print()
+	{
+		for(int i =0; i <N; i++)
+			System.out.print(cache[i]+" ");
+		System.out.println();
+	}
+}

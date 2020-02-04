@@ -1,0 +1,67 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	static int N, divide;
+	static int[] arr;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		int ans =0;
+		N =Integer.parseInt(br.readLine());
+		arr =new int[N];
+		
+		st =new StringTokenizer(br.readLine());
+		for(int i =0; i <N; i++)
+			arr[i] =Integer.parseInt(st.nextToken());
+		
+		ans =solve();
+		bw.write(ans +"\n");
+		bw.flush();
+	}
+	
+	static int solve()
+	{
+		int ret =0;
+		int sum1 =0 ,sum2 =0;
+		for(divide =0; divide <N; divide++)
+		{
+			sum1 =0;
+			sum2 =0;
+			for(int startIndex =0; startIndex <divide; startIndex++)
+				sum1 =Math.max(sum1, ascOrder(startIndex) +1);
+			for(int startIndex =divide; startIndex <N; startIndex++)
+				sum2 =Math.max(sum2, decOrder(startIndex) +1);
+			if(sum1+sum2 >ret)
+				ret =sum1+sum2;
+		}
+		return ret;
+	}
+	static int ascOrder(int startIndex)
+	{
+		if(startIndex ==divide)
+			return 0;
+		int ret =0;
+		for(int nextIndex =startIndex+1; nextIndex <divide; nextIndex++)
+			if(arr[startIndex] <arr[nextIndex])
+				ret =Math.max(ret, ascOrder(nextIndex) +1);
+		return ret;
+	}
+	static int decOrder(int startIndex)
+	{
+		if(startIndex ==N)
+			return 0;
+		int ret =0;
+		for(int nextIndex =startIndex+1; nextIndex <N; nextIndex++)
+			if(arr[startIndex] >arr[nextIndex])
+				ret =Math.max(ret, decOrder(nextIndex) +1);
+		return ret;
+	}
+}
