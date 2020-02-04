@@ -1,0 +1,101 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	static class Pos
+	{
+		int y;
+		int x;
+		int dist;
+		Pos(int y, int x, int dist)
+		{
+			this.y =y;
+			this.x =x;
+			this.dist =dist;
+		}
+	}
+	static int[] dirY = {1, 0, -1, 0};
+	static int[] dirX = {0, 1, 0, -1};
+	static int R, C;
+	static char[][] map;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		String input;
+		int ans =0;
+		
+		st =new StringTokenizer(br.readLine());
+		R =Integer.parseInt(st.nextToken());
+		C =Integer.parseInt(st.nextToken());
+		map =new char[R][C];
+		
+		for(int i =0; i <R; i++)
+		{
+			input =br.readLine();
+			for(int j =0; j <C; j++)
+				map[i][j] =input.charAt(j);
+		}
+		
+		ans =solve();
+		bw.write(ans +"\n");
+		bw.flush();
+	}
+	
+	static int solve()
+	{
+		int ret =0;
+		
+		for(int i =0; i <R; i++)
+			for(int j =0; j <C; j++)
+				if(map[i][j] =='L')
+					ret =Math.max(ret, bfs(i, j));
+		return ret;
+	}
+	
+	static int bfs(int y, int x)
+	{
+		int ret =0;
+		boolean[][] visited =new boolean[R][C];
+		Queue<Pos> q =new LinkedList<>();
+		q.add(new Pos(y, x, 0));
+		visited[y][x] =true;
+		
+		while(!q.isEmpty())
+		{
+			int curY =q.peek().y;
+			int curX =q.peek().x;
+			int dist =q.peek().dist;
+			q.poll();
+			if(dist >ret)
+				ret =dist;
+			
+			for(int i =0; i <4; i++)
+			{
+				int nextY =curY +dirY[i];
+				int nextX =curX +dirX[i];
+				if(inRange(nextY, nextX) && map[nextY][nextX] =='L' && !visited[nextY][nextX])
+				{
+					q.add(new Pos(nextY, nextX, dist+1));
+					visited[nextY][nextX] =true;
+				}
+			}
+		}
+		
+		return ret;
+	}
+	static boolean inRange(int y, int x)
+	{
+		if(y <0 || R <=y || x <0 || C <=x)
+			return false;
+		return true;
+	}
+}

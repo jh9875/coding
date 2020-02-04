@@ -1,0 +1,82 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	static class Floor
+	{
+		int f;
+		int cnt;
+		Floor(int f, int cnt)
+		{
+			this.f =f;
+			this.cnt =cnt;
+		}
+	}
+	static int F, S, G, U, D;
+	static boolean[] visited;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		int ans =0;
+		
+		st =new StringTokenizer(br.readLine());
+		F =Integer.parseInt(st.nextToken());
+		S =Integer.parseInt(st.nextToken());
+		G =Integer.parseInt(st.nextToken());
+		U =Integer.parseInt(st.nextToken());
+		D =Integer.parseInt(st.nextToken());
+		visited =new boolean[F+1];
+		
+		ans =bfs(S);
+		if(ans ==-1)
+			bw.write("use the stairs\n");
+		else
+			bw.write(ans +"\n");
+		bw.flush();
+	}
+	
+	static int bfs(int cur)
+	{
+		int ret =-1;
+		Queue<Floor> queue =new LinkedList<>();
+		queue.add(new Floor(cur, 0));
+		visited[cur] =true;
+		
+		while(!queue.isEmpty())
+		{
+			int floor =queue.peek().f;
+			int cnt =queue.peek().cnt;
+			queue.poll();
+			
+			if(floor ==G)
+			{
+				ret =cnt;
+				break;
+			}
+			
+			int up =floor +U;
+			int down =floor -D;
+			
+			if(up <=F && !visited[up])
+			{
+				visited[up] =true;
+				queue.add(new Floor(up, cnt+1));
+			}
+			if(down >0 && !visited[down])
+			{
+				visited[down] =true;
+				queue.add(new Floor(down, cnt+1));
+			}
+		}
+		return ret;
+	}
+}

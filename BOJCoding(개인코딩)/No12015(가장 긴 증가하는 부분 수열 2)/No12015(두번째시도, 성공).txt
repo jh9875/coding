@@ -1,0 +1,50 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		int N, size, value;
+		ArrayList<Integer> list =new ArrayList<>();
+		
+		N =Integer.parseInt(br.readLine());
+		list.add(0);
+		
+		st =new StringTokenizer(br.readLine());
+		for(int i =0; i <N; i++)
+		{
+			value =Integer.parseInt(st.nextToken());
+			
+			if(list.get(list.size()-1) <value)
+				list.add(value);
+			else
+			{
+				int l, r, m;
+				l =0; r =list.size()-1;
+				
+				while(l <r)
+				{
+					m =(l+r)/2;
+					if(list.get(m) <value)
+						l =m+1;
+					else
+						r =m;
+				}
+				list.set(r, value);
+			}
+		}
+		
+		bw.write(list.size()-1 +"\n");
+		bw.flush();
+	}
+
+}

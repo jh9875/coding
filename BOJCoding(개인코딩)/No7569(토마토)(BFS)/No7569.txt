@@ -1,0 +1,109 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	static class Pos
+	{
+		int h;
+		int n;
+		int m;
+		int cnt;
+		Pos(int h, int n, int m, int cnt)
+		{
+			this.h =h;
+			this.n =n;
+			this.m =m;
+			this.cnt =cnt;
+		}
+	}
+	static int[] dirN = {1, 0, -1, 0, 0, 0};
+	static int[] dirM = {0, 1, 0, -1, 0, 0};
+	static int[] dirH = {0, 0, 0, 0, 1, -1};
+	static int N, M, H;
+	static int[][][] boxes;
+	static Queue<Pos> queue =new LinkedList<>();
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		int ans =0;
+		
+		st =new StringTokenizer(br.readLine());
+		M =Integer.parseInt(st.nextToken());
+		N =Integer.parseInt(st.nextToken());
+		H =Integer.parseInt(st.nextToken());
+		boxes =new int[H][N][M];
+		
+		for(int h =0; h <H; h++)
+		{
+			for(int n =0; n <N; n++)
+			{
+				st =new StringTokenizer(br.readLine());
+				for(int m =0; m <M; m++)
+				{
+					boxes[h][n][m] =Integer.parseInt(st.nextToken());
+					if(boxes[h][n][m] ==1)
+						queue.add(new Pos(h, n, m, 0));
+						
+				}
+			}
+		}
+		ans =bfs();
+		ans =checkZero() ? -1: ans;
+		bw.write(ans +"\n");
+		bw.flush();
+	}
+	static int bfs()
+	{
+		int ret =0;
+		while(!queue.isEmpty())
+		{
+			int curH =queue.peek().h;
+			int curN =queue.peek().n;
+			int curM =queue.peek().m;
+			int cnt =queue.peek().cnt;
+			queue.poll();
+			if(ret <cnt)
+				ret =cnt;
+			
+			for(int i =0; i <6; i++)
+			{
+				int nextH =curH +dirH[i];
+				int nextN =curN +dirN[i];
+				int nextM =curM +dirM[i];
+				
+				if(inRange(nextH, nextN, nextM) && boxes[nextH][nextN][nextM] ==0)
+				{
+					boxes[nextH][nextN][nextM] =1;
+					queue.add(new Pos(nextH, nextN, nextM, cnt+1));
+				}
+			}
+		}
+		return ret;
+	}
+	
+	static boolean inRange(int h, int n, int m)
+	{
+		if(h <0 || h >=H || n <0 || n >=N || m <0 || m >=M)
+			return false;
+		return true;
+	}
+	
+	static boolean checkZero()
+	{
+		for(int h =0; h <H; h++)
+			for(int n =0; n <N; n++)
+				for(int m =0; m <M; m++)
+					if(boxes[h][n][m] ==0)
+						return true;
+		return false;
+	}
+}
