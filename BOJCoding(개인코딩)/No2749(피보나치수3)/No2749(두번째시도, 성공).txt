@@ -1,0 +1,30 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+public class Main
+{
+	static final int MOD =1000000;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		int pisano =1500000;
+		long n;
+		long[] arr =new long[pisano];
+		n =Long.parseLong(br.readLine());
+		
+		arr[0] =0; arr[1] =1;
+		
+		for(int i =2; i <pisano && i <=n; i++)
+			arr[i] =(arr[i-1]+arr[i-2])%MOD;
+		
+		if(n >=pisano)
+			n %=pisano;
+		
+		bw.write(arr[(int)n] +"\n");
+		bw.flush();
+	}
+}

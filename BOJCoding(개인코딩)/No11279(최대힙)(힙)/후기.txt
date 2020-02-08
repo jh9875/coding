@@ -1,0 +1,15 @@
+첫번째는 우선 라이브러리를 이용해봤다.
+
+여태까지 자바에 Heap이라는 라이브러리가 있는줄 알았는데 없는것같다.
+
+그래서 비슷한 우선순위큐로 할려는데 우선선위큐가 오름차순으로 되어있어서
+
+바꿔야했다.
+
+그래서 인터넷찾아보다가
+
+PriorityQueue객체를 생성할때 파라미터로 Collections.reverseOrder()를 넣어주면 역순이 된다.
+
+ex).
+PriorityQueue<Integer> pq =new PriorityQueue<>(Collections.reverseOrder());
+

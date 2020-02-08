@@ -1,0 +1,102 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	static class P
+	{
+		int y;
+		int x;
+		int cost;
+		int checkWall;
+		P(int y, int x, int cost, int checkWall)
+		{
+			this.y =y;
+			this.x =x;
+			this.cost =cost;
+			this.checkWall =checkWall;
+		}
+	}
+	static int N, M;
+	static int[][] map;
+	static int[] dirY = {1, 0, -1, 0};
+	static int[] dirX = {0, 1, 0, -1};
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		String input;
+		int ans =0;
+		
+		st =new StringTokenizer(br.readLine());
+		N =Integer.parseInt(st.nextToken());
+		M =Integer.parseInt(st.nextToken());
+		map =new int[N+1][M+1];
+		for(int i =0; i <N; i++)
+		{
+			input =br.readLine();
+			for(int j =0; j <M; j++)
+				map[i+1][j+1] =input.charAt(j) -'0';
+		}
+		ans =bfs();
+		bw.write(ans +"\n");
+		bw.flush();
+	}
+	static int bfs()
+	{
+		int ret =-1;
+		boolean[][][] visited =new boolean[N+1][M+1][2];
+		Queue<P> queue =new LinkedList<>();
+		queue.add(new P(1, 1, 1, 0));
+		visited[1][1][0] =true;
+		
+		while(!queue.isEmpty())
+		{
+			int y =queue.peek().y;
+			int x =queue.peek().x;
+			int cost =queue.peek().cost;
+			int checkWall =queue.peek().checkWall;
+			queue.poll();
+			
+			if(y ==N && x ==M)
+			{
+				ret =cost;
+				break;
+			}
+			
+			for(int i =0; i <4; i++)
+			{
+				int nextY =y +dirY[i];
+				int nextX =x +dirX[i];
+				
+				if(!inRange(nextY, nextX)) continue;
+				
+				if(map[nextY][nextX] ==1 && checkWall ==0)
+				{
+					visited[nextY][nextX][1] =true;
+					queue.add(new P(nextY, nextX, cost+1, 1));
+				}else if(map[nextY][nextX] ==0 && visited[nextY][nextX][checkWall] ==false)
+				{
+					visited[nextY][nextX][checkWall] =true;
+					queue.add(new P(nextY, nextX, cost+1, checkWall));
+				}
+			}
+		}
+		return ret;
+	}
+	
+	static boolean inRange(int y, int x)
+	{
+		if(y <1 || y >N || x <1 || x >M)
+			return false;
+		return true;
+	}
+}

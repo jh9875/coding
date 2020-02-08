@@ -1,0 +1,172 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	static class BeadPair
+	{
+		int ry, rx, by, bx, cnt;	//빨간구슬의 횟수만 필요하므로
+		
+		BeadPair(int ry, int rx, int by, int bx, int cnt)
+		{
+			this.ry =ry;
+			this.rx =rx;
+			this.by =by;
+			this.bx =bx;
+			this.cnt =cnt;
+		}
+		
+	}
+	static int[] dy = {1, 0, -1, 0};
+	static int[] dx = {0, 1, 0, -1};
+	static int N, M;
+	static char[][] map;
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		String input;
+		int ry =0, rx =0, by =0, bx =0, ans =0;
+		
+		st =new StringTokenizer(br.readLine());
+		N =Integer.parseInt(st.nextToken());
+		M =Integer.parseInt(st.nextToken());
+		map =new char[N][M];
+		
+		for(int i =0; i <N; i++)
+		{
+			input =br.readLine();
+			for(int j =0; j <M; j++)
+			{
+				map[i][j] =input.charAt(j);
+				if(map[i][j] =='R')
+				{
+					ry =i;
+					rx =j;
+					map[i][j] ='.';
+				}else if(map[i][j] =='B')
+				{
+					by =i;
+					bx =j;
+					map[i][j] ='.';
+				}
+			}
+		}
+		ans =solve(ry, rx, by, bx);
+		bw.write(ans +"\n");
+		bw.flush();
+	}
+	static int solve(int ry, int rx, int by, int bx)
+	{
+		int[][] visited =new int[N][M];
+		Queue<BeadPair> queue =new LinkedList<>();
+		queue.add(new BeadPair(ry, rx, by, bx, 0));
+		
+		while(!queue.isEmpty())
+		{
+			int cry =queue.peek().ry;
+			int crx =queue.peek().rx;
+			int cby =queue.peek().by;
+			int cbx =queue.peek().bx;
+			int cnt =queue.peek().cnt;
+			visited[cry][crx]++;
+			queue.poll();
+			
+			if(cnt >10)
+				continue;
+			if(map[cby][cbx] =='O')
+				continue;
+			if(map[cry][crx] =='O')
+				return cnt;
+			
+			for(int i =0; i <4; i++)
+			{
+				BeadPair bp;
+				if(redMoveFirst(cry, crx, cby, cbx, i))
+				{
+					bp =move(cry, crx, cby, cbx, cnt, true, i);
+					bp =move(bp.ry, bp.rx, cby, cbx, cnt+1, false, i);
+					if(visited[bp.ry][bp.rx] <2)
+						queue.add(bp);
+				}else
+				{
+					bp =move(cry, crx, cby, cbx, cnt, false, i);
+					bp =move(cry, crx, bp.by, bp.bx, cnt+1, true, i);
+					if(visited[bp.ry][bp.rx] <2)
+						queue.add(bp);
+				}
+			}
+		}
+		
+		return -1;
+	}
+	static boolean redMoveFirst(int ry, int rx, int by, int bx, int type)	//R이 먼저 움직이면 true
+	{
+		if(type ==0)		//downward
+		{
+			if(ry <=by)
+				return false;
+		}else if(type ==1)	//right
+		{
+			if(rx <=bx)
+				return false;
+		}else if(type ==2)	//upward
+		{
+			if(ry >=by)
+				return false;
+		}else				//left
+		{
+			if(rx >=bx)
+				return false;
+		}
+		return true;
+	}
+	static BeadPair move(int ry, int rx, int by, int bx, int cnt, boolean type, int dir)		//type이 참이면 R이 움직임.
+	{
+		BeadPair bp;
+		if(type)
+		{
+			int nry =ry;
+			int nrx =rx;
+			while(true)
+			{
+				nry +=dy[dir];
+				nrx +=dx[dir];
+				if(map[nry][nrx] =='O')
+					break;
+				if(map[nry][nrx] =='#' || (nry ==by && nrx ==bx))
+				{
+					nry -=dy[dir];
+					nrx -=dx[dir];
+					break;
+				}
+			}
+			bp =new BeadPair(nry, nrx, by, bx, cnt);
+		}else
+		{
+			int nby =by;
+			int nbx =bx;
+			while(true)
+			{
+				nby +=dy[dir];
+				nbx +=dx[dir];
+				if(map[nby][nbx] =='O')
+					break;
+				if(map[nby][nbx] =='#' || (nby ==ry && nbx ==rx))
+				{
+					nby -=dy[dir];
+					nbx -=dx[dir];
+					break;
+				}
+			}
+			bp =new BeadPair(ry, rx, nby, nbx, cnt);
+		}
+		return bp;
+	}
+}
