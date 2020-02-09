@@ -1,0 +1,42 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		String name;
+		int n, p, c;
+		
+		n =Integer.parseInt(br.readLine());
+		while(n-- >0)
+		{
+			int maxValue =0;
+			String maxName ="";
+			
+			p =Integer.parseInt(br.readLine());
+			while(p-- >0)
+			{
+				st =new StringTokenizer(br.readLine());
+				c =Integer.parseInt(st.nextToken());
+				name =st.nextToken();
+				if(maxValue <c)
+				{
+					maxValue =c;
+					maxName =name;
+				}
+			}
+			bw.write(maxName +"\n");
+		}
+		bw.flush();
+	}
+}

@@ -1,0 +1,65 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	static class Student implements Comparable<Student>
+	{
+		String name;
+		int d, m, y;
+		Student(String name, int d, int m, int y)
+		{
+			this.name =name;
+			this.d =d;
+			this.m =m;
+			this.y =y;
+		}
+		@Override
+		public int compareTo(Student s)
+		{
+			if(this.y !=s.y)
+				return this.y -s.y;
+			else
+			{
+				if(this.m !=s.m)
+					return this.m -s.m;
+				else
+				{
+					return this.d -s.d;
+				}
+			}
+		}
+	}
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		Student[] students;
+		String name;
+		int n, y, m, d;
+		
+		
+		n =Integer.parseInt(br.readLine());
+		students =new Student[n];
+		for(int i =0; i <n; i++)
+		{
+			st =new StringTokenizer(br.readLine());
+			name =st.nextToken();
+			d =Integer.parseInt(st.nextToken());
+			m =Integer.parseInt(st.nextToken());
+			y =Integer.parseInt(st.nextToken());
+			students[i] =new Student(name, d, m, y);
+		}
+		Arrays.sort(students);
+		bw.write(students[n-1].name +"\n");
+		bw.write(students[0].name +"\n");
+		bw.flush();
+	}
+}

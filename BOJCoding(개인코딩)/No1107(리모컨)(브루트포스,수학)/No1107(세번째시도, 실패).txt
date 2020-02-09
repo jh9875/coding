@@ -1,0 +1,109 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.Arrays;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	static final int MAX =1000000;
+	static int N;
+	static int LEN;
+	static String str;
+	static boolean[] rc =new boolean[10];		//0~9
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		int M, ans =0;
+		Arrays.fill(rc, true);
+		
+		str =br.readLine();
+		LEN =str.length();
+		N =Integer.parseInt(str);
+		M =Integer.parseInt(br.readLine());
+		st =new StringTokenizer(br.readLine());
+		for(int i =0; i <M; i++)
+			rc[Integer.parseInt(st.nextToken())] =false;
+		ans =solve();
+		bw.write(ans +"\n");
+		bw.flush();
+	}
+	static int solve()
+	{
+		int ret =0;
+		
+		//+,-버튼만 누르는 경우.
+		ret =Math.abs(N-100);
+		//자릿수가 높은것에서 낮을것으로 이동(n자릿수 많은것중 가장 작은수?)
+		int ch =0;
+		for(int i =1; i <10; i++)
+		{
+			if(rc[i])
+			{
+				ch =i;
+				break;
+			}
+		}
+		ret =Math.min(ret, pressButton2(ch, 1));
+		//채널번호 누르고 +,-버튼으로 채널을 맞추는 경우.(자릿수가 낮은것에서 높은것으로)
+		ret =Math.min(ret, pressButton(0, 0));
+		
+		return ret;
+	}
+	static int pressButton(int channel, int len)
+	{
+		if(channel ==N)
+			return 0;
+		int ret =MAX;
+		if(len <LEN)	//(자릿수 맞추기 위해)숫자버튼 누르는경우
+		{
+			int n =str.charAt(len) -'0';
+			String strChannel =String.valueOf(channel);
+			if(rc[n])	//원하는 자릿수에 버튼을 누를 수 있는경우.
+			{
+				String tempChannel =strChannel +n;
+				ret =pressButton(Integer.parseInt(tempChannel), len+1) +1;
+			}else		//원하는 자릿수에 버튼을 누를 수 없는경우, 최대한 가까운 숫자의 번호부터 누른다. 
+			{
+				for(int diff =1; diff <10; diff++)
+				{
+					if(n+diff <10 && rc[n+diff])
+					{
+						String tempChannel =strChannel +(n+diff);
+						ret =Math.min(ret, pressButton(Integer.parseInt(tempChannel), len+1) +1);
+					}
+					if(n-diff >=0 && rc[n-diff])
+					{
+						String tempChannel =strChannel +(n-diff);
+						ret =Math.min(ret, pressButton(Integer.parseInt(tempChannel), len+1) +1);
+					}
+				}
+			}
+		}else			//+,-버튼 누르는 경우.
+			ret =Math.abs(N -channel);
+		return ret;
+	}
+	static int pressButton2(int channel, int len)
+	{
+		if(len >LEN)
+			return channel -N;
+		int ret =0;
+		
+		for(int i =0; i <10; i++)
+		{
+			if(rc[i])
+			{
+				String tempChannel =String.valueOf(channel);
+				tempChannel =tempChannel +i;
+				ret =pressButton2(Integer.parseInt(tempChannel), len+1);
+				break;
+			}
+		}
+		
+		return ret;
+	}
+}

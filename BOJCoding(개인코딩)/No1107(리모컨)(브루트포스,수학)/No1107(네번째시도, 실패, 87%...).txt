@@ -1,0 +1,69 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.Arrays;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	static final int MAX =500000;
+	static int N;
+	static boolean[] rc =new boolean[10];		//0~9
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		int M, ans;
+		Arrays.fill(rc, true);
+		
+		N =Integer.parseInt(br.readLine());
+		M =Integer.parseInt(br.readLine());
+		if(M !=0)
+		{
+			st =new StringTokenizer(br.readLine());
+			for(int i =0; i <M; i++)
+				rc[Integer.parseInt(st.nextToken())] =false;
+			ans =solve();
+		}else
+			ans =1;
+		bw.write(ans +"\n");
+		bw.flush();
+	}
+	
+	static int solve()
+	{
+		//처음버투 +,-만 누른는 경우.
+		int ret =Math.abs(N-100);
+		//버튼을 누르고 +,-(1자릿수)
+		for(int i =0; i <10 ;i++)
+			if(rc[i])
+				ret =Math.min(ret, Math.abs(N-i) +1);
+		//버튼을 눌러보는 수.(2자릿수 이상)
+		for(int i =1; i <10; i++)
+			if(rc[i])
+				ret =Math.min(ret, pressButton(i) +1);
+		return ret;
+	}
+	static int pressButton(int channel)
+	{
+		if(channel >MAX)
+			return MAX;
+		int ret =MAX;
+		String strChannel =String.valueOf(channel);
+		for(int i =0; i <10; i++)
+		{
+			if(rc[i])
+			{
+				String tempChannel = strChannel +i;
+				//현재상태에서 +,-버튼 누루는경우.
+				ret =Math.min(ret, Math.abs(N-Integer.parseInt(tempChannel)) +1);
+				//숫자버튼 한개 더 누르는 경우.
+				ret =Math.min(ret, pressButton(Integer.parseInt(tempChannel)) +1);
+			}
+		}
+		return ret;
+	}
+}

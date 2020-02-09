@@ -1,0 +1,62 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.Arrays;
+
+public class Main
+{
+	static int N;
+	static char[][] map;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		
+		N =Integer.parseInt(br.readLine());
+		map =new char[N+1][N+1];
+		for(int i =1; i <=N; i++)
+			Arrays.fill(map[i], ' ');
+		printStar(1, 1, N);
+		print();
+	}
+	
+	static void printStar(int y, int x, int size)
+	{
+		if(size ==3)
+		{
+			map[y][x] ='*';
+			map[y][x+1] ='*';
+			map[y][x+2] ='*';
+			
+			map[y+1][x] ='*';
+			map[y+1][x+2] ='*';
+		
+			map[y+2][x] ='*';
+			map[y+2][x+1] ='*';
+			map[y+2][x+2] ='*';
+			return;
+		}
+		printStar(y, x, size/3);
+		printStar(y, x+size/3, size/3);
+		printStar(y, x+size/3*2, size/3);
+		
+		printStar(y+size/3, x, size/3);
+		printStar(y+size/3, x+size/3*2, size/3);
+		
+		printStar(y+size/3*2, x, size/3);
+		printStar(y+size/3*2, x+size/3, size/3);
+		printStar(y+size/3*2, x+size/3*2, size/3);
+	}
+	static void print() throws Exception
+	{
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		for(int i =1; i <=N; i++)
+		{
+			for(int j =1; j <=N; j++)
+				bw.write(map[i][j]);
+			bw.write("\n");;
+		}
+		bw.flush();
+	}
+}
