@@ -1,0 +1,124 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	static class Pos
+	{
+		int y, x, cnt;
+		Pos(int y, int x, int cnt)
+		{
+			this.y =y;
+			this.x =x;
+			this.cnt =cnt;
+		}
+	}
+	static int R, C;
+	static int[] dy = {1, 0, -1, 0};
+	static int[] dx = {0, 1, 0, -1};
+	static char[][] map;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		String input;
+		int y =0, x =0, ans;
+		
+		st =new StringTokenizer(br.readLine());
+		R =Integer.parseInt(st.nextToken());
+		C =Integer.parseInt(st.nextToken());
+		map =new char[R][C];
+		for(int i =0; i <R; i++)
+		{
+			input =br.readLine();
+			for(int j =0; j <C; j++)
+			{
+				map[i][j] =input.charAt(j);
+				if(map[i][j] =='S')
+				{
+					y =i; x =j;
+				}
+			}
+		}
+		ans =bfs(y, x);
+		if(ans ==-1)
+			bw.write("KAKTUS\n");
+		else
+			bw.write(ans +"\n");
+		bw.flush();
+	}
+	static int bfs(int y, int x)
+	{
+		int ret =-1, minute =0;
+		boolean[][] visited =new boolean[R][C];
+		Queue<Pos> queue =new LinkedList<>();
+		queue.add(new Pos(y, x, 0));
+		visited[y][x] =true;
+		
+		while(!queue.isEmpty())
+		{
+			int curY =queue.peek().y;
+			int curX =queue.peek().x;
+			int cnt =queue.peek().cnt;
+			queue.poll();
+			if(map[curY][curX] =='D')
+			{
+				ret =cnt;
+				break;
+			}
+			if(cnt ==minute)
+			{
+				updateMap();
+				minute++;
+			}
+			for(int dir =0; dir <4; dir++)
+			{
+				int nextY =curY +dy[dir];
+				int nextX =curX +dx[dir];
+				
+				if(!inRange(nextY, nextX)) continue;
+				if(map[nextY][nextX] !='*' && !visited[nextY][nextX])
+				{
+					queue.add(new Pos(nextY, nextX, cnt+1));
+					visited[nextY][nextX] =true;
+				}
+			}
+		}
+		return ret;
+	}
+	static void updateMap()
+	{
+		Queue<Pos> queue =new LinkedList<>();
+		for(int y =0; y <R; y++)
+			for(int x =0; x <C; x++)
+				if(map[y][x] =='*')
+					queue.add(new Pos(y, x, 0));
+		while(!queue.isEmpty())
+		{
+			int y =queue.peek().y;
+			int x =queue.peek().x;
+			queue.poll();
+			for(int dir =0; dir <4; dir++)
+			{
+				int nextY =y +dy[dir];
+				int nextX =x +dx[dir];
+				if(!inRange(nextY, nextX)) continue;
+				if(map[nextY][nextX] =='.')
+					map[nextY][nextX] ='*';
+			}
+		}
+	}
+	static boolean inRange(int y, int x)
+	{
+		if(y <0 || y >=R || x <0 || x >=C)
+			return false;
+		return true;
+	}
+}

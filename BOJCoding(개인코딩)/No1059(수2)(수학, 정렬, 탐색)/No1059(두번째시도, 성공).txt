@@ -1,0 +1,63 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	static int N, maxValue;
+	static boolean[] luckySet;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		ArrayList<Integer> list =new ArrayList<>();
+		int L, min, max, ans =0;
+		
+		L =Integer.parseInt(br.readLine());
+		st =new StringTokenizer(br.readLine());
+		for(int i =0; i <L; i++)
+			list.add(Integer.parseInt(st.nextToken()));
+		Collections.sort(list);
+		maxValue =list.get(L-1);
+		luckySet =new boolean[maxValue +1];
+		for(int i =0; i <L; i++)
+			luckySet[list.get(i)] =true;
+		N =Integer.parseInt(br.readLine());
+		min =getMin();
+		max =getMax();
+		ans =solve(min, max);
+		bw.write(ans +"\n");
+		bw.flush();
+	}
+	static int getMin()
+	{
+		int min =N;
+		while(min >0 && !luckySet[min])
+			min--;
+		return min+1;
+	}
+	static int getMax()
+	{
+		int max =N;
+		while(max <=maxValue && !luckySet[max])
+			max++;
+		return max-1;
+	}
+	static int solve(int min, int max)
+	{
+		int ret =0;
+		
+		for(int low =min; low <max; low++)
+			for(int high =low+1; high <=max; high++)
+				if(low <=N && N <=high)
+					ret++;
+		return ret;
+	}
+}
