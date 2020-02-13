@@ -1,0 +1,69 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	static int N;
+	static int[] arr;
+	static int[] cache;
+	static int[] choices;
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		ArrayList<Integer> list =new ArrayList<>();
+		int ans =0;
+		
+		N =Integer.parseInt(br.readLine());
+		arr =new int[N];
+		cache =new int[N+1];
+		choices =new int[N+1];
+		Arrays.fill(cache, -1);
+		st =new StringTokenizer(br.readLine());
+		for(int i =0; i <N; i++)
+			arr[i] =Integer.parseInt(st.nextToken());
+		
+		ans =lis(-1) -1;
+		bw.write(ans +"\n");
+		reconstruct(-1, list);
+		for(int i : list)
+			bw.write(i+ " ");
+		bw.flush();
+	}
+	static int lis(int start)
+	{
+		if(cache[start+1] !=-1)
+			return cache[start+1];
+		cache[start+1] =1;
+		int bestNext =-1;
+		
+		for(int next =start+1; next <N; next++)
+		{
+			if(start ==-1 || arr[start] <arr[next])
+			{
+				int cand =lis(next) +1;
+				
+				if(cand >cache[start+1])
+				{
+					cache[start+1] =cand;
+					bestNext =next;
+				}
+			}
+		}
+		choices[start+1] =bestNext;
+		return cache[start+1];
+	}
+	static void reconstruct(int start, ArrayList<Integer> seq)
+	{
+		if(start !=-1) seq.add(arr[start]);
+		int next =choices[start+1];
+		if(next !=-1) reconstruct(next, seq);
+	}
+}
