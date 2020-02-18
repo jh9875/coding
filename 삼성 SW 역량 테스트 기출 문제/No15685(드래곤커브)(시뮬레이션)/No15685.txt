@@ -1,0 +1,78 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	static boolean[][] grid =new boolean[101][101];
+	static int[] dy = {0, -1, 0, 1};
+	static int[] dx = {1, 0, -1, 0};
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		int N, x, y, d, g;
+		
+		N =Integer.parseInt(br.readLine());
+		while(N-- >0)
+		{
+			st =new StringTokenizer(br.readLine());
+			x =Integer.parseInt(st.nextToken());
+			y =Integer.parseInt(st.nextToken());
+			d =Integer.parseInt(st.nextToken());
+			g =Integer.parseInt(st.nextToken());
+			ArrayList<Integer> list =getDir(d, g);
+			drawCurve(y, x, list);
+		}
+		bw.write(countSquare() +"\n");
+		bw.flush();
+	}
+	static ArrayList<Integer> getDir(int d, int g)
+	{
+		ArrayList<Integer> list =new ArrayList<>();
+		list.add(d);
+		
+		for(int i =0; i <g; i++)
+		{
+			int size =list.size();
+			for(int j =size-1; j >=0; j--)
+				list.add((list.get(j) +1)%4);
+		}
+		return list;
+	}
+	static void drawCurve(int y, int x, ArrayList<Integer> list)
+	{
+		int size =list.size();
+		
+		grid[y][x] =true;
+		for(int i =0; i <size; i++)
+		{
+			y +=dy[list.get(i)];
+			x +=dx[list.get(i)];
+			
+			if(inRange(y, x))
+				grid[y][x] =true;
+		}
+	}
+	static boolean inRange(int y, int x)
+	{
+		if(y <0 || y >100 || x <0 || x >100)
+			return false;
+		return true;
+	}
+	static int countSquare()
+	{
+		int ret =0;
+		
+		for(int y =0; y <100; y++)
+			for(int x =0; x <100; x++)
+				if(grid[y][x] && grid[y+1][x] && grid[y][x+1] &&grid[y+1][x+1])
+					ret++;
+		return ret;
+	}
+}
