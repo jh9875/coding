@@ -1,0 +1,55 @@
+lis문제다.
+
+동적계획법으로 해결할 수 있는문제다.
+
+전체 선의 수에서 lis의 수를 빼주면 된다.
+
+
+
+
+lis를 구현할때 처음에 나는 다음과 같이 구현했다.
+int ans =solve();
+
+static int solve()
+{
+	for(int start =0; start <N; start++)
+		lis(start)
+}
+
+static int lis(int index)
+{
+	for(int next =index+1; next <N; next++)
+		lis(next) ...
+}
+
+이런식으로 하면 코드가 길어지고 깔끔하지 않다.
+
+그러다 요즘 공부하고 있는 책에 저렇게 중복된 코드를 없애는 방법이 나와있어서
+
+따라해 봤다.
+
+그건 다음과 같다.
+
+int ans =lis(-1);
+
+static int lis(int index)
+{
+	if(cache[index+1] !=-1)
+		....
+
+	for(int next =index+1 ....
+}
+
+첫번째와 두번째의 차이점은 중복코드를 없앴다는 것이다.
+
+그렇다면 어떻게 없앴을까?
+
+두번째 코드를 자세히보면 인덱스를 -1부터 시작한다.
+
+그러면 메모이제이션을 이용할때 배열을 -1부터 접근하면 오류가 나지 않는가?
+
+그러면 index+1을 검사해 주면 된다.
+
+그냥 한칸씩 밀린다고 생각하면 편할듯하다.
+
+그러면 cache를 1칸더 만들면 된다.

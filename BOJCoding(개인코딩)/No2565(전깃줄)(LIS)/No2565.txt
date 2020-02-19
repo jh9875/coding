@@ -1,0 +1,44 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.Arrays;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	static int N;
+	static int[] arr =new int[501];
+	static int[] cache =new int[502];
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		int a, b, ans;
+		Arrays.fill(cache, -1);
+		
+		N =Integer.parseInt(br.readLine());
+		for(int i =0; i <N; i++)
+		{
+			st =new StringTokenizer(br.readLine());
+			a =Integer.parseInt(st.nextToken());
+			b =Integer.parseInt(st.nextToken());
+			arr[a] =b;
+		}
+		ans =N -(lis(-1)-1);
+		bw.write(ans +"\n");
+		bw.flush();
+	}
+	static int lis(int index)
+	{
+		if(cache[index+1] !=-1)
+			return cache[index+1];
+		cache[index+1] =0;
+		for(int next =index+1; next <501; next++)
+			if(index ==-1 || arr[index] <arr[next])
+				cache[index+1] =Math.max(cache[index+1], lis(next) +1);
+		return cache[index+1];
+	}
+}

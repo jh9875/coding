@@ -1,0 +1,151 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.StringTokenizer;
+
+public class Main
+{
+	static int[][] board =new int[9][9];
+	
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st;
+		int rest =0;
+		
+		for(int i =0; i <9; i++)
+		{
+			st =new StringTokenizer(br.readLine());
+			for(int j =0; j <9; j++)
+			{
+				int n =Integer.parseInt(st.nextToken());
+				if(n ==0)
+					rest++;
+				board[i][j] =n;
+			}
+		}
+		play(rest);
+		for(int i =0; i <9; i++)
+		{
+			for(int j =0; j <9; j++)
+				bw.write(board[i][j] +" ");
+			bw.write("\n");
+		}
+		bw.flush();
+	}
+	static void play(int rest)
+	{
+		while(rest !=0)
+		{
+			for(int i =0; i <9; i++)
+			{
+				for(int j =0; j <9; j++)
+				{
+					if(board[i][j] ==0)
+					{
+						int n =checkRow(i);
+						if(n !=0)
+						{
+							board[i][j] =n;
+							rest--;
+							continue;
+						}
+						n =checkCol(j);
+						if(n !=0)
+						{
+							board[i][j] =n;
+							rest--;
+							continue;
+						}
+						n =checkSquare(i, j);
+						if(n !=0)
+						{
+							board[i][j] =n;
+							rest--;
+							continue;
+						}
+					}
+				}
+			}
+		}
+	}
+	static int checkRow(int row)
+	{
+		int count =0;
+		boolean[] check =new boolean[10];
+		
+		for(int col =0; col <9; col++)
+		{
+			if(board[row][col] !=0)
+			{
+				count++;
+				check[board[row][col]] =true;
+			}
+		}
+		if(count !=8)
+			return 0;
+		else
+		{
+			int num;
+			for(num =1; num <10; num++)
+				if(!check[num])
+					break;
+			return num;
+		}
+	}
+	static int checkCol(int col)
+	{
+		int count =0;
+		boolean[] check =new boolean[10];
+		
+		for(int row =0; row <9; row++)
+		{
+			if(board[row][col] !=0)
+			{
+				count++;
+				check[board[row][col]] =true;
+			}
+		}
+		if(count !=8)
+			return 0;
+		else
+		{
+			int num;
+			for(num =1; num <10; num++)
+				if(!check[num])
+					break;
+			return num;
+		}
+	}
+	static int checkSquare(int i, int j)
+	{
+		boolean[] check =new boolean[10];
+		int n, m, count =0;
+		n =(i/3)*3;
+		m =(j/3)*3;
+		
+		for(int row =n; row <n+3; row++)
+		{
+			for(int col =m; col <m+3; col++)
+			{
+				if(board[row][col] !=0)
+				{
+					count++;
+					check[board[row][col]] =true;
+				}
+			}
+		}
+		if(count !=8)
+			return 0;
+		else
+		{
+			int num;
+			for(num =1; num <10; num++)
+				if(!check[num])
+					break;
+			return num;
+		}
+	}
+}
